@@ -8,6 +8,7 @@ const App = () => {
     <Container>
       <Router />
     </Container>
+    
   );
 };
 
@@ -15,7 +16,7 @@ export default App;
 
 const Container = styled.div`
   width: 375px;
-  height: 812px;
+  height: 100vh;
   position: absolute;
   left: 50%;
   top: 50%;
