@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
+import snsSlice from "../modules/snsSlice";
 
 const store = configureStore({
-  reducer: {},
+  reducer: { snsSlice },
 });
 
 export default store;
