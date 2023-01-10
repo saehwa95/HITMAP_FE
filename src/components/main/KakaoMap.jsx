@@ -3,8 +3,8 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 const KakaoMap = ({ searchPlace }) => {
   const { kakao } = window;
+  const markers = [];
   const [info, setInfo] = useState();
-  const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();
   const [state, setState] = useState({
     center: {
@@ -15,45 +15,55 @@ const KakaoMap = ({ searchPlace }) => {
     isLoading: true,
   });
 
-  useEffect(() => {
-    if (navigator.geolocation) {
-      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setState((prev) => ({
-            ...prev,
-            center: {
-              lat: position.coords.latitude, // 위도
-              lng: position.coords.longitude, // 경도
-            },
-            isLoading: false,
-          }));
-        },
-        (err) => {
-          setState((prev) => ({
-            ...prev,
-            errMsg: err.message,
-            isLoading: false,
-          }));
-        }
-      );
-    } else {
-      // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-      setState((prev) => ({
-        ...prev,
-        errMsg: "geolocation을 사용할수 없어요..",
-        isLoading: false,
-      }));
-    }
+  if (navigator.geolocation) {
+    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setState((prev) => ({
+          ...prev,
+          center: {
+            lat: position.coords.latitude, // 위도
+            lng: position.coords.longitude, // 경도
+          },
+          isLoading: false,
+        }));
+      },
+      (err) => {
+        setState((prev) => ({
+          ...prev,
+          errMsg: err.message,
+          isLoading: false,
+        }));
+      }
+    );
+  } else {
+    // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+    setState((prev) => ({
+      ...prev,
+      errMsg: "geolocation을 사용할수 없어요..",
+      isLoading: false,
+    }));
+  }
 
+  useEffect(() => {
     // 장소 검색 객체를 생성합니다
     const ps = new kakao.maps.services.Places();
 
-    // 키워드로 장소를 검색
-    ps.keywordSearch(searchPlace, placesSearchCB);
+    // 키워드로 장소를 검색합니다
+    searchPlaces();
+
+    // 키워드 검색을 요청하는 함수
+    function searchPlaces() {
+      const keyword = searchPlace;
+      if (!keyword.replace(/^\s+|\s+$/g, "")) {
+        return false;
+      }
+      // 장소검색 객체를 통해 키워드로 장소검색을 요청
+      ps.keywordSearch(searchPlace, placesSearchCB);
+    }
 
     //키워드 확인을 위한 콘솔
-    console.log(searchPlace);
+    // console.log(searchPlace);
 
     // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
     function placesSearchCB(data, status, _pagination) {
@@ -64,8 +74,8 @@ const KakaoMap = ({ searchPlace }) => {
           displayMarker(data[i]);
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
 
-          //위치 경도, 위도
-          console.log(data[i].y, data[i].x);
+          //경도, 위도
+          // console.log(data[i].y, data[i].x);
         }
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정
@@ -75,18 +85,19 @@ const KakaoMap = ({ searchPlace }) => {
 
     // 검색 결과 목록과 마커를 표출하는 함수입니다
     function displayMarker(place) {
-      const marker = new kakao.maps.Marker({
+      new kakao.maps.Marker({
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x),
       });
     }
   }, [
+    searchPlace,
     kakao.maps.LatLng,
     kakao.maps.LatLngBounds,
     kakao.maps.Marker,
     kakao.maps.services.Places,
     kakao.maps.services.Status.OK,
-    searchPlace,
+    map,
   ]);
 
   return (
