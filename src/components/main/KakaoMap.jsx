@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import myLocation from "../../asset/icon/myLocation.svg";
+import myLocationRed from "../../asset/icon/myLocationRed.svg";
+import small from "../../asset/icon/small.svg";
 
 const KakaoMap = ({ searchPlace }) => {
   const { kakao } = window;
   const markers = [];
-  const [info, setInfo] = useState();
   const [map, setMap] = useState();
   const [state, setState] = useState({
     center: {
@@ -75,7 +75,7 @@ const KakaoMap = ({ searchPlace }) => {
           displayMarker(data[i]);
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
           //경도, 위도
-          console.log(data[i].y, data[i].x);
+          // console.log(data[i].y, data[i].x);
         }
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정
         map.setBounds(bounds);
@@ -84,10 +84,21 @@ const KakaoMap = ({ searchPlace }) => {
 
     // 검색 결과 목록과 마커를 표출하는 함수입니다
     function displayMarker(place) {
+      const imageSrc = small;
+      const imageSize = new kakao.maps.Size(32, 40);
+      const imageOption = { offset: new kakao.maps.Point(17, 36) };
+
+      const markerImage = new kakao.maps.MarkerImage(
+        imageSrc,
+        imageSize,
+        imageOption
+      );
+      // console.log(place);
       // console.log(typeof place.x);
       let marker = new kakao.maps.Marker({
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x),
+        image: markerImage,
       });
 
       // 마커에 표시할 인포윈도우를 생성합니다
@@ -118,6 +129,9 @@ const KakaoMap = ({ searchPlace }) => {
     kakao.maps.CustomOverlay,
     kakao.maps.event,
     kakao.maps.InfoWindow,
+    kakao.maps.Point,
+    kakao.maps.MarkerImage,
+    kakao.maps.Size,
   ]);
 
   return (
@@ -132,12 +146,11 @@ const KakaoMap = ({ searchPlace }) => {
         level={3} // 지도의 확대 레벨
         onCreate={setMap}
       >
-        {/* 삼항 연산자로 처리 => 내 위치 , 검색했을때 내용 */}
         {!state.isLoading && (
           <MapMarker
             position={state.center}
             image={{
-              src: myLocation, // 마커이미지의 주소입니다
+              src: myLocationRed, // 마커이미지의 주소입니다
               size: {
                 width: 58,
                 height: 58,
@@ -155,7 +168,6 @@ const KakaoMap = ({ searchPlace }) => {
           <MapMarker
             key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
             position={state.center}
-            onClick={() => setInfo(marker)}
           ></MapMarker>
         ))}
       </Map>
