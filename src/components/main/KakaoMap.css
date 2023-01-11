@@ -1,0 +1,24 @@
+.info-title_div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  gap: 10px;
+  position: absolute;
+  width: 87px;
+  height: 30px;
+  border: 2px solid #006981;
+  border-radius: 100px;
+  background-color: #ffffff;
+  bottom: 0.5px;
+}
+
+.info-title_span {
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 150%;
+  color: #1f1f1f;
+}

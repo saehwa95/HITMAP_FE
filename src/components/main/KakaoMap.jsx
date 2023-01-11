@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import myLocationRed from "../../asset/icon/myLocationRed.svg";
 import small from "../../asset/icon/small.svg";
+import "./KakaoMap.css";
 
 const KakaoMap = ({ searchPlace }) => {
   const { kakao } = window;
@@ -101,9 +102,11 @@ const KakaoMap = ({ searchPlace }) => {
         image: markerImage,
       });
 
+      var iwContent = `<div class="info-title_div"><span class="info-title_span">${place.place_name}</span></div>`;
+
       // 마커에 표시할 인포윈도우를 생성합니다
       const infowindow = new kakao.maps.InfoWindow({
-        content: place.place_name, // 인포윈도우에 표시할 내용
+        content: iwContent
       });
 
       (function (marker, infowindow) {
