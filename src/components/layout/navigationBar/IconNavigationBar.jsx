@@ -41,6 +41,8 @@ const BottomNavigationBar = styled.div`
   border-top: 1px solid #eef2f6;
   box-shadow: 0px -4px 24px rgba(0, 0, 0, 0.08);
   border-radius: 24px 24px 0px 0px;
+  bottom: 0px;
+  z-index: 100;
   .icon-wrapper {
     display: flex;
     flex-direction: row;

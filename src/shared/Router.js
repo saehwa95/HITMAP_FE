@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import WeatherDetail from "../components/main/WeatherDetail";
 import Main from "../pages/main/Main";
 import MyPage from "../pages/mypage/MyPage";
 import PostList from "../pages/sns/PostList";
@@ -11,6 +12,7 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />} />
+        <Route path="/weather" element={<WeatherDetail />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/postlist" element={<PostList />} />
         <Route path="/chat" element={<Chat />} />
