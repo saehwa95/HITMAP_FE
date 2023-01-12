@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import myLocationRed from "../../asset/icon/myLocationRed.svg";
-import small from "../../asset/icon/small.svg";
+import { useNavigate } from "react-router-dom";
+import myLocationIcon from "../../asset/icon/myLocationIcon.svg";
+import pinMarker from "../../asset/icon/pinMarker.svg";
 import "./KakaoMap.css";
 
 const KakaoMap = ({ searchPlace }) => {
+  const navigate = useNavigate();
   const { kakao } = window;
   const markers = [];
   const [map, setMap] = useState();
@@ -65,7 +67,6 @@ const KakaoMap = ({ searchPlace }) => {
     }
 
     //키워드 확인을 위한 콘솔
-    // console.log(searchPlace);
 
     // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
     function placesSearchCB(data, status, _pagination) {
@@ -75,8 +76,6 @@ const KakaoMap = ({ searchPlace }) => {
         for (let i = 0; i < data.length; i++) {
           displayMarker(data[i]);
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-          //경도, 위도
-          // console.log(data[i].y, data[i].x);
         }
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정
         map.setBounds(bounds);
@@ -85,8 +84,8 @@ const KakaoMap = ({ searchPlace }) => {
 
     // 검색 결과 목록과 마커를 표출하는 함수입니다
     function displayMarker(place) {
-      const imageSrc = small;
-      const imageSize = new kakao.maps.Size(32, 40);
+      const imageSrc = pinMarker;
+      const imageSize = new kakao.maps.Size(40, 54);
       const imageOption = { offset: new kakao.maps.Point(17, 36) };
 
       const markerImage = new kakao.maps.MarkerImage(
@@ -94,8 +93,7 @@ const KakaoMap = ({ searchPlace }) => {
         imageSize,
         imageOption
       );
-      // console.log(place);
-      // console.log(typeof place.x);
+
       const marker = new kakao.maps.Marker({
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x),
@@ -106,37 +104,21 @@ const KakaoMap = ({ searchPlace }) => {
 
       const customOverlay = new kakao.maps.CustomOverlay({
         content: iwContent,
-        map: map,
+        map: null,
         position: new kakao.maps.LatLng(place.y, place.x),
       }); // 커스텀 오버레이 생성
-      customOverlay.setMap(map);
 
-      kakao.maps.event.addListener(marker, 'mouseover', function(){
-        customOverlay.open(map,marker)
-      })
+      kakao.maps.event.addListener(marker, "mouseover", function () {
+        customOverlay.setMap(map);
+      });
 
-      // if () {
-      //   kakao.maps.event.addListener(marker, "mouseover", function () {
-      //     customOverlay.open(map, marker);
-      //   });
-      // }
+      kakao.maps.event.addListener(marker, "mouseout", function () {
+        customOverlay.setMap(null);
+      });
 
-      // // 마커에 표시할 인포윈도우를 생성합니다
-      // const infowindow = new kakao.maps.InfoWindow({
-      //   content: iwContent,
-      // });
-
-      // (function (marker, infowindow) {
-      //   // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다
-      //   kakao.maps.event.addListener(marker, "mouseover", function () {
-      //     infowindow.open(map, marker);
-      //   });
-
-      //   // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
-      //   kakao.maps.event.addListener(marker, "mouseout", function () {
-      //     infowindow.close();
-      //   });
-      // })(marker, infowindow);
+      kakao.maps.event.addListener(marker, "click", function () {
+        navigate(`/weather?lat=${place.y}&lon${place.x}`);
+      });
     }
   }, [
     searchPlace,
@@ -152,6 +134,7 @@ const KakaoMap = ({ searchPlace }) => {
     kakao.maps.Point,
     kakao.maps.MarkerImage,
     kakao.maps.Size,
+    navigate,
   ]);
 
   return (
@@ -170,7 +153,7 @@ const KakaoMap = ({ searchPlace }) => {
           <MapMarker
             position={state.center}
             image={{
-              src: myLocationRed, // 마커이미지의 주소입니다
+              src: myLocationIcon, // 마커이미지의 주소입니다
               size: {
                 width: 58,
                 height: 58,

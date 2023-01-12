@@ -1,17 +1,15 @@
 .info-title_div {
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
   padding: 6px 12px;
-  gap: 10px;
   position: absolute;
-  width: 87px;
-  height: 30px;
   border: 2px solid #006981;
-  border-radius: 100px;
+  border-radius: 30px;
   background-color: #ffffff;
-  bottom: 0.5px;
+  top: -87px;
+  left: -60px;
+  overflow: hidden; /* 일단 숨겨놓을 건데 몇자 이상이면 ... 로 바뀌에 가면 좋을듯 */
 }
 
 .info-title_span {
@@ -19,6 +17,13 @@
   font-style: normal;
   font-weight: 700;
   font-size: 12px;
-  line-height: 150%;
   color: #1f1f1f;
+}
+
+.info-title_null {
+  display: none;
+}
+
+.hidden {
+  display: none !important;
 }
