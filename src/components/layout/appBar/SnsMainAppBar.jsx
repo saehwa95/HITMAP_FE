@@ -1,12 +1,21 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import writeIcon from "../../../asset/icon/writeIcon.svg";
 
 const SnsMainAppBar = () => {
+  const navigate = useNavigate();
+
   return (
     <StSnsMainAppBarContainer>
       <div>커뮤니티</div>
-      <img src={writeIcon} alt="글작성아이콘" />
+      <img
+        src={writeIcon}
+        alt="글작성아이콘"
+        onClick={() => {
+          navigate("/create");
+        }}
+      />
     </StSnsMainAppBarContainer>
   );
 };
