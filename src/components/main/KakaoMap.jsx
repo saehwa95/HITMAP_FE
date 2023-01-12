@@ -117,7 +117,7 @@ const KakaoMap = ({ searchPlace }) => {
       });
 
       kakao.maps.event.addListener(marker, "click", function () {
-        navigate(`/weather?lat=${place.y}&lon${place.x}`);
+        navigate(`/weather?lat=${place.y}&lon=${place.x}`);
       });
     }
   }, [
