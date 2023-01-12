@@ -6,6 +6,7 @@ import MyPage from "../pages/mypage/MyPage";
 import PostList from "../pages/sns/PostList";
 import Chat from "../pages/socket/Chat";
 import SignUp from "../pages/user/SignUp";
+import Login from "../pages/user/Login";
 
 const Router = () => {
   return (
@@ -18,6 +19,7 @@ const Router = () => {
         <Route path="/chat" element={<Chat />} />
 
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
