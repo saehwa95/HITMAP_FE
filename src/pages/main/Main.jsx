@@ -1,13 +1,13 @@
 import React from "react";
-import StatusBar from "../../components/layout/appBar/StatusBar";
+// import StatusBar from "../../components/layout/appBar/StatusBar";
 import IconNavigationBar from "../../components/layout/navigationBar/IconNavigationBar";
-import KakaoMap from "../../components/main/KakaoMap";
+import Search from "../../components/main/Search";
 
 const Main = () => {
   return (
     <div>
-      <StatusBar />
-      <KakaoMap />
+      {/* <StatusBar /> */}
+      <Search />
       <IconNavigationBar />
     </div>
   );
