@@ -96,30 +96,47 @@ const KakaoMap = ({ searchPlace }) => {
       );
       // console.log(place);
       // console.log(typeof place.x);
-      let marker = new kakao.maps.Marker({
+      const marker = new kakao.maps.Marker({
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x),
         image: markerImage,
       });
 
-      var iwContent = `<div class="info-title_div"><span class="info-title_span">${place.place_name}</span></div>`;
+      const iwContent = `<div class="info-title_div"><span class="info-title_span">${place.place_name}</span><div class="close" onclick="closeOverlay()" title="닫기"></div></div>`;
 
-      // 마커에 표시할 인포윈도우를 생성합니다
-      const infowindow = new kakao.maps.InfoWindow({
-        content: iwContent
-      });
+      const customOverlay = new kakao.maps.CustomOverlay({
+        content: iwContent,
+        map: map,
+        position: new kakao.maps.LatLng(place.y, place.x),
+      }); // 커스텀 오버레이 생성
+      customOverlay.setMap(map);
 
-      (function (marker, infowindow) {
-        // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다
-        kakao.maps.event.addListener(marker, "mouseover", function () {
-          infowindow.open(map, marker);
-        });
+      kakao.maps.event.addListener(marker, 'mouseover', function(){
+        customOverlay.open(map,marker)
+      })
 
-        // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
-        kakao.maps.event.addListener(marker, "mouseout", function () {
-          infowindow.close();
-        });
-      })(marker, infowindow);
+      // if () {
+      //   kakao.maps.event.addListener(marker, "mouseover", function () {
+      //     customOverlay.open(map, marker);
+      //   });
+      // }
+
+      // // 마커에 표시할 인포윈도우를 생성합니다
+      // const infowindow = new kakao.maps.InfoWindow({
+      //   content: iwContent,
+      // });
+
+      // (function (marker, infowindow) {
+      //   // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다
+      //   kakao.maps.event.addListener(marker, "mouseover", function () {
+      //     infowindow.open(map, marker);
+      //   });
+
+      //   // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
+      //   kakao.maps.event.addListener(marker, "mouseout", function () {
+      //     infowindow.close();
+      //   });
+      // })(marker, infowindow);
     }
   }, [
     searchPlace,
@@ -168,10 +185,12 @@ const KakaoMap = ({ searchPlace }) => {
           />
         )}
         {markers.map((marker) => (
-          <MapMarker
-            key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
-            position={state.center}
-          ></MapMarker>
+          <>
+            <MapMarker
+              key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
+              position={state.center}
+            ></MapMarker>
+          </>
         ))}
       </Map>
     </>
