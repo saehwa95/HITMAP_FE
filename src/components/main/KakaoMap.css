@@ -7,9 +7,9 @@
   border: 2px solid #006981;
   border-radius: 30px;
   background-color: #ffffff;
-  top: -87px;
-  left: -60px;
-  overflow: hidden; /* 일단 숨겨놓을 건데 몇자 이상이면 ... 로 바뀌에 가면 좋을듯 */
+  top: -57px;
+  left: 5px;
+  transform: translate(-50%, -50%);
 }
 
 .info-title_span {

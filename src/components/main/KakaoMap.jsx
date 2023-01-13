@@ -66,8 +66,6 @@ const KakaoMap = ({ searchPlace }) => {
       ps.keywordSearch(searchPlace, placesSearchCB);
     }
 
-    //키워드 확인을 위한 콘솔
-
     // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
     function placesSearchCB(data, status, _pagination) {
       if (status === kakao.maps.services.Status.OK) {
@@ -82,7 +80,7 @@ const KakaoMap = ({ searchPlace }) => {
       }
     }
 
-    // 검색 결과 목록과 마커를 표출하는 함수입니다
+    // 검색 결과 마커를 표출하는 함수입니다
     function displayMarker(place) {
       const imageSrc = pinMarker;
       const imageSize = new kakao.maps.Size(40, 54);
@@ -100,7 +98,7 @@ const KakaoMap = ({ searchPlace }) => {
         image: markerImage,
       });
 
-      const iwContent = `<div class="info-title_div"><span class="info-title_span">${place.place_name}</span><div class="close" onclick="closeOverlay()" title="닫기"></div></div>`;
+      const iwContent = `<div class="info-title_div"><span class="info-title_span">${place.place_name}</span></div>`;
 
       const customOverlay = new kakao.maps.CustomOverlay({
         content: iwContent,
@@ -116,6 +114,7 @@ const KakaoMap = ({ searchPlace }) => {
         customOverlay.setMap(null);
       });
 
+      // 마커 클릭 시 위도 경도에 맞는 상세 페이지 이동
       kakao.maps.event.addListener(marker, "click", function () {
         navigate(`/weather?lat=${place.y}&lon=${place.x}`);
       });
