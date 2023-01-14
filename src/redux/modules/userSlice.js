@@ -14,14 +14,14 @@ export const __postSignin = createAsyncThunk(
   "userSlice/__postSignin",
   async (arg, thunkAPI) => {
     try {
-      const signInData = await axios.post(`/user/login`, arg);
+      const signInData = await instance.post(`/user/login`, arg);
       /**************************************************
        * response의 '응답' 탭의 access_token을            *
        * "auth"라는 이름으로                              *
        * 쿠키에 저장해주는 setCookie                       *
        **************************************************/
       setCookie("auth", signInData.data.access_token);
-      return thunkAPI.fulfillWithValue(signInData.data.result);
+      return thunkAPI.fulfillWithValue(signInData?.data.message);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -86,6 +86,27 @@ export const __nickItem = createAsyncThunk(
       } else {
         return thunkAPI.rejectWithValue(401);
       }
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+
+export const __logOut = createAsyncThunk(
+  "userSlice/__logOut",
+  async (payload, thunkAPI) => {
+    try {
+      const logout = await instance.post(`user/logout`, {
+        // withCredentials: true,
+      });
+      // console.log("최종", logout);
+
+      // if (logout.status === 204) {
+      //   console.log(logout);
+      //   return thunkAPI.fulfillWithValue(logout.message);
+      // } else {
+      //   return thunkAPI.rejectWithValue(400);
+      // }
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
     }

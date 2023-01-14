@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import closeBtnIcon from "../../asset/icon/closeBtnIcon.svg";
@@ -19,6 +19,16 @@ const SignUp = () => {
   const formData = new FormData();
   const imgRef = useRef();
 
+  const [emailValid, SetEmailValid] = useState(false);
+  const [nicklValid, SetNickValid] = useState(false);
+
+  const [notAllow, setNotAllow] = useState(true);
+  //오류메시지 상태저장
+  const [nickMessage, setNickeMessage] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+  //유효성 검사
+  const [isName, setIsName] = useState(false);
+  const [isEmail, setIsEmail] = useState(false);
   //이미지 formData에 넣기
   //이미지 프리뷰
   const saveFileImage = (e) => {
@@ -48,27 +58,71 @@ const SignUp = () => {
   const onEmailChangeHandler = (e) => {
     e.preventDefault();
     setEmail(e.target.value);
+    const regex =
+      // eslint-disable-next-line
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+    if (regex.test(email)) {
+      SetEmailValid(true);
+    } else {
+      SetEmailValid(false);
+    }
   };
+
   const onemail = (e) => {
     e.preventDefault();
     const payload = {
       email: email,
     };
-    dispatch(__emailItem(payload));
+
+    dispatch(__emailItem(payload)).then((res) => {
+      console.log("res:", res);
+      if (res.meta.requestStatus === "fulfilled") {
+        setEmailMessage("사용 가능한 이메일 입니다.");
+      } else if (res.meta.requestStatus === "rejected") {
+        setEmailMessage("이미 사용중인 이메일입니다.");
+      } else {
+        setEmailMessage("이메일 형식이 바르지 않습니다.");
+      }
+    });
   };
 
   //nickname 검사
   const onNickChangeHandler = (e) => {
     e.preventDefault();
     setNickname(e.target.value);
+    const regex =
+      // eslint-disable-next-line
+      /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]{2,10}$/;
+    if (regex.test(nickname)) {
+      SetNickValid(true);
+    } else {
+      SetNickValid(false);
+    }
   };
   const onnick = (e) => {
     e.preventDefault();
     const payload = {
       nickname: nickname,
     };
-    dispatch(__nickItem(payload));
+    dispatch(__nickItem(payload)).then((res) => {
+      console.log("res:", res);
+      if (res.meta.requestStatus === "fulfilled") {
+        setNickeMessage("사용 가능한 닉네임입니다.");
+      } else if (res.meta.requestStatus === "rejected") {
+        setNickeMessage("이미 사용중인 닉네임입니다.");
+      } else {
+        setNickeMessage("닉네임 형식이 바르지 않습니다.");
+      }
+    });
   };
+
+  useEffect(() => {
+    if (emailValid) {
+      setNotAllow(false);
+      return;
+    }
+    setNotAllow(true);
+  }, [emailValid]);
 
   // 프리뷰 이미지 삭제
   //  const deleteFileImage = () => {
@@ -107,14 +161,21 @@ const SignUp = () => {
           <StNickdiv>
             <StText>닉네임</StText>
             <StNIckName>
-              <StInput
-                value={nickname}
-                onChange={onNickChangeHandler}
-                placeholder="닉네임을 입력해주세요"
-              />
+              <StErrMsg>
+                <StInput
+                  value={nickname}
+                  onChange={onNickChangeHandler}
+                  placeholder="닉네임을 입력해주세요"
+                />
+                {nicklValid && <Stspan>{nickMessage}</Stspan>}
 
+                {!nicklValid && nickname.length === 0 && (
+                  <Stspan>닉네임을 입력해주세요</Stspan>
+                )}
+              </StErrMsg>
               <StBtn src={duplicateIcon} onClick={onnick} />
             </StNIckName>
+
             <StInputTxt>
               닉네임은 한글, 영문, 숫자만 가능하며 2자 이상 10자 이하로
               입력해주세요
@@ -123,12 +184,24 @@ const SignUp = () => {
           <StEmaildiv>
             <StText>이메일</StText>
             <StNIckName>
-              <StInput
-                value={email}
-                type="email"
-                placeholder="이메일"
-                onChange={onEmailChangeHandler}
-              />
+              <StEmailField>
+                <StErrMsg>
+                  <StInput
+                    value={email}
+                    type="email"
+                    placeholder="이메일"
+                    onChange={onEmailChangeHandler}
+                  />
+                  {emailValid && <Stspan>{emailMessage}</Stspan>}
+                  {!emailValid && email.length > 1 && (
+                    <Stspan>이메일 형식이 바르지 않습니다.</Stspan>
+                  )}
+                  {!emailValid && email.length === 0 && (
+                    <Stspan>이메일을 입력해주세요</Stspan>
+                  )}
+                </StErrMsg>
+              </StEmailField>
+
               <StBtn src={duplicateIcon} onClick={onemail} />
             </StNIckName>
           </StEmaildiv>
@@ -154,7 +227,10 @@ const SignUp = () => {
               16자 이하로 입력해주세요
             </StInputTxt>
             <Signupcontain>
-              <SignBtn onClick={(e) => submitOnclickHandler(e)}>
+              <SignBtn
+                onClick={(e) => submitOnclickHandler(e)}
+                disabled={notAllow}
+              >
                 <StSignupBtn>회원가입</StSignupBtn>
               </SignBtn>
             </Signupcontain>
@@ -281,7 +357,7 @@ const StNickdiv = styled.div`
   gap: 12px;
 
   width: 375px;
-  height: 165px;
+  height: 191px;
 
   /* Gray/White */
 
@@ -324,7 +400,7 @@ const StNIckName = styled.div`
   gap: 10px;
 
   width: 343px;
-  height: 48px;
+  height: 74px;
 `;
 
 const StPsInput = styled.input`
@@ -392,7 +468,7 @@ const StEmaildiv = styled.div`
   gap: 8px;
 
   width: 375px;
-  height: 107px;
+  height: 137px;
 
   /* Gray/White */
 
@@ -418,7 +494,7 @@ const Signupcontain = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
+  top: 95%;
   gap: 10px;
 
   position: absolute;
@@ -439,16 +515,21 @@ const SignBtn = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 8px 15px;
+  padding: 8px 149px;
   gap: 10px;
 
   width: 343px;
   height: 48px;
 
-  /* Gray/Gray_400 */
+  /* Primary/Primary */
 
-  background: #c2c2c2;
+  background: #006981;
   border-radius: 8px;
+
+  :disabled {
+    background: #c2c2c2;
+    border-radius: 8px;
+  }
 `;
 
 const Stpwinputcontainer = styled.div`
@@ -476,3 +557,29 @@ const StSignupBtn = styled.span`
 
   color: #ffffff;
 `;
+
+const Stspan = styled.span`
+  position: absolute;
+  width: 250px;
+  height: 19px;
+
+  /* Subtitle/Bold/16 */
+
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: flex-end;
+  color: red;
+`;
+
+const StEmailField = styled.div`
+  width: 243px;
+  height: 74px;
+`;
+
+const StErrMsg = styled.div``;

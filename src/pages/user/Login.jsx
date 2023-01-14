@@ -1,17 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { __postSignin } from "../../redux/modules/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { __postSignin, __logOut } from "../../redux/modules/userSlice";
 
 const Login = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userPw, setUserPw] = useState("");
   const dispatch = useDispatch();
 
+  const logoutOnclickHandler = (e) => {
+    e.preventDefault();
+
+    dispatch(__logOut());
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(__postSignin({ email: userEmail, password: userPw }));
   };
+
   return (
     <>
       <StLoginContainer>
@@ -33,6 +40,9 @@ const Login = () => {
           />
         </StSigninInput>
         <StLoginBtn onClick={submitHandler}>로그인</StLoginBtn>
+        <StLogoutBtn onClick={(e) => logoutOnclickHandler(e)}>
+          로그아웃
+        </StLogoutBtn>
       </StSignInContainer>
     </>
   );
@@ -131,4 +141,11 @@ const StLoginBtn = styled.button`
   cursor: pointer;
 
   color: #ffffff;
+`;
+
+const StLogoutBtn = styled.button`
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 80%;
 `;
