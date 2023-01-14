@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 import { instance } from "../../redux/api/instance";
+import { setCookie } from "../../shared/cookie";
 
 const initialState = {
   userinfo: {},
@@ -12,8 +14,13 @@ export const __postSignin = createAsyncThunk(
   "userSlice/__postSignin",
   async (arg, thunkAPI) => {
     try {
-      const signInData = await instance.post(`/user/login`, arg);
-
+      const signInData = await axios.post(`/user/login`, arg);
+      /**************************************************
+       * response의 '응답' 탭의 access_token을            *
+       * "auth"라는 이름으로                              *
+       * 쿠키에 저장해주는 setCookie                       *
+       **************************************************/
+      setCookie("auth", signInData.data.access_token);
       return thunkAPI.fulfillWithValue(signInData.data.result);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
