@@ -2,29 +2,51 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import backIcon from "../../../asset/icon/backIcon.svg";
+import StatusBar from "./StatusBar";
+import backButton from "../../../asset/button/backButton.svg";
 
-const SnsMainAppBar = () => {
+const SnsDetailAppBar = () => {
   const navigate = useNavigate();
 
   return (
-    <StSnsMainAppBarContainer>
-      <img
-        src={backIcon}
-        alt="글작성아이콘"
-        onClick={() => {
-          navigate("/postlist");
-        }}
-      />
-      <div>작성자 닉네임 들어갈 자리</div>
-    </StSnsMainAppBarContainer>
+    <StSnsDetailAppBarContainer>
+      <StatusBar />
+      <StBackIconBackGround>
+        <StBackIconImg
+          src={backButton}
+          alt="뒤로가기 아이콘"
+          onClick={() => {
+            navigate("/postlist");
+          }}
+        />
+      </StBackIconBackGround>
+    </StSnsDetailAppBarContainer>
   );
 };
 
-export default SnsMainAppBar;
+export default SnsDetailAppBar;
 
-const StSnsMainAppBarContainer = styled.div`
+const StSnsDetailAppBarContainer = styled.div`
   border: 1px solid red;
+
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  flex-direction: column;
+  width: 375px;
+  height: 108px;
+  z-index: 100;
+`;
+
+const StBackIconBackGround = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+const StBackIconImg = styled.img`
+  width: 48px;
+  height: 48px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-left: 16px;
 `;
