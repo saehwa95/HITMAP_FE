@@ -2,7 +2,6 @@
   "name": "hit-map",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://koyunhyeok.shop",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
     "@tanstack/react-query": "^4.22.0",
