@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { instance } from "../../redux/api/instance";
-import { setCookie } from "../../shared/cookie";
+import { deleteCookie, setCookie } from "../../shared/cookie";
 
 const initialState = {
   userinfo: {},
@@ -96,9 +96,9 @@ export const __logOut = createAsyncThunk(
   "userSlice/__logOut",
   async (payload, thunkAPI) => {
     try {
-      const logout = await instance.post(`user/logout`, {
-        // withCredentials: true,
-      });
+      const logout = await instance.post(`user/logout`, {});
+      deleteCookie("auth");
+
       // console.log("최종", logout);
 
       // if (logout.status === 204) {
