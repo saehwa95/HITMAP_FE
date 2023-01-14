@@ -1,8 +1,17 @@
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
+import { instance } from "../../../redux/api/instance";
 
 //댓글 하나 컴포넌트
 const SnsComment = () => {
+  // 유저 정보 불러오는 fetchAPI와 data
+  // const fetchAPI = () => {
+  //   return instance.get("/me");
+  // };
+  // const { data, isLoading, error } = useQuery(["userInfo"], fetchAPI);
+  // console.log(data.data);
+
   return (
     <StSnsCommentContainer>
       <StSnsCommentHeader>
