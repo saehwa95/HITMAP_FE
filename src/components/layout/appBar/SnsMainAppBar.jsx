@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import writeIcon from "../../../asset/icon/writeIcon.svg";
+import writeButton from "../../../asset/button/writeButton.svg";
 import { getCookie } from "../../../shared/cookie";
 import StatusBar from "./StatusBar";
 
@@ -16,7 +16,7 @@ const SnsMainAppBar = () => {
       <StSnsMainAppBarBox>
         <StSnsMainAppBarTitle>커뮤니티</StSnsMainAppBarTitle>
         <StSnsMainAppBarIcon
-          src={writeIcon}
+          src={writeButton}
           alt="글작성아이콘"
           onClick={() => {
             authJudge
@@ -32,7 +32,6 @@ const SnsMainAppBar = () => {
 export default SnsMainAppBar;
 
 const StSnsMainAppBarContainer = styled.div`
-  border: 1px solid red;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -45,7 +44,7 @@ const StSnsMainAppBarBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 16px 8px 16px;
+  padding: 8px 16px;
 `;
 
 const StSnsMainAppBarTitle = styled.label`
@@ -55,9 +54,9 @@ const StSnsMainAppBarTitle = styled.label`
 `;
 
 const StSnsMainAppBarIcon = styled.img`
-  width: 24px;
-  height: 24px;
-  padding: 12px;
+  width: 48px;
+  height: 48px;
+  /* margin: 12px; */
   background: #006981;
   border-radius: 16px;
 `;

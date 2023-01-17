@@ -3,55 +3,38 @@ import { useMutation } from "@tanstack/react-query";
 import styled from "styled-components";
 import { instance } from "../../../redux/api/instance";
 import SnsCreateAppBar from "../../layout/appBar/SnsCreateAppBar";
-import deleteButton from "../../../asset/button/deleteButton.svg";
-import { getCookie } from "../../../shared/cookie";
+import { useNavigate } from "react-router-dom";
 
-//얘는 모달일까 바텀시트일까, 일단 page로 만드는 폴더구조이긴한데..
 const SnsCreate = () => {
+  const navigate = useNavigate();
   const [input, setInput] = useState({ content: "", fishName: "" });
-  const [imageFile, setImageFile] = useState(null);
-  const [showImages, setShowImages] = useState([]);
+  const [postImages, setPostImages] = useState([]); // 서버로 보낼 이미지 데이터
 
   const onChangeTextHandler = (e) => {
     const { value, name } = e.target;
     setInput({ ...input, [name]: value });
-    console.log(input.content, input.fishName);
   };
 
-  //이미지 상대경로 저장
-  const handleAddImages = (event) => {
-    setImageFile(event.target.files);
-    const imageLists = event.target.files;
-    let imageUrlLists = [...showImages];
-
-    for (let i = 0; i < imageLists.length; i++) {
-      const currentImageUrl = URL.createObjectURL(imageLists[i]);
-      imageUrlLists.push(currentImageUrl);
-    }
-
-    if (imageUrlLists.length > 5) {
-      imageUrlLists = imageUrlLists.slice(0, 5);
-    }
-
-    setShowImages(imageUrlLists);
-  };
-  //미리보기삭제버튼 클릭시 이미지 삭제
-  const handleDeleteImage = (id) => {
-    setShowImages(showImages.filter((_, index) => index !== id));
+  const onChangImages = (e) => {
+    setPostImages(e.target.files);
   };
 
-  // const formData = new FormData();
-  // formData.append("images", imageFile[0])
-  // formData.append("images", imageFile[1])
-  // formData.append("images", imageFile[2])
-  // formData.append("images", imageFile[3])
-  // formData.append("images", imageFile[4])
-  // formData.append("content", input.content)
-  // formData.append("fishName", input.fishName)
+  const formData = new FormData();
+  formData.append("content", input.content);
+  formData.append("fishName", input.fishName);
+  Array.from(postImages).forEach((item) => {
+    formData.append("image", item);
+  });
 
-  // const {status} = useMutation(()=> {
-  //   return instance.post('/post', formData)
-  // })
+  const postMain = useMutation({
+    mutationFn: async (formData) => {
+      return await instance.post("/post", formData);
+    },
+    onSuccess: () => {
+      alert("게시글 작성 완료");
+      navigate("/postlist");
+    },
+  });
 
   return (
     <div>
@@ -60,26 +43,28 @@ const SnsCreate = () => {
         <StImageBox>
           <StImageLabel>사진 선택 (최대 5장)</StImageLabel>
           <StImageFileBox>
-            <StImageLabelButton htmlFor="input-file" onChange={handleAddImages}>
+            <StImageLabelButton htmlFor="input-file">
               +
               <input
                 type="file"
                 id="input-file"
+                accept="image/*"
                 style={{ display: "none" }}
+                onChange={onChangImages}
                 multiple
               />
             </StImageLabelButton>
             <StPreviewImgContainer>
-              {showImages.map((image, id) => (
-                <StPreviewImgBox key={id}>
-                  <StPreviewImg src={image} alt={`${image}-${id}`} />
-                  <StPreviewDeleteButton
-                    alt="미리보기삭제버튼"
-                    src={deleteButton}
-                    onClick={() => handleDeleteImage(id)}
-                  ></StPreviewDeleteButton>
-                </StPreviewImgBox>
-              ))}
+              {Array.from(postImages).map((item) => {
+                return (
+                  <div key={item.lastModified}>
+                    <StImgPreview
+                      alt="미리보기이미지"
+                      src={item ? URL.createObjectURL(item) : null}
+                    />
+                  </div>
+                );
+              })}
             </StPreviewImgContainer>
           </StImageFileBox>
         </StImageBox>
@@ -102,7 +87,15 @@ const SnsCreate = () => {
             onChange={onChangeTextHandler}
           />
         </StFishNameBox>
-        <StButton type="submit">작성하기</StButton>
+        <StButton
+          type="submit"
+          onClick={(e) => {
+            e.preventDefault();
+            postMain.mutate(formData);
+          }}
+        >
+          작성하기
+        </StButton>
       </StCreateContainer>
     </div>
   );
@@ -123,12 +116,12 @@ const StPreviewImgContainer = styled.div`
   border: 1px solid red;
 `;
 
-const StPreviewImgBox = styled.div``;
-
-const StPreviewDeleteButton = styled.div``;
+const StImgPreview = styled.img`
+  width: 100px;
+  height: 100px;
+`;
 
 const StImageBox = styled.div`
-  /* border: 1px solid blue; */
   margin: 0 16px;
   padding: 16px 0 16px 0;
 `;
@@ -159,13 +152,6 @@ const StImageLabelButton = styled.label`
   color: white;
 `;
 
-const StPreviewImg = styled.img`
-  /* padding-top: 5px; */
-  border-radius: 10px;
-  width: 84px;
-  height: 84px;
-`;
-
 const StContentInputBox = styled.div`
   margin: 0 16px 0 16px;
   padding: 16px 0 16px 0;
@@ -186,7 +172,6 @@ const StFishNameBox = styled.div`
   border: 1px solid red;
   display: flex;
   flex-direction: column;
-  /* width: 343px; */
   padding: 16px 16px 100px 16px;
   height: 111px;
   gap: 12px;

@@ -18,7 +18,7 @@ const SnsCreateAppBar = () => {
             navigate("/postlist");
           }}
         />
-        <StAppBarTitle>글쓰기</StAppBarTitle>
+        <StAppBarTitle>게시글 작성</StAppBarTitle>
       </StSnsCreateAppBarBox>
     </StSnsCreateAppBarContainer>
   );
@@ -27,7 +27,6 @@ const SnsCreateAppBar = () => {
 export default SnsCreateAppBar;
 
 const StSnsCreateAppBarContainer = styled.div`
-  border: 1px solid red;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -40,20 +39,20 @@ const StSnsCreateAppBarBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 16px 8px 16px;
+  padding: 8px 0;
 `;
 
 const StSnsCreateAppBarIcon = styled.img`
   width: 24px;
   height: 24px;
   padding: 12px;
+  margin-left: 16px;
   background: #dfdfdf;
   border-radius: 16px;
 `;
 
 const StAppBarTitle = styled.div`
-  border: 1px solid blue;
-  /* margin: 0 auto; */
+  margin-right: 126px;
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
