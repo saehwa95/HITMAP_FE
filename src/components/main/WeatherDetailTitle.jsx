@@ -32,14 +32,9 @@ const WeatherDetailInfo = () => {
   );
 };
 
-export default WeatherDetailInfo;
+export default React.memo(WeatherDetailInfo);
 
 const WeatherDetailTitleWrapper = styled.div`
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  float: left;
-  position: absolute;
   width: 64px;
   height: 688px;
   background-color: #f6f6f6;

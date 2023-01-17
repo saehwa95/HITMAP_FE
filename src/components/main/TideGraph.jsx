@@ -1,9 +1,7 @@
 import React from "react";
 // import ApexCharts from "apexcharts";
 
-const TideGraph = ({ weatherInfo }) => {
-  const weatherData = weatherInfo?.data?.data;
-
+const TideGraph = ({ weatherData }) => {
   return (
     <>
       {/* <ApexCharts /> */}
@@ -12,4 +10,4 @@ const TideGraph = ({ weatherInfo }) => {
   );
 };
 
-export default TideGraph;
+export default React.memo(TideGraph);

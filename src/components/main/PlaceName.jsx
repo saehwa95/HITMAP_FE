@@ -4,9 +4,7 @@ import StatusBar from "../layout/appBar/StatusBar";
 import smallBackButton from "../../asset/button/smallBackButton.svg";
 import { Link } from "react-router-dom";
 
-const PlaceName = ({ weatherInfo }) => {
-  const placeName = weatherInfo?.data?.data.place_name;
-
+const PlaceName = ({ placeName }) => {
   return (
     <>
       <StatusBar />
@@ -24,7 +22,7 @@ const PlaceName = ({ weatherInfo }) => {
   );
 };
 
-export default PlaceName;
+export default React.memo(PlaceName);
 
 const Name = styled.div`
   display: flex;

@@ -1,21 +1,33 @@
 import React from "react";
 import styled from "styled-components";
 import WeatherDetailInfo from "../../elements/WeatherDetailInfo";
-import TideGraph from "./TideGraph";
 import WeatherDetailTitle from "./WeatherDetailTitle";
 
-const WeatherDetail = ({ weatherInfo }) => {
+const WeatherDetail = ({ weatherData }) => {
   return (
-    <WeatherContainer>
-      <WeatherDetailTitle />
-      <WeatherDetailInfo weatherInfo={weatherInfo} />
-      <TideGraph weatherInfo={weatherInfo} />
-    </WeatherContainer>
+    <>
+      <TableWrapper>
+        <WeatherDetailTitle />
+        <ScrollView>
+          <WeatherDetailInfo weatherData={weatherData} />
+        </ScrollView>
+      </TableWrapper>
+    </>
   );
 };
 
-export default WeatherDetail;
+export default React.memo(WeatherDetail);
 
-const WeatherContainer = styled.div`
-display:flex;
+const TableWrapper = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+const ScrollView = styled.div`
+  display: flex;
+  width: 311px;
+  /* overflow-x: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  } */
 `;

@@ -21,13 +21,15 @@ const Weather = () => {
   };
 
   const weatherInfo = useQuery(["weatherdata"], WeatherfetchAPI);
+  const placeName = weatherInfo?.data?.data.place_name;
+  const weatherData = weatherInfo?.data?.data;
 
   return (
     <>
-      <PlaceName weatherInfo={weatherInfo} />
-      <WeatherDetail weatherInfo={weatherInfo} />
+      <PlaceName placeName={placeName} />
+      <WeatherDetail weatherData={weatherData} />
     </>
   );
 };
 
-export default Weather;
+export default React.memo(Weather);
