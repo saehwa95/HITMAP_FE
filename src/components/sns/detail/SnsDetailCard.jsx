@@ -15,21 +15,17 @@ const SnsDetailCard = () => {
     return instance.get(`/post/${postId}`);
   };
 
-  const { data, isLoading, isError, error } = useQuery(
-    ["detailPost"],
-    fetchAPI
-  );
+  const { data, isLoading } = useQuery(["detailPost"], fetchAPI);
   const detailData = data?.data.post;
-  // console.log(detailData);
 
   if (isLoading) {
     return <h2>Loading....</h2>;
   }
   //get한 서버 데이터 중 created_at을 정해진 디자인에 쓰기 위해 시간 포맷 바꿔주는 변수
-  const timeForCard = detailData.created_at.split("T")[0].replace(/-/gi, ".");
+  const timeForCard = detailData.created_at.slice(0, 16).replace(/-/gi, ".");
 
   return (
-    <div>
+    <StDetailCardContainer>
       <StCardHeader>
         <div>
           <StCardHeaderProfileImg
@@ -65,14 +61,16 @@ const SnsDetailCard = () => {
       </div>
       <SnsCommentList comments={detailData.comments} />
       <WriteCommentBar />
-    </div>
+    </StDetailCardContainer>
   );
 };
 
 export default SnsDetailCard;
 
+const StDetailCardContainer = styled.div``;
+
 const StCardHeader = styled.div`
-  border: 1px solid orange;
+  margin: 16px;
   display: flex;
   flex-direction: row;
   padding: 0px 16px;
@@ -98,19 +96,22 @@ const StCardHeaderCreateTime = styled.div`
 `;
 
 const StCardImgBox = styled.div`
-  border: 1px solid brown;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
 const StCardImg = styled.img`
-  width: 350px;
-  height: 350px;
+  width: 343px;
+  height: 343px;
 `;
 
 const StCardContent = styled.div`
-  border: 1px solid pink;
+  margin: 16px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: #3f3f3f;
 `;
 
 const StFishNameContainer = styled.div`
@@ -118,10 +119,9 @@ const StFishNameContainer = styled.div`
   align-items: flex-start;
   flex-direction: column;
   gap: 8px;
-  width: 343px;
   height: 85px;
-  margin: 8px;
-  padding: 8px;
+  margin: 16px;
+  padding: 16px;
   background: #f6f6f6;
   border-radius: 8px;
 `;
@@ -141,17 +141,27 @@ const StFishName = styled.div`
 const StCardStatusBox = styled.div`
   display: flex;
   flex-direction: row;
+  padding-left: 16px;
+  width: 145px;
+  height: 32px;
+  gap: 16px;
+  width: 145px;
+  height: 32px;
+  margin-bottom: 4px;
 `;
 
 const StCardStatusCount = styled.div`
-  border: 1px solid red;
-
+  border: 1px solid #dfdfdf;
+  border-radius: 25px;
+  background: #ffffff;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 4px 10px 4px 8px;
   gap: 4px;
+  color: #979797;
+  font-weight: 700;
+  font-size: 18px;
   width: 58px;
   height: 32px;
 `;
