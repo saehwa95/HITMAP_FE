@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -7,30 +7,34 @@ import { getCookie } from "../../../shared/cookie";
 
 const WriteCommentBar = () => {
   const { postId } = useParams();
-  const [comment, setComment] = useState("");
+
+  //Query Invalidation ( 쿼리 값 mutation 일어나면 쿼리 무효화 해주고 새로운 쿼리값 보여주는 코드)
+  const queryClient = useQueryClient();
 
   //토큰의 유무(로그인/비로그인)에 따라 접근권한 처리해주기 위해 가져온 값
   const authJudge = getCookie("auth");
 
+  const [comment, setComment] = useState("");
   const onChangeCommentHandler = (e) => {
     e.preventDefault();
     setComment(e.target.value);
-    // console.log(comment);
   };
+
+  // 댓글 작성 mutation
+  const postComment = useMutation({
+    mutationFn: async (commentPost) => {
+      return await instance.post(`/comment/${postId}`, commentPost);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["detailPost"] });
+    },
+  });
 
   //유저 정보 불러오는 fetchAPI와 data
   const fetchAPI = () => {
     return authJudge ? instance.get("/me") : null;
   };
-  const { data, isLoading, error } = useQuery(["userInfo"], fetchAPI);
-
-  //댓글 작성 mutation
-  // const updateAPI = () => {
-  //   return instance.post(`/comment/${postId}`, {content: comment});
-  // };
-
-  // const {mutate} = useMutation(updateAPI, )
-
+  const { data } = useQuery(["userInfo"], fetchAPI);
   return authJudge ? (
     <StWriteCommentBarContainer>
       <StWriteCommentBarBox>
@@ -39,8 +43,17 @@ const WriteCommentBar = () => {
           src={data?.data.profile_image}
         />
         <StTextBar>
-          <StTextInput onChange={onChangeCommentHandler} />
-          <StSendButton>등록</StSendButton>
+          <StTextInput
+            onChange={onChangeCommentHandler}
+            placeholder="댓글 남기기"
+          />
+          <StSendButton
+            onClick={() => {
+              postComment.mutate({ content: comment });
+            }}
+          >
+            등록
+          </StSendButton>
         </StTextBar>
       </StWriteCommentBarBox>
     </StWriteCommentBarContainer>
@@ -50,7 +63,9 @@ const WriteCommentBar = () => {
 export default WriteCommentBar;
 
 const StWriteCommentBarContainer = styled.div`
-  border: 1px solid red;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
+  /* background-color: white; */
+  /* border: 1px solid red; */
   bottom: 0px;
   width: 375px;
 
@@ -59,7 +74,6 @@ const StWriteCommentBarContainer = styled.div`
 `;
 
 const StWriteCommentBarBox = styled.div`
-  /* border: 1px solid orange; */
   display: flex;
   flex-direction: row;
   gap: 8px;
@@ -84,8 +98,17 @@ const StTextBar = styled.div`
 
 const StTextInput = styled.input`
   width: 240px;
-  border: 1px solid brown;
+  border: none;
   border-radius: 16px;
+  ::placeholder {
+    font-weight: 500;
+    font-size: 16px;
+    color: #c2c2c2;
+    text-indent: 16px;
+  }
+  &:focus {
+    border: transparent;
+  }
 `;
 
 const StSendButton = styled.button`

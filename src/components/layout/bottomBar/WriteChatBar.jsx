@@ -38,7 +38,10 @@ const WriteChatBar = () => {
 export default WriteChatBar;
 
 const StWriteChatBarContainer = styled.div`
-  border: 1px solid red;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
+  /* border: 1px solid red; */
+  background-color: white;
+
   bottom: 0px;
   width: 375px;
 
