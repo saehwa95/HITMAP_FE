@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const WeatherDetailInfo = () => {
   return (
-    <Wrapper>
+    <WeatherDetailTitleWrapper>
       <div className="time">
         <span>시간</span>
       </div>
@@ -28,16 +28,17 @@ const WeatherDetailInfo = () => {
           <span>조석</span>
         </div>
       </div>
-    </Wrapper>
+    </WeatherDetailTitleWrapper>
   );
 };
 
 export default WeatherDetailInfo;
 
-const Wrapper = styled.div`
+const WeatherDetailTitleWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   flex-direction: column;
+  float: left;
   position: absolute;
   width: 64px;
   height: 688px;
