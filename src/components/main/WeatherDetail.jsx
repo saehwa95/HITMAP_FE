@@ -1,23 +1,33 @@
 import React from "react";
-import axios from "axios";
+import styled from "styled-components";
+import WeatherDetailInfo from "../../elements/WeatherDetailInfo";
+import WeatherDetailTitle from "./WeatherDetailTitle";
 
-const WeatherDetail = () => {
-  console.log(
-    "위도 : ",
-    new URLSearchParams(window.location.search).get("lat"),
-    "경도 : ",
-    new URLSearchParams(window.location.search).get("lon")
+const WeatherDetail = ({ weatherData }) => {
+  return (
+    <>
+      <TableWrapper>
+        <WeatherDetailTitle />
+        <ScrollView>
+          <WeatherDetailInfo weatherData={weatherData} />
+        </ScrollView>
+      </TableWrapper>
+    </>
   );
-  const req = axios.get(
-    `http://koyunhyeok.shop/weather?lat=${new URLSearchParams(
-      window.location.search
-    ).get("lat")}&lon=${new URLSearchParams(window.location.search).get("lon")}`
-  );
-  req.then(function (response) {
-    console.log(response);
-  });
-
-  return <div>WeatherDetail</div>;
 };
 
-export default WeatherDetail;
+export default React.memo(WeatherDetail);
+
+const TableWrapper = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+const ScrollView = styled.div`
+  display: flex;
+  width: 311px;
+  /* overflow-x: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  } */
+`;
