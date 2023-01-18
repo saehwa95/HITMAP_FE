@@ -11,19 +11,16 @@ const WeatherDetailInfo = () => {
         <div className="temp same_height">
           <span>기온</span>
         </div>
+        <div className="rain_info same_height">
+          <span>강수</span>
+        </div>
         <div className="wind_deg same_height">
           <span>풍향</span>
-          <span>(m/s)</span>
         </div>
         <div className="wind_speed same_height">
           <span>풍속</span>
-          <span>(m)</span>
         </div>
-        <div className="wave_info same_height">
-          <span>
-            <span>파고</span>
-          </span>
-        </div>
+
         <div className="tide_info">
           <span>조석</span>
         </div>
@@ -36,7 +33,7 @@ export default React.memo(WeatherDetailInfo);
 
 const WeatherDetailTitleWrapper = styled.div`
   width: 64px;
-  height: 688px;
+  height: 800px;
   background-color: #f6f6f6;
   border-right: 1px solid #ececec;
   span {
@@ -73,6 +70,6 @@ const WeatherDetailTitleWrapper = styled.div`
     gap: 2px;
   }
   .tide_info {
-    height: 272px;
+    height: 384px;
   }
 `;
