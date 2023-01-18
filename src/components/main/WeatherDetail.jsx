@@ -26,8 +26,8 @@ const TableWrapper = styled.div`
 const ScrollView = styled.div`
   display: flex;
   width: 311px;
-  /* overflow-x: scroll;
-  ::-webkit-scrollbar {
+  overflow-x: scroll;
+  /* ::-webkit-scrollbar {
     display: none;
   } */
 `;

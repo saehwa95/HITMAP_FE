@@ -3,28 +3,29 @@ import styled from "styled-components";
 import TideGraph from "../components/main/TideGraph";
 
 const WeatherDetailInfo = ({ weatherData }) => {
-  const newArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; //
+  const weatherList = weatherData?.weather;
+
   return (
     /* 풍향, 풍속 기온, 3시간 간격 시간 */
     <>
-      {newArray.map((value, index) => {
+      {weatherList?.map((value, index) => {
         return (
           <WeatherDetailInfoWrapper key={`weather-info-${index}`}>
             <div className="time">
-              <span>{weatherData?.weather[0].date}</span>
+              <span>{value?.date}</span>
             </div>
             <div>
               <div className="temp same_height">
                 <span className="icon_relative">
-                  {weatherData?.weather[0].temp}
+                  {value?.temp}
                   <span className="icon">º</span>
                 </span>
               </div>
               <div className="wind_deg same_height">
-                <span>{weatherData?.weather[0].wind_deg}</span>
+                <span>{value?.wind_deg}</span>
               </div>
               <div className="wind_speed same_height">
-                <span>{weatherData?.weather[0].wind_speed}</span>
+                <span>{value?.wind_speed}</span>
               </div>
               <div className="wave_info same_height">
                 <span>
@@ -102,5 +103,11 @@ const WeatherDetailInfoWrapper = styled.div`
   }
   .tide_info {
     height: 272px;
+  }
+  .wind_deg,
+  .wind_speed {
+    span {
+      color: #5e67de;
+    }
   }
 `;
