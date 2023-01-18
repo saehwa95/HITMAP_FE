@@ -4,7 +4,6 @@ import TideGraph from "../components/main/TideGraph";
 
 const WeatherDetailInfo = ({ weatherData }) => {
   const weatherList = weatherData?.weather;
-  console.log(weatherList);
   return (
     <>
       {weatherList?.map((value, index) => {

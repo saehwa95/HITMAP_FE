@@ -4,11 +4,6 @@ import styled from "styled-components";
 
 const TideGraph = ({ weatherData }) => {
   const tideInfo = weatherData?.tide_info;
-  console.log(tideInfo);
-
-  /* 배열 안에 객체 안에 원하는 key에 대한 value 값만 가져오기 */
-  // const level = tideInfo.map((value) => value.tph_level);
-
   return (
     <ChartWrapper>
       <AreaChart width={1105} height={384} data={tideInfo}>
