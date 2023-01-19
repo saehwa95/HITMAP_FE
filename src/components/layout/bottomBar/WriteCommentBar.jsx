@@ -31,10 +31,10 @@ const WriteCommentBar = () => {
   });
 
   //유저 정보 불러오는 fetchAPI와 data
-  const fetchAPI = () => {
+  const userInfoAPI = () => {
     return authJudge ? instance.get("/me") : null;
   };
-  const { data } = useQuery(["userInfo"], fetchAPI);
+  const { data } = useQuery(["userInfo"], userInfoAPI);
   return authJudge ? (
     <StWriteCommentBarContainer>
       <StWriteCommentBarBox>
@@ -107,7 +107,7 @@ const StTextInput = styled.input`
     text-indent: 16px;
   }
   &:focus {
-    border: transparent;
+    outline: none;
   }
 `;
 
