@@ -15,7 +15,9 @@ const PlaceName = ({ placeName }) => {
               <img src={smallBackButton} alt="" />
             </button>
           </Link>
-          <span>{placeName}</span>
+          <div className="place_name">
+            <span>{placeName}</span>
+          </div>
         </div>
       </Name>
     </>
@@ -29,7 +31,6 @@ const Name = styled.div`
   flex-direction: column;
   align-items: flex-start;
   height: 64px;
-  justify-content: center;
   padding: 8px 16px;
   background-color: #ffffff;
   margin-bottom: 16px;
@@ -56,6 +57,10 @@ const Name = styled.div`
     line-height: 24px;
     text-align: center;
     color: #1f1f1f;
-    margin-left: 71px;
+  }
+  .place_name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
