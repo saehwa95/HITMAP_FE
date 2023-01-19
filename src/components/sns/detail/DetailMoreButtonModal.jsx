@@ -1,48 +1,40 @@
 import styled from "styled-components";
-import React from "react";
-import { instance } from "../../../redux/api/instance";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import DeleteConfirmModal from "./DeleteConfirmModal";
+import SnsUpdateModal from "../update/SnsUpdateModal";
 
-const DetailMoreButtonModal = (setMoreButtonModal) => {
-  // const queryClient = useQueryClient();
-  const { postId } = useParams();
-  const navigate = useNavigate();
-  //사용자 정보 가져오는 쿼리
-  // const fetchAPI = () => {
-  //   return instance.get("/me");
-  // };
-  // const { data, isLoading, error } = useQuery(["userInfo"], fetchAPI);
-  // const userInformation = data?.data.user_id;
-
-  // // 게시글 작성자 정보 가져오는 쿼리
-  // const detailAPI = () => {
-  //   return instance.get(`/post/${postId}`);
-  // };
-
-  // const detailPostResponse = useQuery(["detailPost"], detailAPI);
-  // const writerInformation = detailPostResponse.data?.data.post.user_id;
-
-  const deleteMain = useMutation({
-    mutationFn: async (postId) => {
-      return await instance.delete(`/post/${postId}`);
-    },
-    onSuccess: () => {
-      alert("게시글 삭제 완료");
-      navigate("/postlist");
-    },
-  });
+const DetailMoreButtonModal = ({ setMoreButtonModal }) => {
+  const [updateModal, setUpdateModal] = useState(false);
+  const [deleteConfirmModal, setDeleteConfirmModal] = useState(false);
 
   return (
     <StModalContainer>
-      <StGoUpdatePageButton>게시글 수정하기</StGoUpdatePageButton>
+      <StGoUpdatePageButton
+        onClick={() => {
+          setUpdateModal(!updateModal);
+        }}
+      >
+        게시글 수정하기
+      </StGoUpdatePageButton>
       <StGoDeleteButton
         onClick={() => {
-          deleteMain.mutate(postId);
+          setDeleteConfirmModal(!deleteConfirmModal);
         }}
       >
         삭제하기
       </StGoDeleteButton>
+      {updateModal && (
+        <SnsUpdateModal
+          setUpdateModal={setUpdateModal}
+          setMoreButtonModal={setMoreButtonModal}
+        />
+      )}
+      {deleteConfirmModal && (
+        <DeleteConfirmModal
+          setMoreButtonModal={setMoreButtonModal}
+          setDeleteConfirmModal={setDeleteConfirmModal}
+        />
+      )}
     </StModalContainer>
   );
 };
