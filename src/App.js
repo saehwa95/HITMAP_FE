@@ -2,12 +2,19 @@ import React from "react";
 import Router from "./shared/Router";
 import "./App.css";
 import styled from "styled-components";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <Container>
-      <Router />
-    </Container>
+    <QueryClientProvider client={queryClient}>
+      <Container>
+        <Router />
+      </Container>
+      <ReactQueryDevtools initialIsOpen={true} />
+    </QueryClientProvider>
   );
 };
 
