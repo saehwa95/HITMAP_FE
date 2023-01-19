@@ -7,7 +7,7 @@ import { instance } from "../../redux/api/instance";
 
 import ModalBasic from "../../components/myPage/ModalBasic";
 import moreIcon from "../../asset/icon/moreIcon.svg";
-import likeIcon from "../../asset/icon/likeIcon.svg";
+
 import commentIcon from "../../asset/icon/commentIcon.svg";
 import { useParams } from "react-router-dom";
 
@@ -78,7 +78,7 @@ const MyPage = () => {
           </StPostview>
           <StLikeComment>
             <StPostListLike>
-              <StLikeIcon src={likeIcon} />0
+              <StLikeIcon />0
             </StPostListLike>
             <StPostListComment>
               <StCommentIcon src={commentIcon} />0
