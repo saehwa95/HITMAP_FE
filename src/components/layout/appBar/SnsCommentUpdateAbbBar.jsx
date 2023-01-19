@@ -4,29 +4,35 @@ import styled from "styled-components";
 import closeButton from "../../../asset/button/closeButton.svg";
 import StatusBar from "./StatusBar";
 
-const SnsCreateAppBar = () => {
-  const navigate = useNavigate();
+const SnsCommentUpdateAbbBar = ({
+  setMoreButtonModal,
+  setUpdateCommentModal,
+}) => {
+  //댓글 삭제 확인 모달창 끄는 함수
+  const closeUpdateCommentModal = () => {
+    setMoreButtonModal(false);
+    setUpdateCommentModal(false);
+  };
 
   return (
-    <StSnsCreateAppBarContainer>
+    <StSnsCommentUpdateAbbBarContainer>
       <StatusBar />
-      <StSnsCreateAppBarBox>
-        <StSnsCreateAppBarIcon
+      <StSnsCommentUpdateAbbBarBox>
+        <StSnsCommentUpdateAbbBarIcon
           src={closeButton}
           alt="취소 아이콘"
-          onClick={() => {
-            navigate("/postlist");
-          }}
+          onClick={closeUpdateCommentModal}
         />
-        <StAppBarTitle>게시글 작성</StAppBarTitle>
-      </StSnsCreateAppBarBox>
-    </StSnsCreateAppBarContainer>
+        <StAppBarTitle>댓글 수정</StAppBarTitle>
+      </StSnsCommentUpdateAbbBarBox>
+    </StSnsCommentUpdateAbbBarContainer>
   );
 };
 
-export default SnsCreateAppBar;
+export default SnsCommentUpdateAbbBar;
 
-const StSnsCreateAppBarContainer = styled.div`
+const StSnsCommentUpdateAbbBarContainer = styled.div`
+  background-color: white;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -35,14 +41,14 @@ const StSnsCreateAppBarContainer = styled.div`
   z-index: 100;
 `;
 
-const StSnsCreateAppBarBox = styled.div`
+const StSnsCommentUpdateAbbBarBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 8px 0;
 `;
 
-const StSnsCreateAppBarIcon = styled.img`
+const StSnsCommentUpdateAbbBarIcon = styled.img`
   width: 48px;
   height: 48px;
   margin-left: 16px;
@@ -51,6 +57,7 @@ const StSnsCreateAppBarIcon = styled.img`
 `;
 
 const StAppBarTitle = styled.div`
+  padding-right: 15px;
   margin-right: 126px;
   font-weight: 700;
   font-size: 20px;

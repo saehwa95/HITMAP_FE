@@ -13,10 +13,10 @@ const WriteChatBar = () => {
   };
 
   //유저 정보 불러오는 fetchAPI와 data
-  const fetchAPI = () => {
+  const userInfoAPI = () => {
     return instance.get("/me");
   };
-  const { data, isLoading, error } = useQuery(["userInfo"], fetchAPI);
+  const { data, isLoading, error } = useQuery(["userInfo"], userInfoAPI);
 
   // console.log(data);
   return (

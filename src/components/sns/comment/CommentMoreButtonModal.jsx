@@ -1,45 +1,47 @@
-import styled from "styled-components";
 import React, { useState } from "react";
-import DeleteConfirmModal from "./DeleteConfirmModal";
-import SnsUpdateModal from "../update/SnsUpdateModal";
+import styled from "styled-components";
+import CommentDeleteConfirmModal from "./CommentDeleteConfirmModal";
+import CommentUpdateModal from "./CommentUpdateModal";
 
-const DetailMoreButtonModal = ({ setMoreButtonModal }) => {
-  const [updateModal, setUpdateModal] = useState(false);
+const CommentMoreButtonModal = ({ setMoreButtonModal, list }) => {
   const [deleteConfirmModal, setDeleteConfirmModal] = useState(false);
+  const [updateCommentModal, setUpdateCommentModal] = useState(false);
 
   return (
     <StModalContainer>
-      <StGoUpdatePageButton
+      <StGoCommentUpdateButton
         onClick={() => {
-          setUpdateModal(!updateModal);
+          setUpdateCommentModal(!updateCommentModal);
         }}
       >
-        게시글 수정하기
-      </StGoUpdatePageButton>
-      <StGoDeleteButton
+        댓글 수정하기
+      </StGoCommentUpdateButton>
+      <StGoCommentDeleteComfirmButton
         onClick={() => {
           setDeleteConfirmModal(!deleteConfirmModal);
         }}
       >
         삭제하기
-      </StGoDeleteButton>
-      {updateModal && (
-        <SnsUpdateModal
-          setUpdateModal={setUpdateModal}
-          setMoreButtonModal={setMoreButtonModal}
-        />
-      )}
+      </StGoCommentDeleteComfirmButton>
       {deleteConfirmModal && (
-        <DeleteConfirmModal
+        <CommentDeleteConfirmModal
           setMoreButtonModal={setMoreButtonModal}
           setDeleteConfirmModal={setDeleteConfirmModal}
+          list={list}
+        />
+      )}
+      {updateCommentModal && (
+        <CommentUpdateModal
+          setMoreButtonModal={setMoreButtonModal}
+          setUpdateCommentModal={setUpdateCommentModal}
+          list={list}
         />
       )}
     </StModalContainer>
   );
 };
 
-export default DetailMoreButtonModal;
+export default CommentMoreButtonModal;
 
 const StModalContainer = styled.div`
   display: flex;
@@ -49,11 +51,11 @@ const StModalContainer = styled.div`
   position: absolute;
   width: 150px;
   height: 112px;
-  left: 209px;
-  top: 92px;
+  left: 160px;
+  top: 0px;
 `;
 
-const StGoUpdatePageButton = styled.button`
+const StGoCommentUpdateButton = styled.button`
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -71,7 +73,7 @@ const StGoUpdatePageButton = styled.button`
   border-top-right-radius: 16px;
 `;
 
-const StGoDeleteButton = styled.button`
+const StGoCommentDeleteComfirmButton = styled.button`
   display: flex;
   flex-direction: row;
   justify-content: center;

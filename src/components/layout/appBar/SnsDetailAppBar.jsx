@@ -7,16 +7,19 @@ import moreButton from "../../../asset/button/moreButton.svg";
 import DetailMoreButtonModal from "../../sns/detail/DetailMoreButtonModal";
 import { instance } from "../../../redux/api/instance";
 import { useQuery } from "@tanstack/react-query";
+import { getCookie } from "../../../shared/cookie";
 
 const SnsDetailAppBar = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
   const [moreButtonModal, setMoreButtonModal] = useState(false);
 
-  const fetchAPI = () => {
-    return instance.get("/me");
+  const authJudge = getCookie("auth");
+
+  const userInfoAPI = () => {
+    return authJudge ? instance.get("/me") : null;
   };
-  const { data } = useQuery(["userInfo"], fetchAPI);
+  const { data } = useQuery(["userInfo"], userInfoAPI);
   const userInformation = data?.data.user_id;
 
   // 게시글 작성자 정보 가져오는 쿼리

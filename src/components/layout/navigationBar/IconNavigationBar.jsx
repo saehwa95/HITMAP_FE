@@ -37,8 +37,10 @@ const IconNavigationBar = () => {
             src={chatAlarmIcon}
             alt=""
             onClick={() => {
-              authJudge ? navigate("/chat") : alert("로그인창으로 이동합니다");
-              navigate("/login");
+              authJudge
+                ? navigate("/chat")
+                : alert("로그인이 필요한 기능이므로 로그인페이지로 이동합니다");
+              authJudge ? navigate("/chat") : navigate("/login");
             }}
           />
         </div>
@@ -49,7 +51,8 @@ const IconNavigationBar = () => {
             onClick={() => {
               authJudge
                 ? navigate("/mypage")
-                : alert("로그인창으로 이동합니다");
+                : alert("로그인이 필요한 기능이므로 로그인페이지로 이동합니다");
+              authJudge ? navigate("/mypage") : navigate("/login");
             }}
           />
         </div>

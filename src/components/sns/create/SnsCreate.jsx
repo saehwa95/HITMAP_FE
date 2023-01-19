@@ -8,8 +8,9 @@ import { useNavigate } from "react-router-dom";
 const SnsCreate = () => {
   const navigate = useNavigate();
   const [input, setInput] = useState({ content: "", fishName: "" });
-  const [postImages, setPostImages] = useState([]); // 서버로 보낼 이미지 데이터
-
+  // 서버로 보낼 이미지 데이터
+  const [postImages, setPostImages] = useState([]);
+  const imageLength = postImages.length;
   const onChangeTextHandler = (e) => {
     const { value, name } = e.target;
     setInput({ ...input, [name]: value });
@@ -22,9 +23,14 @@ const SnsCreate = () => {
   const formData = new FormData();
   formData.append("content", input.content);
   formData.append("fishName", input.fishName);
-  Array.from(postImages).forEach((item) => {
-    formData.append("image", item);
-  });
+  if (imageLength > 5) {
+    alert("사진은 최대 5장까지 작성 가능합니다");
+    setPostImages([]);
+  } else {
+    Array.from(postImages).forEach((item) => {
+      formData.append("image", item);
+    });
+  }
 
   const postMain = useMutation({
     mutationFn: async (formData) => {
@@ -87,15 +93,17 @@ const SnsCreate = () => {
             onChange={onChangeTextHandler}
           />
         </StFishNameBox>
-        <StButton
-          type="submit"
-          onClick={(e) => {
-            e.preventDefault();
-            postMain.mutate(formData);
-          }}
-        >
-          작성하기
-        </StButton>
+        <StButtonBox>
+          <StButton
+            type="submit"
+            onClick={(e) => {
+              e.preventDefault();
+              postMain.mutate(formData);
+            }}
+          >
+            작성하기
+          </StButton>
+        </StButtonBox>
       </StCreateContainer>
     </div>
   );
@@ -104,7 +112,7 @@ const SnsCreate = () => {
 export default SnsCreate;
 
 const StCreateContainer = styled.form`
-  border: 1px solid orange;
+  height: 88vh;
 `;
 
 const StPreviewImgContainer = styled.div`
@@ -117,17 +125,20 @@ const StPreviewImgContainer = styled.div`
 `;
 
 const StImgPreview = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 84px;
+  height: 84px;
+  border-radius: 8px;
 `;
 
 const StImageBox = styled.div`
+  border: 1px solid blue;
   margin: 0 16px;
   padding: 16px 0 16px 0;
 `;
 
 const StImageLabel = styled.label`
   border: 1px solid blue;
+
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;
@@ -136,11 +147,15 @@ const StImageLabel = styled.label`
 
 const StImageFileBox = styled.div`
   border: 1px solid brown;
-
   display: flex;
   flex-direction: row;
-  width: 343px;
-  height: 155px;
+  padding: 4px 0 4px 0;
+  height: 94px;
+  /* overflow-x: scroll;
+  //업로드된 게시물 사진들 보여주는 x축 스크롤바
+  ::-webkit-scrollbar {
+    display: none;
+  } */
 `;
 
 const StImageLabelButton = styled.label`
@@ -155,24 +170,28 @@ const StImageLabelButton = styled.label`
 const StContentInputBox = styled.div`
   margin: 0 16px 0 16px;
   padding: 16px 0 16px 0;
+  height: 272px;
   border-top: 1px solid #dfdfdf;
   border-bottom: 1px solid #dfdfdf;
   text-align: start;
 `;
 
-const StContentInput = styled.input`
-  width: 343px;
-  height: 230px;
-  border: 1px solid pink;
+const StContentInput = styled.textarea`
+  border: none;
+  width: 340px;
+  height: 236px;
   vertical-align: top;
   text-align: left;
+  resize: none;
+  &:focus {
+    outline: none;
+  }
 `;
 
 const StFishNameBox = styled.div`
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
-  padding: 16px 16px 100px 16px;
+  padding: 16px 16px 16px 16px;
   height: 111px;
   gap: 12px;
 `;
@@ -186,20 +205,29 @@ const StFishNameLabel = styled.label`
 
 const StFishNameInput = styled.input`
   height: 48px;
-  border: 2px solid #006981;
+  border: 1px solid #dfdfdf;
   border-radius: 8px;
+  &:focus {
+    outline: 2px solid #006981;
+  }
+`;
+
+const StButtonBox = styled.div`
+  margin-top: 183px;
+  padding: 8px 16px 27px 16px;
+  width: 375px;
+  height: 83px;
+  background-color: #ffffff;
 `;
 
 const StButton = styled.button`
-  margin: 8px 16px 27px 16px;
-  border: none;
-
-  width: 341px;
+  width: 343px;
   height: 48px;
-  border-radius: 8px;
-  background: #006981;
+  color: white;
+  border: none;
+  background-color: #006981;
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;
-  color: white;
+  border-radius: 8px;
 `;

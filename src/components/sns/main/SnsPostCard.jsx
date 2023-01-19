@@ -1,10 +1,13 @@
+import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import commentIcon from "../../../asset/icon/commentIcon.svg";
 import likeIcon from "../../../asset/icon/likeIcon.svg";
+import { instance } from "../../../redux/api/instance";
+import likeActiveIcon from "../../../asset/icon/likeActiveIcon.svg";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 //sns 포스트카드 한 장 컴포넌트
-//SnsList.jsx로부터 받아온 데이터들을 가공해서 바인딩해주자.
 const SnsPostCard = ({ posts }) => {
   const navigate = useNavigate();
   //get한 서버 데이터 중 created_at을 정해진 디자인에 쓰기 위해 시간 포맷 바꿔주는 변수
@@ -14,6 +17,16 @@ const SnsPostCard = ({ posts }) => {
   const goDetailPage = () => {
     navigate(`/detail/${posts.post_id}`);
   };
+
+  const queryClient = useQueryClient();
+  const submitLike = useMutation({
+    mutationFn: async () => {
+      return await instance.patch(`/post/${posts.post_id}/like`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+  });
 
   return (
     <StCardContainer>
@@ -36,7 +49,23 @@ const SnsPostCard = ({ posts }) => {
       <StCardContent>{posts.content}</StCardContent>
       <StCardStatus>
         <StCardStatusCount>
-          <img alt="좋아요 아이콘" src={likeIcon}></img>
+          {posts.like ? (
+            <img
+              alt="좋아요 아이콘"
+              src={likeActiveIcon}
+              onClick={() => {
+                submitLike.mutate();
+              }}
+            />
+          ) : (
+            <img
+              alt="좋아요 아이콘"
+              src={likeIcon}
+              onClick={() => {
+                submitLike.mutate();
+              }}
+            />
+          )}
           <span>{posts.like_count}</span>
         </StCardStatusCount>
         <StCardStatusCount onClick={goDetailPage}>

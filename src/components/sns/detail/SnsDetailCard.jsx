@@ -1,23 +1,34 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
-import SnsCommentList from "./SnsCommentList";
+import SnsCommentList from "../comment/SnsCommentList";
 import { instance } from "../../../redux/api/instance";
 import likeIcon from "../../../asset/icon/likeIcon.svg";
+import likeActiveIcon from "../../../asset/icon/likeActiveIcon.svg";
 import commentIcon from "../../../asset/icon/commentIcon.svg";
 import WriteCommentBar from "../../layout/bottomBar/WriteCommentBar";
 
 //sns 상세카드 한 장 컴포넌트
 const SnsDetailCard = () => {
   const { postId } = useParams();
-  const fetchAPI = () => {
-    return instance.get(`/post/${postId}`);
+  const queryClient = useQueryClient();
+  const submitLike = useMutation({
+    mutationFn: async () => {
+      return await instance.patch(`/post/${postId}/like`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["detailPost"] });
+    },
+  });
+
+  const detailPostAPI = async () => {
+    return await instance.get(`/post/${postId}`);
   };
 
-  const { data, isLoading } = useQuery(["detailPost"], fetchAPI);
+  const { data, isLoading } = useQuery(["detailPost"], detailPostAPI);
   const detailData = data?.data.post;
-
+  const imageSrc = detailData?.PostImage;
   if (isLoading) {
     return <h2>Loading....</h2>;
   }
@@ -42,6 +53,9 @@ const SnsDetailCard = () => {
         <StCardImgBox>
           {/* 작성사진 들어갈 자리 */}
           <StCardImg alt="작성사진" src={detailData.PostImage[0].src} />
+          {/* <StCarouselBox>
+            <SnsDetailImageCarousel imageSrc={imageSrc} />
+          </StCarouselBox> */}
         </StCardImgBox>
         <StCardContent>{detailData.content}</StCardContent>
         <StFishNameContainer>
@@ -50,7 +64,24 @@ const SnsDetailCard = () => {
         </StFishNameContainer>
         <StCardStatusBox>
           <StCardStatusCount>
-            <img alt="좋아요 아이콘" src={likeIcon}></img>
+            {detailData.like ? (
+              <img
+                alt="좋아요 아이콘"
+                src={likeActiveIcon}
+                onClick={() => {
+                  submitLike.mutate();
+                }}
+              ></img>
+            ) : (
+              <img
+                alt="좋아요 아이콘"
+                src={likeIcon}
+                onClick={() => {
+                  submitLike.mutate();
+                }}
+              ></img>
+            )}
+
             <span>{detailData.like_count}</span>
           </StCardStatusCount>
           <StCardStatusCount>
@@ -67,7 +98,14 @@ const SnsDetailCard = () => {
 
 export default SnsDetailCard;
 
-const StDetailCardContainer = styled.div``;
+const StDetailCardContainer = styled.div`
+  //무한스크롤처럼 보이게 땜질한 css(추후 무한스크롤 진행 예정)
+  height: 79vh;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 const StCardHeader = styled.div`
   margin: 16px;
@@ -101,9 +139,15 @@ const StCardImgBox = styled.div`
   justify-content: center;
 `;
 
+const StCarouselBox = styled.div`
+  border: 1px solid red;
+  height: 200px;
+  width: 200px;
+`;
+
 const StCardImg = styled.img`
-  width: 343px;
-  height: 343px;
+  width: 342px;
+  height: 342px;
 `;
 
 const StCardContent = styled.div`
