@@ -1,0 +1,114 @@
+import React from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import styled from "styled-components";
+import { instance } from "../../../redux/api/instance";
+
+const CommentDeleteConfirmModal = ({
+  setMoreButtonModal,
+  setDeleteConfirmModal,
+  list,
+}) => {
+  //댓글 삭제 확인 모달창 끄는 함수
+  const closeCommentDeleteConfirmModal = () => {
+    setMoreButtonModal(false);
+    setDeleteConfirmModal(false);
+  };
+
+  //댓글 삭제 mutation
+  const queryClient = useQueryClient();
+  const deleteComment = useMutation({
+    mutationFn: async () => {
+      return await instance.delete(`/comment/${list.comment_id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["detailPost"] });
+    },
+  });
+
+  return (
+    <StDeleteConfirmAll>
+      <StDeleteConfirmBox>
+        <StDeleteConfirmMessage>
+          댓글을 삭제하시겠습니까?
+        </StDeleteConfirmMessage>
+        <StDeleteConfirmButtonBox>
+          <StDeleteConfirmCancelButton onClick={closeCommentDeleteConfirmModal}>
+            취소
+          </StDeleteConfirmCancelButton>
+          <StDeleteConfirmDeleteButton
+            onClick={() => {
+              deleteComment.mutate();
+            }}
+          >
+            삭제
+          </StDeleteConfirmDeleteButton>
+        </StDeleteConfirmButtonBox>
+      </StDeleteConfirmBox>
+    </StDeleteConfirmAll>
+  );
+};
+
+export default CommentDeleteConfirmModal;
+
+const StDeleteConfirmAll = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 99.9vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+`;
+
+const StDeleteConfirmBox = styled.div`
+  width: 312px;
+  height: 164px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: #ffffff;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
+  border-radius: 16px;
+`;
+
+const StDeleteConfirmMessage = styled.div`
+  margin: 16px 0 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  width: 280px;
+  height: 72px;
+  color: #1f1f1f;
+`;
+
+const StDeleteConfirmButtonBox = styled.div``;
+
+const StDeleteConfirmCancelButton = styled.button`
+  width: 136px;
+  height: 48px;
+  background: #ffffff;
+  border: 1px solid #006981;
+  margin-right: 4px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #006981;
+`;
+
+const StDeleteConfirmDeleteButton = styled.button`
+  width: 136px;
+  height: 48px;
+  margin-left: 4px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #ffffff;
+  background: #006981;
+  border-radius: 8px;
+  border: none;
+`;
