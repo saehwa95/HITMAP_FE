@@ -6,9 +6,10 @@ import SnsComment from "./SnsComment";
 const SnsCommentList = ({ comments }) => {
   return (
     <StSnsCommentListContainer>
-      {/* 나중에 여기다가 snsComment 컴포넌트 맵 돌릴거야
-      지금은 임의로 보여놓으려고 넣어놓은거야 */}
-      <SnsComment />
+      <StTopBlank />
+      {comments?.map((list) => {
+        return <SnsComment list={list} key={list.comment_id} />;
+      })}
     </StSnsCommentListContainer>
   );
 };
@@ -16,5 +17,10 @@ const SnsCommentList = ({ comments }) => {
 export default SnsCommentList;
 
 const StSnsCommentListContainer = styled.div`
-  border: 1px solid green;
+  margin-top: 16px;
+`;
+
+const StTopBlank = styled.div`
+  height: 16px;
+  background-color: #f6f6f6; ;
 `;

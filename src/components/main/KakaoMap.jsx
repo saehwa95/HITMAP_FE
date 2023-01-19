@@ -70,7 +70,6 @@ const KakaoMap = ({ searchPlace }) => {
     function placesSearchCB(data, status, _pagination) {
       if (status === kakao.maps.services.Status.OK) {
         const bounds = new kakao.maps.LatLngBounds();
-
         for (let i = 0; i < data.length; i++) {
           displayMarker(data[i]);
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
@@ -98,6 +97,9 @@ const KakaoMap = ({ searchPlace }) => {
         image: markerImage,
       });
 
+      //키워드에 맞는 장소 정보
+      // console.log(place);
+
       const iwContent = `<div class="info-title_div"><span class="info-title_span">${place.place_name}</span></div>`;
 
       const customOverlay = new kakao.maps.CustomOverlay({
@@ -116,7 +118,9 @@ const KakaoMap = ({ searchPlace }) => {
 
       // 마커 클릭 시 위도 경도에 맞는 상세 페이지 이동
       kakao.maps.event.addListener(marker, "click", function () {
-        navigate(`/weather?lat=${place.y}&lon=${place.x}`);
+        navigate(
+          `/weather?lat=${place.y}&lon=${place.x}&place_name=${place.place_name}`
+        );
       });
     }
   }, [

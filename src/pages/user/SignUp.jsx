@@ -18,29 +18,35 @@ const SignUp = () => {
   const [fileimage, setFileImage] = useState();
   const formData = new FormData();
   const imgRef = useRef();
-
+  //유효성 검사
   const [emailValid, SetEmailValid] = useState(false);
   const [nicklValid, SetNickValid] = useState(false);
-
+  const [isnick, setIsNick] = useState(false);
+  const [isemail, setIsEmail] = useState(false);
+  const [isPassword, SetisPassword] = useState(false);
+  const [isPasswordConfirm, SetisPasswordConfirm] = useState(false);
   const [notAllow, setNotAllow] = useState(true);
+  const [inputchange, setInputChange] = useState(true);
   //오류메시지 상태저장
   const [nickMessage, setNickeMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
-  //유효성 검사
-  const [isName, setIsName] = useState(false);
-  const [isEmail, setIsEmail] = useState(false);
+  const [passwordMessage, SetpasswordMessage] = useState("");
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
+
   //이미지 formData에 넣기
   //이미지 프리뷰
   const saveFileImage = (e) => {
     setFileImage(e.target.files[0]);
+
     formData.append("image", e.target.files);
 
-    const file = imgRef.current.files[0];
     const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setFileImage(reader.result);
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setFileImage(reader.result);
+      }
     };
+    reader.readAsDataURL(e.target.files[0]);
   };
   //formData submit
   const submitOnclickHandler = (e) => {
@@ -58,9 +64,9 @@ const SignUp = () => {
   const onEmailChangeHandler = (e) => {
     e.preventDefault();
     setEmail(e.target.value);
+    setEmailMessage("");
     const regex =
-      // eslint-disable-next-line
-      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (regex.test(email)) {
       SetEmailValid(true);
     } else {
@@ -69,19 +75,29 @@ const SignUp = () => {
   };
 
   const onemail = (e) => {
+    const regex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (regex.test(email)) {
+      SetEmailValid(true);
+    } else {
+      SetEmailValid(false);
+    }
     e.preventDefault();
     const payload = {
       email: email,
     };
 
     dispatch(__emailItem(payload)).then((res) => {
-      console.log("res:", res);
+      console.log(res);
       if (res.meta.requestStatus === "fulfilled") {
         setEmailMessage("사용 가능한 이메일 입니다.");
-      } else if (res.meta.requestStatus === "rejected") {
+        setIsEmail(true);
+      } else if (res.payload === 401) {
         setEmailMessage("이미 사용중인 이메일입니다.");
+        setIsEmail(false);
       } else {
         setEmailMessage("이메일 형식이 바르지 않습니다.");
+        setIsEmail(false);
       }
     });
   };
@@ -90,39 +106,91 @@ const SignUp = () => {
   const onNickChangeHandler = (e) => {
     e.preventDefault();
     setNickname(e.target.value);
+    setNickeMessage("");
+
     const regex =
       // eslint-disable-next-line
-      /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]{2,10}$/;
+      /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{1,16}$/;
     if (regex.test(nickname)) {
       SetNickValid(true);
     } else {
       SetNickValid(false);
     }
   };
+
   const onnick = (e) => {
     e.preventDefault();
+    const regex =
+      // eslint-disable-next-line
+      /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{1,16}$/;
+    if (regex.test(nickname)) {
+      SetNickValid(true);
+    } else {
+      SetNickValid(false);
+    }
     const payload = {
       nickname: nickname,
     };
+
     dispatch(__nickItem(payload)).then((res) => {
-      console.log("res:", res);
       if (res.meta.requestStatus === "fulfilled") {
         setNickeMessage("사용 가능한 닉네임입니다.");
+        setIsNick(true);
+        if (nicklValid(false)) {
+          setIsNick(false);
+        }
       } else if (res.meta.requestStatus === "rejected") {
         setNickeMessage("이미 사용중인 닉네임입니다.");
+        setIsNick(false);
       } else {
         setNickeMessage("닉네임 형식이 바르지 않습니다.");
+        setIsNick(false);
       }
     });
   };
+  const onChangePassword = (e) => {
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+    const passwordeCurrent = e.target.value;
+    setPassword(passwordeCurrent);
+
+    if (!passwordRegex.test(passwordeCurrent)) {
+      SetpasswordMessage("비밀번호 조건에 충족하지않습니다.");
+      SetisPassword(false);
+    } else {
+      SetpasswordMessage("");
+      SetisPassword(true);
+    }
+  };
+
+  const onChangePassWordCh = (e) => {
+    const passwordeConfirmCurrent = e.target.value;
+    setPasswordCh(passwordeConfirmCurrent);
+
+    if (password === passwordeConfirmCurrent) {
+      setPasswordConfirmMessage("");
+      SetisPasswordConfirm(true);
+    } else {
+      setPasswordConfirmMessage("비밀번호가 일치하지 않습니다.");
+      SetpasswordMessage("");
+      SetisPasswordConfirm(false);
+    }
+  };
 
   useEffect(() => {
-    if (emailValid) {
+    if (
+      isemail &&
+      isnick &&
+      emailValid &&
+      nicklValid &&
+      isPassword &&
+      isPasswordConfirm
+    ) {
       setNotAllow(false);
       return;
     }
     setNotAllow(true);
-  }, [emailValid]);
+  }, [isemail, isnick, emailValid, nicklValid, isPassword, isPasswordConfirm]);
 
   // 프리뷰 이미지 삭제
   //  const deleteFileImage = () => {
@@ -131,6 +199,11 @@ const SignUp = () => {
   //  };
   // const submitOnclickHandler = () => {};
 
+  const imageInput = useRef();
+
+  const onClickImageUpload = () => {
+    imageInput.current.click();
+  };
   return (
     <StSignupContainer>
       <StTopNav>
@@ -147,14 +220,16 @@ const SignUp = () => {
           <StBackimage>
             <Stimage src={fileimage}></Stimage>
           </StBackimage>
-
-          <StFileInput
+          <StPostProfileBtn
             name="coverimage"
             type="file"
             accept="image/*"
             onChange={saveFileImage}
-            ref={imgRef}
-          ></StFileInput>
+            ref={imageInput}
+          />
+          <StPostChangeBtn onClick={onClickImageUpload}>
+            사진변경 {">"}
+          </StPostChangeBtn>
         </StProfileContainer>
 
         <StInputWrapper>
@@ -167,8 +242,15 @@ const SignUp = () => {
                   onChange={onNickChangeHandler}
                   placeholder="닉네임을 입력해주세요"
                 />
-                {nicklValid && <Stspan>{nickMessage}</Stspan>}
 
+                {!nicklValid && nickname.length < 11 && (
+                  <StFalSpan>닉네임 형식이 바르지 않습니다.</StFalSpan>
+                )}
+                {!nicklValid && nickname.length > 10 && (
+                  <StFalSpan>닉네임 형식이 바르지 않습니다.</StFalSpan>
+                )}
+                {isnick !== true && <StFalSpan>{nickMessage}</StFalSpan>}
+                {isnick === true && <StTruSpan>{nickMessage}</StTruSpan>}
                 {!nicklValid && nickname.length === 0 && (
                   <Stspan>닉네임을 입력해주세요</Stspan>
                 )}
@@ -191,11 +273,19 @@ const SignUp = () => {
                     type="email"
                     placeholder="이메일"
                     onChange={onEmailChangeHandler}
+                    // onClick={changeinput}
                   />
-                  {emailValid && <Stspan>{emailMessage}</Stspan>}
-                  {!emailValid && email.length > 1 && (
-                    <Stspan>이메일 형식이 바르지 않습니다.</Stspan>
+
+                  {!emailValid && email.length > 10 && (
+                    <StFalSpan>이메일 형식이 바르지 않습니다.</StFalSpan>
                   )}
+                  {!emailValid && email.length < 11 && (
+                    <StFalSpan>이메일 형식이 바르지 않습니다.</StFalSpan>
+                  )}
+                  {isemail === true && <StTruSpan>{emailMessage}</StTruSpan>}
+
+                  {isemail !== true && <StFalSpan>{emailMessage}</StFalSpan>}
+
                   {!emailValid && email.length === 0 && (
                     <Stspan>이메일을 입력해주세요</Stspan>
                   )}
@@ -210,16 +300,24 @@ const SignUp = () => {
             <Stpwinputcontainer>
               <StPsInput
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={onChangePassword}
                 type="password"
                 placeholder="비밀번호를 입력해주세요"
               />
+              {isPassword === true && <StTruSpan>{passwordMessage}</StTruSpan>}
+              {isPassword === false && <StFalSpan>{passwordMessage}</StFalSpan>}
               <StPsInput
                 value={passwordCh}
-                onChange={(e) => setPasswordCh(e.target.value)}
+                onChange={onChangePassWordCh}
                 type="password"
                 placeholder="비밀번호를 다시 한번 입력해주세요"
               />
+              {isPasswordConfirm === false && (
+                <StFalSpan>{passwordConfirmMessage}</StFalSpan>
+              )}
+              {isPasswordConfirm === true && (
+                <StTruSpan>{passwordConfirmMessage}</StTruSpan>
+              )}
             </Stpwinputcontainer>
 
             <StInputTxt>
@@ -345,7 +443,12 @@ const StInput = styled.input`
   background: #ffffff;
   /* Gray/Gray_200 */
 
-  border: 1px solid #d5dde5;
+  &:focus {
+    outline: none !important;
+    border-color: red;
+  }
+
+  border: 1px solid #1a4066;
   border-radius: 8px;
 `;
 
@@ -503,8 +606,6 @@ const Signupcontain = styled.div`
   left: 0px;
   bottom: 0px;
 
-  border: 1px solid red;
-
   /* Gray/White */
 
   background: #ffffff;
@@ -517,6 +618,7 @@ const SignBtn = styled.button`
   align-items: center;
   padding: 8px 149px;
   gap: 10px;
+  margin: 0 auto;
 
   width: 343px;
   height: 48px;
@@ -552,13 +654,38 @@ const StSignupBtn = styled.span`
   /* identical to box height, or 24px */
 
   text-align: center;
-
+  margin: 0 auto;
   /* Gray/White */
 
   color: #ffffff;
 `;
 
 const Stspan = styled.span`
+  position: absolute;
+  width: 250px;
+  height: 19px;
+  background-color: white;
+  /* Subtitle/Bold/16 */
+
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: flex-end;
+`;
+
+const StEmailField = styled.div`
+  width: 243px;
+  height: 74px;
+`;
+
+const StErrMsg = styled.div``;
+
+const StSucSpan = styled.span`
   position: absolute;
   width: 250px;
   height: 19px;
@@ -574,12 +701,92 @@ const Stspan = styled.span`
 
   display: flex;
   align-items: flex-end;
-  color: red;
+  color: blue;
 `;
 
-const StEmailField = styled.div`
-  width: 243px;
-  height: 74px;
+const StTruSpan = styled.span`
+  position: absolute;
+  width: 300px;
+  height: 19px;
+
+  color: blue;
+
+  /* Subtitle/Bold/16 */
+
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: flex-end;
 `;
 
-const StErrMsg = styled.div``;
+const StFalSpan = styled.span`
+  position: absolute;
+  width: 300px;
+  height: 19px;
+
+  color: #e5294a;
+  /* Subtitle/Bold/16 */
+
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: flex-end;
+`;
+
+const StPostProfileBtn = styled.input`
+  display: none;
+`;
+
+const StPostChangeBtn = styled.button`
+  box-sizing: border-box;
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px 16px;
+  gap: 12px;
+
+  width: 120px;
+  height: 32px;
+
+  /* Gray/White */
+
+  background: #ffffff;
+  /* Primary/Primary */
+
+  border: 1px solid #006981; /* 2px 4px 16px 0px rgba(0, 0, 0, 4%)
+  
+Small
+*/
+  box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.04);
+  border-radius: 100px;
+  cursor: pointer;
+
+  /* Button/Bold/16 */
+
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  /* identical to box height, or 24px */
+
+  display: flex;
+  align-items: center;
+
+  /* Primary/Primary */
+
+  color: #006981;
+`;

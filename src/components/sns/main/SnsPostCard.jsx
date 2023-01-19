@@ -1,22 +1,32 @@
+import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import commentIcon from "../../../asset/icon/commentIcon.svg";
 import likeIcon from "../../../asset/icon/likeIcon.svg";
-import SnsDetailCard from "../detail/SnsDetailCard";
+import { instance } from "../../../redux/api/instance";
+import likeActiveIcon from "../../../asset/icon/likeActiveIcon.svg";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 //sns 포스트카드 한 장 컴포넌트
-//SnsList.jsx로부터 받아온 데이터들을 가공해서 바인딩해주자.
 const SnsPostCard = ({ posts }) => {
   const navigate = useNavigate();
   //get한 서버 데이터 중 created_at을 정해진 디자인에 쓰기 위해 시간 포맷 바꿔주는 변수
-  const timeForCard = posts.created_at.split("T")[0].replace(/-/gi, ".");
-  // console.log(posts.created_at);
-  // console.log(timeForCard);
+  const timeForCard = posts.created_at.slice(0, 16).replace(/-/gi, ".");
 
   //상세페이지로 이동하는 함수
   const goDetailPage = () => {
     navigate(`/detail/${posts.post_id}`);
   };
+
+  const queryClient = useQueryClient();
+  const submitLike = useMutation({
+    mutationFn: async () => {
+      return await instance.patch(`/post/${posts.post_id}/like`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+  });
 
   return (
     <StCardContainer>
@@ -30,7 +40,6 @@ const SnsPostCard = ({ posts }) => {
         </div>
       </StCardHeader>
       <StCardImgBox>
-        {/* 작성사진 들어갈 자리 */}
         <StCardImg
           alt="작성사진"
           src={posts.PostImage[0].src}
@@ -39,12 +48,27 @@ const SnsPostCard = ({ posts }) => {
       </StCardImgBox>
       <StCardContent>{posts.content}</StCardContent>
       <StCardStatus>
-        {/* 좋아요, 댓글 아이콘 들어갈 자리 */}
         <StCardStatusCount>
-          <img alt="좋아요 아이콘" src={likeIcon}></img>
+          {posts.like ? (
+            <img
+              alt="좋아요 아이콘"
+              src={likeActiveIcon}
+              onClick={() => {
+                submitLike.mutate();
+              }}
+            />
+          ) : (
+            <img
+              alt="좋아요 아이콘"
+              src={likeIcon}
+              onClick={() => {
+                submitLike.mutate();
+              }}
+            />
+          )}
           <span>{posts.like_count}</span>
         </StCardStatusCount>
-        <StCardStatusCount>
+        <StCardStatusCount onClick={goDetailPage}>
           <img alt="댓글 아이콘" src={commentIcon}></img>
           <span>{posts.comment_count}</span>
         </StCardStatusCount>
@@ -56,17 +80,16 @@ const SnsPostCard = ({ posts }) => {
 export default SnsPostCard;
 
 const StCardContainer = styled.div`
-  border: 1px solid blue;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
   border-radius: 16px;
   display: flex;
   flex-direction: column;
   margin: 16px 16px 20px 16px;
-  padding: 16px 0px 20px;
+  padding: 16px 0px 16px;
   gap: 16px;
 `;
 
 const StCardHeader = styled.div`
-  border: 1px solid orange;
   display: flex;
   flex-direction: row;
   padding: 0px 16px;
@@ -92,44 +115,48 @@ const StCardHeaderCreateTime = styled.div`
 `;
 
 const StCardContent = styled.div`
-  border: 1px solid pink;
+  margin: 16px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: #3f3f3f;
 `;
 
 const StCardImgBox = styled.div`
-  border: 1px solid brown;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
 const StCardImg = styled.img`
-  width: 350px;
-  height: 350px;
+  width: 343px;
+  height: 343px;
 `;
 
 const StCardStatus = styled.div`
-  border: 1px solid skyblue;
   display: flex;
   flex-direction: row;
-  /* justify-content: flex-end; */
-  /* align-items: flex-start; */
-  /* padding: 0px 0px 0px 16px; */
-  gap: 16px;
-
+  padding-left: 16px;
   width: 145px;
   height: 32px;
+  gap: 16px;
+  width: 145px;
+  height: 32px;
+  margin-bottom: 4px;
 `;
 
 const StCardStatusCount = styled.div`
-  border: 1px solid red;
-
+  border: 1px solid #dfdfdf;
+  border-radius: 25px;
+  background: #ffffff;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 4px 10px 4px 8px;
   gap: 4px;
-
+  color: #979797;
+  font-weight: 700;
+  font-size: 18px;
   width: 58px;
   height: 32px;
 `;
