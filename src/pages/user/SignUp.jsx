@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import closeBtnIcon from "../../asset/icon/closeBtnIcon.svg";
 import duplicateIcon from "../../asset/icon/duplicateIcon.svg";
 import {
@@ -33,7 +34,9 @@ const SignUp = () => {
   const [passwordMessage, SetpasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
 
+  const navigate = useNavigate();
   //이미지 formData에 넣기
+
   //이미지 프리뷰
   const saveFileImage = (e) => {
     setFileImage(e.target.files[0]);
@@ -57,7 +60,15 @@ const SignUp = () => {
     formData.append("password", password);
     formData.append("passwordConfirm", passwordCh);
 
-    dispatch(__postSignup(formData));
+    dispatch(__postSignup(formData)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        alert("회외가입이 완료되었습니다.");
+        navigate("/login");
+      } else {
+        setEmailMessage("이메일 형식이 바르지 않습니다.");
+        setIsEmail(false);
+      }
+    });
   };
 
   //email 검사
@@ -65,6 +76,7 @@ const SignUp = () => {
     e.preventDefault();
     setEmail(e.target.value);
     setEmailMessage("");
+    setIsEmail(false);
     const regex =
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (regex.test(email)) {
@@ -79,27 +91,26 @@ const SignUp = () => {
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (regex.test(email)) {
       SetEmailValid(true);
+      const payload = {
+        email: email,
+      };
+
+      dispatch(__emailItem(payload)).then((res) => {
+        if (res.meta.requestStatus === "fulfilled") {
+          setEmailMessage("사용 가능한 이메일 입니다.");
+          setIsEmail(true);
+        } else if (res.payload === 401) {
+          setEmailMessage("이미 사용중인 이메일입니다.");
+          setIsEmail(false);
+        } else {
+          setEmailMessage("이메일 형식이 바르지 않습니다.");
+          setIsEmail(false);
+        }
+      });
     } else {
       SetEmailValid(false);
     }
     e.preventDefault();
-    const payload = {
-      email: email,
-    };
-
-    dispatch(__emailItem(payload)).then((res) => {
-      console.log(res);
-      if (res.meta.requestStatus === "fulfilled") {
-        setEmailMessage("사용 가능한 이메일 입니다.");
-        setIsEmail(true);
-      } else if (res.payload === 401) {
-        setEmailMessage("이미 사용중인 이메일입니다.");
-        setIsEmail(false);
-      } else {
-        setEmailMessage("이메일 형식이 바르지 않습니다.");
-        setIsEmail(false);
-      }
-    });
   };
 
   //nickname 검사
@@ -107,10 +118,11 @@ const SignUp = () => {
     e.preventDefault();
     setNickname(e.target.value);
     setNickeMessage("");
+    setIsNick(false);
 
     const regex =
       // eslint-disable-next-line
-      /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{1,16}$/;
+      /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{1,10}$/;
     if (regex.test(nickname)) {
       SetNickValid(true);
     } else {
@@ -122,31 +134,32 @@ const SignUp = () => {
     e.preventDefault();
     const regex =
       // eslint-disable-next-line
-      /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{1,16}$/;
+      /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
     if (regex.test(nickname)) {
-      SetNickValid(true);
-    } else {
-      SetNickValid(false);
-    }
-    const payload = {
-      nickname: nickname,
-    };
+      setIsNick(true);
+      const payload = {
+        nickname: nickname,
+      };
 
-    dispatch(__nickItem(payload)).then((res) => {
-      if (res.meta.requestStatus === "fulfilled") {
-        setNickeMessage("사용 가능한 닉네임입니다.");
-        setIsNick(true);
-        if (nicklValid(false)) {
+      dispatch(__nickItem(payload)).then((res) => {
+        if (res.meta.requestStatus === "fulfilled") {
+          setNickeMessage("사용 가능한 닉네임입니다.");
+          setIsNick(true);
+          if (nicklValid(false)) {
+            setIsNick(false);
+          }
+        } else if (res.meta.requestStatus === "rejected") {
+          setNickeMessage("이미 사용중인 닉네임입니다.");
+          setIsNick(false);
+        } else {
+          setNickeMessage("닉네임 형식이 바르지 않습니다.");
           setIsNick(false);
         }
-      } else if (res.meta.requestStatus === "rejected") {
-        setNickeMessage("이미 사용중인 닉네임입니다.");
-        setIsNick(false);
-      } else {
-        setNickeMessage("닉네임 형식이 바르지 않습니다.");
-        setIsNick(false);
-      }
-    });
+      });
+    } else {
+      setNickeMessage("닉네임 형식이 바르지 않습니다.");
+      setIsNick(false);
+    }
   };
   const onChangePassword = (e) => {
     const passwordRegex =
@@ -353,7 +366,7 @@ const StTopNav = styled.div`
 `;
 
 const StNavitem = styled.div`
-  width: 375px;
+  width: 370px;
   height: 64px;
   display: flex;
   flex-direction: column;
@@ -373,14 +386,13 @@ const StNavitem = styled.div`
 const StTextField = styled.div`
   width: 343px;
   height: 48px;
-
+  margin: 0 auto;
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
   line-height: 50px;
   text-align: center;
-  padding: 8px 16px;
 `;
 
 const StSignupList = styled.div`
@@ -423,7 +435,7 @@ const StInputWrapper = styled.div`
   padding: 0px;
 
   width: 375px;
-  height: 499px;
+  height: 575px;
 
   /* Gray/White */
 
@@ -460,11 +472,7 @@ const StNickdiv = styled.div`
   gap: 12px;
 
   width: 375px;
-  height: 191px;
-
-  /* Gray/White */
-
-  background: #ffffff;
+  height: 190px;
 
   /* Gray/White */
 
@@ -474,7 +482,7 @@ const StNickdiv = styled.div`
 const StText = styled.span`
   width: 343px;
   height: 19px;
-  padding: 16px 16px 0px 16px;
+  padding: 16px 16px 12px 16px;
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 600;
@@ -499,11 +507,12 @@ const StNIckName = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: 0px 16px 0px 16px;
+  padding: 0px;
+  margin: 0 auto;
   gap: 10px;
 
   width: 343px;
-  height: 74px;
+  height: 73px;
 `;
 
 const StPsInput = styled.input`
@@ -537,7 +546,7 @@ const StCloseImg = styled.img`
   position: absolute;
   left: 0%;
   right: 86.01%;
-  top: -18.08%;
+  top: -31.08%;
   bottom: -2.08%;
 `;
 
@@ -586,7 +595,7 @@ const StPassContainer = styled.div`
   gap: 12px;
 
   width: 375px;
-  height: 223px;
+  height: 249px;
 
   /* Gray/White */
 
@@ -597,14 +606,14 @@ const Signupcontain = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  top: 95%;
+  padding: 8px 16px 0px;
   gap: 10px;
 
   position: absolute;
   width: 375px;
   height: 83px;
   left: 0px;
-  bottom: 0px;
+  top: 100%;
 
   /* Gray/White */
 
@@ -616,7 +625,7 @@ const SignBtn = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 8px 149px;
+
   gap: 10px;
   margin: 0 auto;
 
@@ -638,11 +647,11 @@ const Stpwinputcontainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0px 16px 0px 16px;
+  margin: 0 auto;
   gap: 10px;
 
   width: 343px;
-  height: 106px;
+  height: 132px;
 `;
 
 const StSignupBtn = styled.span`
@@ -652,7 +661,9 @@ const StSignupBtn = styled.span`
   font-size: 16px;
   line-height: 150%;
   /* identical to box height, or 24px */
-
+  padding-top: 15px;
+  width: 100px;
+  height: 50px;
   text-align: center;
   margin: 0 auto;
   /* Gray/White */
@@ -708,7 +719,7 @@ const StTruSpan = styled.span`
   position: absolute;
   width: 300px;
   height: 19px;
-
+  padding-top: 6px;
   color: blue;
 
   /* Subtitle/Bold/16 */
