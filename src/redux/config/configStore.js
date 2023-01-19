@@ -4,6 +4,7 @@ import snsSlice from "../modules/snsSlice";
 
 const store = configureStore({
   reducer: { userSlice, snsSlice },
+  devTools: false,
 });
 
 export default store;

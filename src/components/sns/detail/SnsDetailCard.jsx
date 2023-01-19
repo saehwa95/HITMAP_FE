@@ -1,35 +1,42 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
-import SnsCommentList from "./SnsCommentList";
+import SnsCommentList from "../comment/SnsCommentList";
 import { instance } from "../../../redux/api/instance";
 import likeIcon from "../../../asset/icon/likeIcon.svg";
+import likeActiveIcon from "../../../asset/icon/likeActiveIcon.svg";
 import commentIcon from "../../../asset/icon/commentIcon.svg";
 import WriteCommentBar from "../../layout/bottomBar/WriteCommentBar";
 
 //sns 상세카드 한 장 컴포넌트
 const SnsDetailCard = () => {
   const { postId } = useParams();
-  const fetchAPI = () => {
-    return instance.get(`/post/${postId}`);
+  const queryClient = useQueryClient();
+  const submitLike = useMutation({
+    mutationFn: async () => {
+      return await instance.patch(`/post/${postId}/like`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["detailPost"] });
+    },
+  });
+
+  const detailPostAPI = async () => {
+    return await instance.get(`/post/${postId}`);
   };
 
-  const { data, isLoading, isError, error } = useQuery(
-    ["detailPost"],
-    fetchAPI
-  );
+  const { data, isLoading } = useQuery(["detailPost"], detailPostAPI);
   const detailData = data?.data.post;
-  // console.log(detailData);
-
+  const imageSrc = detailData?.PostImage;
   if (isLoading) {
     return <h2>Loading....</h2>;
   }
   //get한 서버 데이터 중 created_at을 정해진 디자인에 쓰기 위해 시간 포맷 바꿔주는 변수
-  const timeForCard = detailData.created_at.split("T")[0].replace(/-/gi, ".");
+  const timeForCard = detailData.created_at.slice(0, 16).replace(/-/gi, ".");
 
   return (
-    <div>
+    <StDetailCardContainer>
       <StCardHeader>
         <div>
           <StCardHeaderProfileImg
@@ -46,6 +53,9 @@ const SnsDetailCard = () => {
         <StCardImgBox>
           {/* 작성사진 들어갈 자리 */}
           <StCardImg alt="작성사진" src={detailData.PostImage[0].src} />
+          {/* <StCarouselBox>
+            <SnsDetailImageCarousel imageSrc={imageSrc} />
+          </StCarouselBox> */}
         </StCardImgBox>
         <StCardContent>{detailData.content}</StCardContent>
         <StFishNameContainer>
@@ -54,7 +64,24 @@ const SnsDetailCard = () => {
         </StFishNameContainer>
         <StCardStatusBox>
           <StCardStatusCount>
-            <img alt="좋아요 아이콘" src={likeIcon}></img>
+            {detailData.like ? (
+              <img
+                alt="좋아요 아이콘"
+                src={likeActiveIcon}
+                onClick={() => {
+                  submitLike.mutate();
+                }}
+              ></img>
+            ) : (
+              <img
+                alt="좋아요 아이콘"
+                src={likeIcon}
+                onClick={() => {
+                  submitLike.mutate();
+                }}
+              ></img>
+            )}
+
             <span>{detailData.like_count}</span>
           </StCardStatusCount>
           <StCardStatusCount>
@@ -65,14 +92,23 @@ const SnsDetailCard = () => {
       </div>
       <SnsCommentList comments={detailData.comments} />
       <WriteCommentBar />
-    </div>
+    </StDetailCardContainer>
   );
 };
 
 export default SnsDetailCard;
 
+const StDetailCardContainer = styled.div`
+  //무한스크롤처럼 보이게 땜질한 css(추후 무한스크롤 진행 예정)
+  height: 79vh;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
 const StCardHeader = styled.div`
-  border: 1px solid orange;
+  margin: 16px;
   display: flex;
   flex-direction: row;
   padding: 0px 16px;
@@ -98,19 +134,28 @@ const StCardHeaderCreateTime = styled.div`
 `;
 
 const StCardImgBox = styled.div`
-  border: 1px solid brown;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
+const StCarouselBox = styled.div`
+  border: 1px solid red;
+  height: 200px;
+  width: 200px;
+`;
+
 const StCardImg = styled.img`
-  width: 350px;
-  height: 350px;
+  width: 342px;
+  height: 342px;
 `;
 
 const StCardContent = styled.div`
-  border: 1px solid pink;
+  margin: 16px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: #3f3f3f;
 `;
 
 const StFishNameContainer = styled.div`
@@ -118,10 +163,9 @@ const StFishNameContainer = styled.div`
   align-items: flex-start;
   flex-direction: column;
   gap: 8px;
-  width: 343px;
   height: 85px;
-  margin: 8px;
-  padding: 8px;
+  margin: 16px;
+  padding: 16px;
   background: #f6f6f6;
   border-radius: 8px;
 `;
@@ -141,17 +185,27 @@ const StFishName = styled.div`
 const StCardStatusBox = styled.div`
   display: flex;
   flex-direction: row;
+  padding-left: 16px;
+  width: 145px;
+  height: 32px;
+  gap: 16px;
+  width: 145px;
+  height: 32px;
+  margin-bottom: 4px;
 `;
 
 const StCardStatusCount = styled.div`
-  border: 1px solid red;
-
+  border: 1px solid #dfdfdf;
+  border-radius: 25px;
+  background: #ffffff;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 4px 10px 4px 8px;
   gap: 4px;
+  color: #979797;
+  font-weight: 700;
+  font-size: 18px;
   width: 58px;
   height: 32px;
 `;
