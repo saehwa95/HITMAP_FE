@@ -25,7 +25,7 @@ HITMAP은 낚시에서 가장 중요한 날씨와 낚시의 정보를 교류할 
 |:---:|:---|:---|
 |[장세화](https://github.com/saehwa95)|FE(VL)|- 지도 검색<br> - 날씨정보 제공<br>|
 |[정창원](https://github.com/jungjang)|FE|- 게시글 CRUD<br> - 댓글 CRUD <br> - 좋아요기능|
-|[조형준](https://github.com/cho98)|BE|- 로그인<br>- 회원가입<br>- 로그아웃<br>|
+|[조형준](https://github.com/cho98)|FE|- 로그인<br>- 회원가입<br>- 로그아웃<br>|
 
 
 ### 💻개발환경
