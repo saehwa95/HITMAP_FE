@@ -21,6 +21,17 @@ HITMAP은 낚시에서 가장 중요한 날씨와 낚시의 정보를 교류할 
 
 
 ### ⚙주요기능
+- 지도 검색
+  - 원하는 지역 검색 기능
+- 날씨정보 제공 
+  - 해당 지역 검색 후 그 지역의 날씨와 바다 상황 정보 제공
+- SNS 기능
+  - 잡은 물고기나 낚시 관한 정보 게시
+  - 작성된 게시글에 대한 댓글 기능
+  - 다른 클라이언트가 작성한 게시글이 마음에 들 경우 좋아요 기능
+- 회원가입/로그인 기능
+  - 비회원시 : 지도, 날씨, SNS Read기능만 가능
+  - 회원가입시 : SNS 작성과 댓글, 좋아요, 마이페이지 기능 사용 가능
 
 
 ### 👪팀 구성
@@ -35,6 +46,7 @@ HITMAP은 낚시에서 가장 중요한 날씨와 낚시의 정보를 교류할 
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/ReduxToolkit-764ABC?style=for-the-badge&logo=Redux&logoColor=white"> <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white"> <img src="https://img.shields.io/badge/ReactQuery-FF4154?style=for-the-badge&logo=ReactQuery&logoColor=white"> <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"> <img src="https://img.shields.io/badge/AmazonS3-569A31?style=for-the-badge&logo=Amazon-S3&logoColor=white">
 
 ### 🛠서비스 아키텍쳐
+<img src="https://user-images.githubusercontent.com/109060295/213470938-40a9e7a2-9d98-4d3e-ac57-49829e3c69e2.png" />
 
 ### 📌기술적 의사결정
 <details>
