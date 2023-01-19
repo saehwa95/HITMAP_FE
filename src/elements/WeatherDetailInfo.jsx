@@ -8,7 +8,6 @@ const WeatherDetailInfo = ({ weatherData }) => {
     <>
       {weatherList?.map((value, index) => {
         const wind = value.wind_deg;
-
         const windDeg = () => {
           if (wind === 0) {
             return "북";
@@ -31,7 +30,7 @@ const WeatherDetailInfo = ({ weatherData }) => {
         return (
           <WeatherDetailInfoWrapper key={`weather-info-${index}`}>
             <div className="time">
-              <span>{value?.date}</span>
+              <span>{value?.time}</span>
             </div>
             <div>
               <div className="temp same_height">
