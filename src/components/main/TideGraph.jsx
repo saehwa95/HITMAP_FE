@@ -4,7 +4,6 @@ import { AreaChart, Area, Tooltip, YAxis } from "recharts";
 
 const TideGraph = ({ weatherData }) => {
   const tideInfo = weatherData?.tide_info;
-  console.log(tideInfo);
 
   return (
     <TideInfoWrapper>
