@@ -24,6 +24,7 @@ const CommentUpdateModal = ({
 
   //댓글 업데이트 Mutation
   const queryClient = useQueryClient();
+
   const updateComment = useMutation({
     mutationFn: async (commentUpdate) => {
       return await instance.patch(`/comment/${list.comment_id}`, commentUpdate);
@@ -43,12 +44,13 @@ const CommentUpdateModal = ({
       />
       <StInputContainer>
         <StUpdateCommentInput
-          placeholder={list.comment}
+          defaultValue={list.comment}
           onChange={onChangeCommentHandler}
         />
       </StInputContainer>
       <StButtonBox>
         <StButton
+          disabled={!comment}
           onClick={() => {
             updateComment.mutate({ content: comment });
           }}
@@ -108,7 +110,7 @@ const StButton = styled.button`
   height: 48px;
   color: white;
   border: none;
-  background-color: #006981;
+  background-color: ${(props) => (props.disabled ? "#A6CAD3" : "#006981")};
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;
