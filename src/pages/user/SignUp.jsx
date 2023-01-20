@@ -27,7 +27,7 @@ const SignUp = () => {
   const [isPassword, SetisPassword] = useState(false);
   const [isPasswordConfirm, SetisPasswordConfirm] = useState(false);
   const [notAllow, setNotAllow] = useState(true);
-  const [inputchange, setInputChange] = useState(true);
+
   //오류메시지 상태저장
   const [nickMessage, setNickeMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
@@ -36,8 +36,6 @@ const SignUp = () => {
 
   const navigate = useNavigate();
   //이미지 formData에 넣기
-
-  //이미지 프리뷰
   const saveFileImage = (e) => {
     setFileImage(e.target.files[0]);
 
@@ -62,7 +60,7 @@ const SignUp = () => {
 
     dispatch(__postSignup(formData)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
-        alert("회외가입이 완료되었습니다.");
+        alert("회원가입이 완료되었습니다.");
         navigate("/login");
       } else {
         setEmailMessage("이메일 형식이 바르지 않습니다.");
@@ -71,12 +69,13 @@ const SignUp = () => {
     });
   };
 
-  //email 검사
+  //email 유효성 확인
   const onEmailChangeHandler = (e) => {
     e.preventDefault();
     setEmail(e.target.value);
     setEmailMessage("");
     setIsEmail(false);
+
     const regex =
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (regex.test(email)) {
@@ -85,12 +84,14 @@ const SignUp = () => {
       SetEmailValid(false);
     }
   };
-
+  //email 유효성 서버
   const onemail = (e) => {
-    const regex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    if (regex.test(email)) {
-      SetEmailValid(true);
+    const regexcom =
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.com/;
+    const regexnet =
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.net/;
+    if (regexcom.test(email) || regexnet.test(email)) {
+      setIsEmail(true);
       const payload = {
         email: email,
       };
@@ -108,12 +109,12 @@ const SignUp = () => {
         }
       });
     } else {
-      SetEmailValid(false);
+      setEmailMessage("이메일 형식이 바르지 않습니다");
+      setIsEmail(false);
     }
-    e.preventDefault();
   };
 
-  //nickname 검사
+  //nickname 유효성 검사
   const onNickChangeHandler = (e) => {
     e.preventDefault();
     setNickname(e.target.value);
@@ -129,7 +130,7 @@ const SignUp = () => {
       SetNickValid(false);
     }
   };
-
+  //nickname 유효성 서버
   const onnick = (e) => {
     e.preventDefault();
     const regex =
@@ -161,6 +162,7 @@ const SignUp = () => {
       setIsNick(false);
     }
   };
+  //password 유효성 검사
   const onChangePassword = (e) => {
     const passwordRegex =
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
@@ -175,7 +177,7 @@ const SignUp = () => {
       SetisPassword(true);
     }
   };
-
+  //paassword 확인
   const onChangePassWordCh = (e) => {
     const passwordeConfirmCurrent = e.target.value;
     setPasswordCh(passwordeConfirmCurrent);
@@ -190,6 +192,7 @@ const SignUp = () => {
     }
   };
 
+  //회원가입 버튼 활성화/비활성화
   useEffect(() => {
     if (
       isemail &&
@@ -212,11 +215,18 @@ const SignUp = () => {
   //  };
   // const submitOnclickHandler = () => {};
 
+  // 프리뷰 이미지
   const imageInput = useRef();
 
   const onClickImageUpload = () => {
     imageInput.current.click();
   };
+
+  //뒤로가기 버튼
+  const onClickbackmain = (e) => {
+    navigate("/");
+  };
+
   return (
     <StSignupContainer>
       <StTopNav>
@@ -224,7 +234,7 @@ const SignUp = () => {
         <StNavitem>
           <StTextField>
             회원가입
-            <StCloseImg src={closeBtnIcon} alt="" />
+            <StCloseImg src={closeBtnIcon} alt="" onClick={onClickbackmain} />
           </StTextField>
         </StNavitem>
       </StTopNav>
@@ -289,12 +299,10 @@ const SignUp = () => {
                     // onClick={changeinput}
                   />
 
-                  {!emailValid && email.length > 10 && (
+                  {!emailValid && (
                     <StFalSpan>이메일 형식이 바르지 않습니다.</StFalSpan>
                   )}
-                  {!emailValid && email.length < 11 && (
-                    <StFalSpan>이메일 형식이 바르지 않습니다.</StFalSpan>
-                  )}
+
                   {isemail === true && <StTruSpan>{emailMessage}</StTruSpan>}
 
                   {isemail !== true && <StFalSpan>{emailMessage}</StFalSpan>}
@@ -354,15 +362,20 @@ const SignUp = () => {
 
 export default SignUp;
 
-const StSignupContainer = styled.div``;
+const StSignupContainer = styled.div`
+  position: relative;
+  width: 373px;
+  height: 812px;
+
+  /* Gray/White */
+
+  background: #ffffff;
+`;
 
 const StTopNav = styled.div`
   position: absolute;
   width: 375px;
   height: 108px;
-
-  left: 0px;
-  top: 0px;
 `;
 
 const StNavitem = styled.div`
@@ -386,13 +399,20 @@ const StNavitem = styled.div`
 const StTextField = styled.div`
   width: 343px;
   height: 48px;
+  padding-top: 20px;
   margin: 0 auto;
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
-  font-size: 18px;
-  line-height: 50px;
+  font-size: 20px;
+  line-height: 24px;
+  /* identical to box height */
+
   text-align: center;
+
+  /* Gray/Black */
+
+  color: #1f1f1f;
 `;
 
 const StSignupList = styled.div`
@@ -419,8 +439,6 @@ const StProfileContainer = styled.div`
   height: 177px;
 `;
 
-const StFileInput = styled.input``;
-
 const Stimage = styled.img`
   width: 100px;
   height: 100px;
@@ -432,7 +450,6 @@ const StInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0px;
 
   width: 375px;
   height: 575px;
@@ -507,7 +524,7 @@ const StNIckName = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: 0px;
+
   margin: 0 auto;
   gap: 10px;
 
@@ -535,11 +552,6 @@ const StPsInput = styled.input`
 const StStatusBar = styled.div`
   width: 375px;
   height: 44px;
-  position: absolute;
-  left: 0%;
-  right: 0%;
-  top: 0%;
-  bottom: 94.58%;
 `;
 
 const StCloseImg = styled.img`
@@ -626,7 +638,6 @@ const SignBtn = styled.button`
   justify-content: center;
   align-items: center;
 
-  gap: 10px;
   margin: 0 auto;
 
   width: 343px;
@@ -638,7 +649,7 @@ const SignBtn = styled.button`
   border-radius: 8px;
 
   :disabled {
-    background: #c2c2c2;
+    background: #a6cad3;
     border-radius: 8px;
   }
 `;
@@ -695,25 +706,6 @@ const StEmailField = styled.div`
 `;
 
 const StErrMsg = styled.div``;
-
-const StSucSpan = styled.span`
-  position: absolute;
-  width: 250px;
-  height: 19px;
-
-  /* Subtitle/Bold/16 */
-
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
-  /* identical to box height */
-
-  display: flex;
-  align-items: flex-end;
-  color: blue;
-`;
 
 const StTruSpan = styled.span`
   position: absolute;
