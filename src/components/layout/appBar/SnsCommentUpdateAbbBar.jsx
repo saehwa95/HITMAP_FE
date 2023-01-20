@@ -1,8 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import closeButton from "../../../asset/button/closeButton.svg";
 import StatusBar from "./StatusBar";
+import closeButton from "../../../asset/button/closeButton.svg";
 
 const SnsCommentUpdateAbbBar = ({
   setMoreButtonModal,
@@ -54,6 +53,7 @@ const StSnsCommentUpdateAbbBarIcon = styled.img`
   margin-left: 16px;
   background: #dfdfdf;
   border-radius: 16px;
+  cursor: pointer;
 `;
 
 const StAppBarTitle = styled.div`
