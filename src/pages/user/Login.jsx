@@ -23,8 +23,8 @@ const Login = () => {
     dispatch(__postSignin({ email: userEmail, password: userPw })).then(
       (res) => {
         if (res.meta.requestStatus === "fulfilled") {
-          navigate("/weather");
-          alert("로그인완료");
+          navigate("/");
+          alert("로그인 완료");
         } else {
           setNotLoginMessage("이메일 또는 비밀번호를 확인해주세요");
           setNotLogin(false);

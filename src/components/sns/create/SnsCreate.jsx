@@ -256,7 +256,7 @@ const StFishNameInput = styled.input`
 `;
 
 const StButtonBox = styled.div`
-  margin-top: 183px;
+  margin-top: 100px;
   padding: 8px 16px 27px 16px;
   width: 375px;
   height: 83px;
