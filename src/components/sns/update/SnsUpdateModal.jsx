@@ -3,20 +3,18 @@ import { useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
 import { instance } from "../../../redux/api/instance";
-// import SnsCommentList from "./SnsCommentList";
-
 import SnsUpdateAppBar from "../../layout/appBar/SnsUpdateAppBar";
+
 //sns 상세카드 한 장 컴포넌트
 const SnsUpdateModal = ({ setUpdateModal, setMoreButtonModal }) => {
   const { postId } = useParams();
 
   const [input, setInput] = useState({ content: "", fishName: "" });
-
   const onChangeTextHandler = (e) => {
     const { value, name } = e.target;
     setInput({ ...input, [name]: value });
   };
-  console.log(input);
+
   //해당 게시글 정보 가져오는 useQuery
   const detailPostAPI = async () => {
     return await instance.get(`/post/${postId}`);
@@ -25,19 +23,18 @@ const SnsUpdateModal = ({ setUpdateModal, setMoreButtonModal }) => {
   const dataForUpdate = data?.data.post;
 
   const queryClient = useQueryClient();
-
-  const formData = new FormData();
-  formData.append("content", input.content);
-  formData.append("fishName", input.fishName);
-
   const updateMain = useMutation({
-    mutationFn: async (formData) => {
-      return await instance.patch(`/post/${postId}`, formData);
+    mutationFn: async ({ content, fishName }) => {
+      return await instance.patch(`/post/${postId}`, {
+        content,
+        fishName,
+      });
     },
     onSuccess: () => {
       alert("게시글 수정 완료");
-      // queryClient.invalidateQueries({ queryKey: ["detailPost"] });
-      // navigate("/postlist");
+      setUpdateModal(false);
+      setMoreButtonModal(false);
+      queryClient.invalidateQueries({ queryKey: ["detailPost"] });
     },
   });
 
@@ -63,27 +60,32 @@ const SnsUpdateModal = ({ setUpdateModal, setMoreButtonModal }) => {
         </StImageBoxScrollDiv>
         <StUpdateContent
           name="content"
-          value={input.content}
+          maxLength="150"
+          defaultValue={dataForUpdate.content}
           onChange={onChangeTextHandler}
-          placeholder={dataForUpdate.content}
+          placeholder="내용을 입력해주세요.(최대 150자)"
         ></StUpdateContent>
         <StUpdateFishNameBox>
           <StUpdateFishNameLabel>조황정보</StUpdateFishNameLabel>
           <StUpdateFishName
             name="fishName"
-            value={input.fishName}
+            maxLength="20"
+            defaultValue={dataForUpdate.fishName}
             onChange={onChangeTextHandler}
-            placeholder={dataForUpdate.fishName}
+            placeholder="조황 정보를 입력해주세요.(최대 20자)"
           ></StUpdateFishName>
         </StUpdateFishNameBox>
       </StUpdateBody>
       <StButtonBox>
         <StButton
-          type="submit"
           onClick={(e) => {
             e.preventDefault();
-            updateMain.mutate(formData);
+            updateMain.mutate({
+              content: input.content,
+              fishName: input.fishName,
+            });
           }}
+          disabled={!(input.fishName && input.content)}
         >
           등록하기
         </StButton>
@@ -120,9 +122,8 @@ const StUpdateBody = styled.div`
 const StImageBoxScrollDiv = styled.div`
   width: 343px;
   overflow-x: scroll;
-  //업로드된 게시물 사진들 보여주는 x축 스크롤바
   ::-webkit-scrollbar {
-    display: none;
+    /* display: none; */
   }
 `;
 
@@ -202,7 +203,7 @@ const StButton = styled.button`
   height: 48px;
   color: white;
   border: none;
-  background-color: #006981;
+  background-color: ${(props) => (props.disabled ? "#A6CAD3" : "#006981")};
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;
