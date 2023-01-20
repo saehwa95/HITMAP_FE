@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import styled from "styled-components";
 import { instance } from "../../../redux/api/instance";
 import SnsCreateAppBar from "../../layout/appBar/SnsCreateAppBar";
-import { useNavigate } from "react-router-dom";
+import deletePhotoButton from "../../../asset/button/deletePhotoButton.svg";
 
 const SnsCreate = () => {
   const navigate = useNavigate();
   const [input, setInput] = useState({ content: "", fishName: "" });
+
   // 서버로 보낼 이미지 데이터
   const [postImages, setPostImages] = useState([]);
   const imageLength = postImages.length;
@@ -42,6 +44,14 @@ const SnsCreate = () => {
     },
   });
 
+  //미리보기 삭제 함수
+  const onDeletePreviewImg = (id) => {
+    const newPreviewList = Array.from(postImages).filter(
+      (_, index) => index !== id
+    );
+    setPostImages(newPreviewList);
+  };
+
   return (
     <div>
       <SnsCreateAppBar />
@@ -49,48 +59,61 @@ const SnsCreate = () => {
         <StImageBox>
           <StImageLabel>사진 선택 (최대 5장)</StImageLabel>
           <StImageFileBox>
-            <StImageLabelButton htmlFor="input-file">
-              +
-              <input
-                type="file"
-                id="input-file"
-                accept="image/*"
-                style={{ display: "none" }}
-                onChange={onChangImages}
-                multiple
-              />
-            </StImageLabelButton>
+            <div>
+              <StImageLabelButton htmlFor="input-file">
+                +
+                <input
+                  type="file"
+                  id="input-file"
+                  accept="image/jpeg, image/jpg, image/png"
+                  style={{ display: "none" }}
+                  onChange={onChangImages}
+                  multiple
+                />
+              </StImageLabelButton>
+            </div>
             <StPreviewImgContainer>
-              {Array.from(postImages).map((item) => {
+              {Array.from(postImages).map((item, id) => {
                 return (
                   <div key={item.lastModified}>
-                    <StImgPreview
-                      alt="미리보기이미지"
-                      src={item ? URL.createObjectURL(item) : null}
-                    />
+                    <StImgPreviewContainer>
+                      <StImgPreview
+                        alt="미리보기이미지"
+                        src={item ? URL.createObjectURL(item) : null}
+                      />
+                      <StImgPreviewDeleteButton
+                        alt=""
+                        src={deletePhotoButton}
+                        onClick={() => {
+                          onDeletePreviewImg(id);
+                        }}
+                      />
+                    </StImgPreviewContainer>
                   </div>
                 );
               })}
             </StPreviewImgContainer>
           </StImageFileBox>
         </StImageBox>
-
         <StContentInputBox>
           <StContentInput
             type="text"
+            maxLength="150"
             name="content"
             value={input.content}
             onChange={onChangeTextHandler}
-            placeholder="Sample text"
+            placeholder="내용을 작성해주세요.(최대 150자)"
           />
         </StContentInputBox>
         <StFishNameBox>
           <StFishNameLabel>조황정보</StFishNameLabel>
           <StFishNameInput
             type="text"
+            maxLength="20"
             name="fishName"
             value={input.fishName}
             onChange={onChangeTextHandler}
+            placeholder="어종을 작성해주세요.(최대 20자)"
           />
         </StFishNameBox>
         <StButtonBox>
@@ -100,6 +123,9 @@ const SnsCreate = () => {
               e.preventDefault();
               postMain.mutate(formData);
             }}
+            disabled={
+              !(input.fishName && input.content && !(postImages.length === 0))
+            }
           >
             작성하기
           </StButton>
@@ -116,12 +142,26 @@ const StCreateContainer = styled.form`
 `;
 
 const StPreviewImgContainer = styled.div`
+  padding-top: 10px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   flex-direction: row;
-  gap: 7px;
-  border: 1px solid red;
+  height: 118px;
+  gap: 16px;
+  overflow-x: scroll;
+  ::-webkit-scrollbar {
+    /* display: none; */
+  }
+`;
+
+const StImageBox = styled.div`
+  margin: 0 16px 10px 16px;
+  padding: 16px 0 0 0;
+`;
+
+const StImgPreviewContainer = styled.div`
+  position: relative;
 `;
 
 const StImgPreview = styled.img`
@@ -130,15 +170,18 @@ const StImgPreview = styled.img`
   border-radius: 8px;
 `;
 
-const StImageBox = styled.div`
-  border: 1px solid blue;
-  margin: 0 16px;
-  padding: 16px 0 16px 0;
+const StImgPreviewDeleteButton = styled.img`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  top: -8px;
+  right: -8px;
 `;
 
 const StImageLabel = styled.label`
-  border: 1px solid blue;
-
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;
@@ -146,24 +189,24 @@ const StImageLabel = styled.label`
 `;
 
 const StImageFileBox = styled.div`
-  border: 1px solid brown;
   display: flex;
   flex-direction: row;
   padding: 4px 0 4px 0;
-  height: 94px;
-  /* overflow-x: scroll;
-  //업로드된 게시물 사진들 보여주는 x축 스크롤바
-  ::-webkit-scrollbar {
-    display: none;
-  } */
+  height: 126px;
 `;
 
 const StImageLabelButton = styled.label`
+  transform: translateY(10px);
+  display: flex;
+  align-items: inherit;
+  justify-content: center;
   width: 84px;
   height: 84px;
+  margin-right: 16px;
   background: #979797;
   border-radius: 8px;
   font-size: 48px;
+  font-weight: 100;
   color: white;
 `;
 
@@ -225,7 +268,7 @@ const StButton = styled.button`
   height: 48px;
   color: white;
   border: none;
-  background-color: #006981;
+  background-color: ${(props) => (props.disabled ? "#A6CAD3" : "#006981")};
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;
