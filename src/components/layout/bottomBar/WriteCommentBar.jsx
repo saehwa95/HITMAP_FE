@@ -1,6 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
 import { instance } from "../../../redux/api/instance";
 import { getCookie } from "../../../shared/cookie";
@@ -44,12 +44,16 @@ const WriteCommentBar = () => {
         />
         <StTextBar>
           <StTextInput
+            maxLength="20"
             onChange={onChangeCommentHandler}
-            placeholder="댓글 남기기"
+            placeholder="댓글 남기기(최대 20자)"
+            value={comment}
           />
           <StSendButton
+            // disalbed={comment ? true : false}
             onClick={() => {
               postComment.mutate({ content: comment });
+              setComment("");
             }}
           >
             등록
@@ -64,8 +68,6 @@ export default WriteCommentBar;
 
 const StWriteCommentBarContainer = styled.div`
   box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
-  /* background-color: white; */
-  /* border: 1px solid red; */
   bottom: 0px;
   width: 375px;
 

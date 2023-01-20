@@ -22,5 +22,5 @@ const StSnsCommentListContainer = styled.div`
 
 const StTopBlank = styled.div`
   height: 16px;
-  background-color: #f6f6f6; ;
+  background-color: #f6f6f6;
 `;

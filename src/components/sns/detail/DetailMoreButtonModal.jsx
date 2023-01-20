@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import React, { useState } from "react";
+import styled from "styled-components";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import SnsUpdateModal from "../update/SnsUpdateModal";
 
@@ -51,6 +51,7 @@ const StModalContainer = styled.div`
   height: 112px;
   left: 209px;
   top: 92px;
+  z-index: 1000;
 `;
 
 const StGoUpdatePageButton = styled.button`
