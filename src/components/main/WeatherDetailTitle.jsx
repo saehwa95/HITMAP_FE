@@ -20,7 +20,6 @@ const WeatherDetailInfo = () => {
         <div className="wind_speed same_height">
           <span>풍속</span>
         </div>
-
         <div className="tide_info">
           <span>조석</span>
         </div>
@@ -33,7 +32,7 @@ export default React.memo(WeatherDetailInfo);
 
 const WeatherDetailTitleWrapper = styled.div`
   width: 64px;
-  height: 800px;
+  height: 704px;
   background-color: #f6f6f6;
   border-right: 1px solid #ececec;
   span {
@@ -70,6 +69,7 @@ const WeatherDetailTitleWrapper = styled.div`
     gap: 2px;
   }
   .tide_info {
-    height: 384px;
+    height: 385px;
+    background-color: #f6f6f6;
   }
 `;

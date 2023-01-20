@@ -4,24 +4,27 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { instance } from "../../redux/api/instance";
+import { useDispatch } from "react-redux";
+
+import { __logOut } from "../../redux/modules/userSlice";
 
 import ModalBasic from "../../components/myPage/ModalBasic";
 import moreIcon from "../../asset/icon/moreIcon.svg";
 
 import commentIcon from "../../asset/icon/commentIcon.svg";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 
 const MyPage = () => {
-  const { userId } = useParams();
+  // const { userId } = useParams();
   const [modalOpen, setModalOpen] = useState(false);
-
+  const dispatch = useDispatch();
   const myInf = () => {
     return instance.get(`/me`);
   };
   const { data, isLoading, isError, error } = useQuery(["myPage"], myInf);
 
   const myData = data?.data;
-  console.log(data?.profile_image);
+
   if (isLoading) {
     return <h1>로딩중</h1>;
   }
@@ -37,8 +40,17 @@ const MyPage = () => {
     setModalOpen(true);
   };
 
+  const logoutOnclickHandler = (e) => {
+    e.preventDefault();
+
+    dispatch(__logOut());
+  };
+
   return (
     <>
+      <StLogoutBtn onClick={(e) => logoutOnclickHandler(e)}>
+        로그아웃
+      </StLogoutBtn>
       <StTitle>마이페이지</StTitle>
       <StMyContainer>
         <StMyPost>
@@ -624,3 +636,11 @@ const StPostListComment = styled.div`
 `;
 
 const StCommentIcon = styled.img``;
+
+const StLogoutBtn = styled.button`
+  width: 90px;
+  height: 50px;
+  display: flex;
+
+  float: right;
+`;
