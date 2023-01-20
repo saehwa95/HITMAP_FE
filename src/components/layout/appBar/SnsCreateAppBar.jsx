@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import closeButton from "../../../asset/button/closeButton.svg";
 import StatusBar from "./StatusBar";
+import closeButton from "../../../asset/button/closeButton.svg";
 
 const SnsCreateAppBar = () => {
   const navigate = useNavigate();
@@ -48,6 +48,7 @@ const StSnsCreateAppBarIcon = styled.img`
   margin-left: 16px;
   background: #dfdfdf;
   border-radius: 16px;
+  cursor: pointer;
 `;
 
 const StAppBarTitle = styled.div`

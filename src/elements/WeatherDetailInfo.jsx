@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import TideGraph from "../components/main/TideGraph";
 
 const WeatherDetailInfo = ({ weatherData }) => {
   const weatherList = weatherData?.weather;
+
   return (
-    <>
+    <Wrapper>
       {weatherList?.map((value, index) => {
         const wind = value.wind_deg;
         const windDeg = () => {
@@ -25,6 +25,8 @@ const WeatherDetailInfo = ({ weatherData }) => {
             return "서";
           } else if (wind > 270 && wind < 360) {
             return "북서";
+          } else if (wind === 360) {
+            return "북";
           }
         };
         return (
@@ -54,12 +56,15 @@ const WeatherDetailInfo = ({ weatherData }) => {
           </WeatherDetailInfoWrapper>
         );
       })}
-      <TideGraph weatherData={weatherData} />
-    </>
+    </Wrapper>
   );
 };
 
 export default React.memo(WeatherDetailInfo);
+
+const Wrapper = styled.div`
+  display: flex;
+`;
 
 const WeatherDetailInfoWrapper = styled.div`
   width: 64px;

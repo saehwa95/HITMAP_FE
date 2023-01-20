@@ -1,6 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import styled from "styled-components";
 import { instance } from "../../../redux/api/instance";
 
@@ -66,7 +66,6 @@ const StDeleteConfirmBox = styled.div`
   height: 164px;
   display: flex;
   align-items: center;
-  /* justify-content: center; */
   flex-direction: column;
   background: #ffffff;
   box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);

@@ -27,5 +27,4 @@ const Container = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  border: 1px solid #808080;
 `;

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
+import { instance } from "../../../redux/api/instance";
+import { getCookie } from "../../../shared/cookie";
 import StatusBar from "./StatusBar";
+import DetailMoreButtonModal from "../../sns/detail/DetailMoreButtonModal";
 import backButton from "../../../asset/button/backButton.svg";
 import moreButton from "../../../asset/button/moreButton.svg";
-import DetailMoreButtonModal from "../../sns/detail/DetailMoreButtonModal";
-import { instance } from "../../../redux/api/instance";
-import { useQuery } from "@tanstack/react-query";
-import { getCookie } from "../../../shared/cookie";
 
 const SnsDetailAppBar = () => {
   const navigate = useNavigate();
@@ -82,9 +82,11 @@ const StBackIconBackGround = styled.div`
 const StBackIconImg = styled.img`
   width: 48px;
   height: 48px;
+  cursor: pointer;
 `;
 
 const StMoreIconImg = styled.img`
   width: 48px;
   height: 48px;
+  cursor: pointer;
 `;

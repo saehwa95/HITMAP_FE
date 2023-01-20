@@ -1,44 +1,76 @@
 import React from "react";
+import styled from "styled-components";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+// import clickIcon from "../../../asset/icon/clickIcon.svg";
+
+// const SampleNextArrow = (props) => {
+//   const { className, style, onClick } = props;
+//   return (
+//     <div
+//       className={className}
+//       style={{ ...style, display: "block", background: "gray" }}
+//       onClick={onClick}
+//     />
+//   );
+// };
+
+// const SamplePrevArrow = (props) => {
+//   const { className, style, onClick } = props;
+//   return (
+//     <StArrow
+//       className={className}
+//       // src={clickIcon}
+//       style={{ ...style, display: "block", background: "green" }}
+//       onClick={onClick}
+//     />
+//   );
+// };
 
 const SnsDetailCarousel = ({ imageSrc }) => {
-  console.log(imageSrc[1].src);
+  const settings = {
+    dots: true,
+    fade: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    // nextArrow: <SampleNextArrow />,
+    // prevArrow: <SamplePrevArrow />,
+  };
   return (
-    <div
-      id="carouselExampleControls"
-      class="carousel slide"
-      data-bs-ride="carousel"
-    >
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src={imageSrc[0].src} class="d-block w-100" alt="..." />
-        </div>
-        <div class="carousel-item">
-          <img src={imageSrc[1].src} class="d-block w-100" alt="..." />
-        </div>
-        <div class="carousel-item">
-          <img src={imageSrc[2].src} class="d-block w-100" alt="..." />
-        </div>
+    <div>
+      <div>
+        <Slider {...settings}>
+          {imageSrc.map((item) => {
+            return (
+              <StCardImgBackground key={item.src}>
+                <StCardImg alt="" src={item.src} />
+              </StCardImgBackground>
+            );
+          })}
+        </Slider>
       </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExampleControls"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExampleControls"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
     </div>
   );
 };
 
 export default SnsDetailCarousel;
+
+const StCardImgBackground = styled.div`
+  width: 343px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StCardImg = styled.img`
+  width: 343px;
+  /* height: 343px; */
+`;
+
+// const StArrow = styled.div`
+//   width: 24px;
+//   height: 24px;
+// `;

@@ -2,12 +2,13 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
-import SnsCommentList from "../comment/SnsCommentList";
 import { instance } from "../../../redux/api/instance";
+import SnsDetailCarousel from "./SnsDetailCarousel";
+import WriteCommentBar from "../../layout/bottomBar/WriteCommentBar";
+import SnsCommentList from "../comment/SnsCommentList";
 import likeIcon from "../../../asset/icon/likeIcon.svg";
 import likeActiveIcon from "../../../asset/icon/likeActiveIcon.svg";
 import commentIcon from "../../../asset/icon/commentIcon.svg";
-import WriteCommentBar from "../../layout/bottomBar/WriteCommentBar";
 
 //sns 상세카드 한 장 컴포넌트
 const SnsDetailCard = () => {
@@ -52,10 +53,10 @@ const SnsDetailCard = () => {
       <div>
         <StCardImgBox>
           {/* 작성사진 들어갈 자리 */}
-          <StCardImg alt="작성사진" src={detailData.PostImage[0].src} />
-          {/* <StCarouselBox>
-            <SnsDetailImageCarousel imageSrc={imageSrc} />
-          </StCarouselBox> */}
+          {/* <StCardImg alt="작성사진" src={detailData.PostImage[0].src} /> */}
+          <StCarouselBox>
+            <SnsDetailCarousel imageSrc={imageSrc} />
+          </StCarouselBox>
         </StCardImgBox>
         <StCardContent>{detailData.content}</StCardContent>
         <StFishNameContainer>
@@ -63,7 +64,7 @@ const SnsDetailCard = () => {
           <StFishName>{detailData.fishName}</StFishName>
         </StFishNameContainer>
         <StCardStatusBox>
-          <StCardStatusCount>
+          <StLikeStatusCount>
             {detailData.like ? (
               <img
                 alt="좋아요 아이콘"
@@ -83,11 +84,11 @@ const SnsDetailCard = () => {
             )}
 
             <span>{detailData.like_count}</span>
-          </StCardStatusCount>
-          <StCardStatusCount>
+          </StLikeStatusCount>
+          <StCommentStatusCount>
             <img alt="댓글 아이콘" src={commentIcon}></img>
             <span>{detailData.comment_count}</span>
-          </StCardStatusCount>
+          </StCommentStatusCount>
         </StCardStatusBox>
       </div>
       <SnsCommentList comments={detailData.comments} />
@@ -134,21 +135,21 @@ const StCardHeaderCreateTime = styled.div`
 `;
 
 const StCardImgBox = styled.div`
+  padding-bottom: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
 const StCarouselBox = styled.div`
-  border: 1px solid red;
-  height: 200px;
-  width: 200px;
+  width: 342px;
+  /* height: 342px; */
 `;
 
-const StCardImg = styled.img`
-  width: 342px;
-  height: 342px;
-`;
+// const StCardImg = styled.img`
+//   width: 342px;
+//   height: 342px;
+// `;
 
 const StCardContent = styled.div`
   margin: 16px;
@@ -194,7 +195,24 @@ const StCardStatusBox = styled.div`
   margin-bottom: 4px;
 `;
 
-const StCardStatusCount = styled.div`
+const StLikeStatusCount = styled.div`
+  border: 1px solid #dfdfdf;
+  border-radius: 25px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  color: #979797;
+  font-weight: 700;
+  font-size: 18px;
+  width: 58px;
+  height: 32px;
+  cursor: pointer;
+`;
+
+const StCommentStatusCount = styled.div`
   border: 1px solid #dfdfdf;
   border-radius: 25px;
   background: #ffffff;

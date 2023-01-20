@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import closeButton from "../../../asset/button/closeButton.svg";
 import StatusBar from "./StatusBar";
+import closeButton from "../../../asset/button/closeButton.svg";
 
 const SnsUpdateAppBar = ({ setUpdateModal, setMoreButtonModal }) => {
   //댓글 삭제 확인 모달창 끄는 함수
@@ -50,6 +50,7 @@ const StSnsUpdateAbbBarIcon = styled.img`
   margin-left: 16px;
   background: #dfdfdf;
   border-radius: 16px;
+  cursor: pointer;
 `;
 
 const StAppBarTitle = styled.div`

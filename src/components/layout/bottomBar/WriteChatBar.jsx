@@ -16,9 +16,8 @@ const WriteChatBar = () => {
   const userInfoAPI = () => {
     return instance.get("/me");
   };
-  const { data, isLoading, error } = useQuery(["userInfo"], userInfoAPI);
+  const { data } = useQuery(["userInfo"], userInfoAPI);
 
-  // console.log(data);
   return (
     <StWriteChatBarContainer>
       <StWriteChatBarBox>
@@ -27,8 +26,14 @@ const WriteChatBar = () => {
           src={data?.data.profile_image}
         />
         <StTextBar>
-          <StTextInput onChange={onChangeMessageHandler} />
-          <StSendButton>전송</StSendButton>
+          <StTextInput onChange={onChangeMessageHandler} value={message} />
+          <StSendButton
+            onClick={() => {
+              setMessage("");
+            }}
+          >
+            전송
+          </StSendButton>
         </StTextBar>
       </StWriteChatBarBox>
     </StWriteChatBarContainer>
@@ -39,18 +44,14 @@ export default WriteChatBar;
 
 const StWriteChatBarContainer = styled.div`
   box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
-  /* border: 1px solid red; */
   background-color: white;
-
   bottom: 0px;
   width: 375px;
-
   z-index: 100;
   position: absolute;
 `;
 
 const StWriteChatBarBox = styled.div`
-  /* border: 1px solid orange; */
   display: flex;
   flex-direction: row;
   gap: 8px;
