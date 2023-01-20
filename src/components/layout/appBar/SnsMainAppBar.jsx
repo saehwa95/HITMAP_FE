@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import writeButton from "../../../asset/button/writeButton.svg";
 import { getCookie } from "../../../shared/cookie";
 import StatusBar from "./StatusBar";
+import writeButton from "../../../asset/button/writeButton.svg";
 
 const SnsMainAppBar = () => {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ const StSnsMainAppBarTitle = styled.label`
 const StSnsMainAppBarIcon = styled.img`
   width: 48px;
   height: 48px;
-  /* margin: 12px; */
   background: #006981;
   border-radius: 16px;
+  cursor: pointer;
 `;

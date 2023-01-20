@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import WeatherDetailInfo from "../../elements/WeatherDetailInfo";
 import WeatherDetailTitle from "./WeatherDetailTitle";
+import TideGraph from "../../components/main/TideGraph";
 
 const WeatherDetail = ({ weatherData }) => {
   return (
@@ -10,6 +11,7 @@ const WeatherDetail = ({ weatherData }) => {
         <WeatherDetailTitle />
         <ScrollView>
           <WeatherDetailInfo weatherData={weatherData} />
+          <TideGraph weatherData={weatherData} />
         </ScrollView>
       </TableWrapper>
     </>
@@ -25,8 +27,9 @@ const TableWrapper = styled.div`
 
 const ScrollView = styled.div`
   display: flex;
+  flex-direction: column;
   width: 311px;
-  /* overflow-x: scroll; */
+  overflow-x: scroll;
   /* ::-webkit-scrollbar {
     display: none;
   } */

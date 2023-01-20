@@ -1,13 +1,13 @@
 import React from "react";
-import { AreaChart, Area, Tooltip, YAxis } from "recharts";
 import styled from "styled-components";
+import { AreaChart, Area, Tooltip, YAxis } from "recharts";
 
 const TideGraph = ({ weatherData }) => {
   const tideInfo = weatherData?.tide_info;
 
   return (
-    <ChartWrapper>
-      <AreaChart width={1500} height={384} data={tideInfo}>
+    <TideInfoWrapper>
+      <AreaChart width={1088} height={369} data={tideInfo}>
         <YAxis domain={[0, "dataMax + 700"]} hide="true" />
         <Tooltip />
         <defs>
@@ -24,18 +24,13 @@ const TideGraph = ({ weatherData }) => {
           fill="url(#colorPv)"
         />
       </AreaChart>
-    </ChartWrapper>
+    </TideInfoWrapper>
   );
 };
 
 export default React.memo(TideGraph);
 
-const ChartWrapper = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  position: absolute;
-  bottom: 22px;
-  height: 384px;
+const TideInfoWrapper = styled.div`
+  width: 1088px;
   background-color: #f6f6f6;
 `;

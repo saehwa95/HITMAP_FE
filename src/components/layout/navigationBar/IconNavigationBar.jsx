@@ -37,17 +37,23 @@ const IconNavigationBar = () => {
             src={chatAlarmIcon}
             alt=""
             onClick={() => {
-              authJudge
-                ? navigate("/chat")
-                : alert("로그인이 필요한 기능이므로 로그인페이지로 이동합니다");
-              authJudge ? navigate("/chat") : navigate("/login");
+              alert("준비중인 기능입니다");
             }}
+            // onClick={() => {
+            //   authJudge
+            //     ? navigate("/chat")
+            //     : alert("로그인이 필요한 기능이므로 로그인페이지로 이동합니다");
+            //   authJudge ? navigate("/chat") : navigate("/login");
+            // }}
           />
         </div>
         <div>
           <img
             src={myPageIcon}
             alt=""
+            // onClick={() => {
+            //   alert("준비중인 기능입니다");
+            // }}
             onClick={() => {
               authJudge
                 ? navigate("/mypage")

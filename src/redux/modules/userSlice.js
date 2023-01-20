@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import { instance } from "../../redux/api/instance";
 import { deleteCookie, setCookie } from "../../shared/cookie";
 
