@@ -5,13 +5,14 @@ import CommentMoreButtonModal from "./CommentMoreButtonModal";
 import { instance } from "../../../redux/api/instance";
 import { getCookie } from "../../../shared/cookie";
 import moreIcon from "../../../asset/icon/moreIcon.svg";
+
 //댓글 하나 컴포넌트
 const SnsComment = ({ list }) => {
   const [moreButtonModal, setMoreButtonModal] = useState(false);
   const timeForComment = list.created_at.slice(0, 16).replace(/-/gi, ".");
   const authJudge = getCookie("auth");
 
-  //유저 정보 불러오는 fetchAPI와 data
+  //유저 정보 불러오는 userInfoAPI와 data
   const userInfoAPI = () => {
     return authJudge ? instance.get("/me") : null;
   };
@@ -50,14 +51,12 @@ const SnsComment = ({ list }) => {
             />
           ) : null}
         </StMoreIconImgBox>
-        {/* <StCommentMoreButtonModalBox> */}
         {moreButtonModal && (
           <CommentMoreButtonModal
             setMoreButtonModal={setMoreButtonModal}
             list={list}
           />
         )}
-        {/* </StCommentMoreButtonModalBox> */}
       </StSnsCommentWriterInfo>
       <StSnsCommentBody>{list.comment}</StSnsCommentBody>
     </StSnsCommentContainer>
@@ -124,12 +123,5 @@ const StMoreIconImgBox = styled.div`
 const StMoreIconImg = styled.img`
   width: 24px;
   height: 24px;
+  cursor: pointer;
 `;
-
-// const StCommentMoreButtonModalBox = styled.div`
-//   border: 1px solid red;
-//   height: 100px;
-//   position: absolute;
-//   /* position: fixed; */
-//   width: 200px;
-// `;
