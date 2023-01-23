@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import Logout from '../../components/myPage/EditMyInfo/Logout'
+import Withdraw from '../../components/myPage/EditMyInfo/Withdraw'
 
 const EditMyInfo = () => {
   return (
-    <div>EditMyInfo</div>
-  )
-}
+    <div>
+      <Logout />
+      <Withdraw />
+    </div>
+  );
+};
 
-export default EditMyInfo
+export default EditMyInfo;
