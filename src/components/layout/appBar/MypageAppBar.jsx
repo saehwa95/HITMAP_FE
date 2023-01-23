@@ -15,8 +15,9 @@ const MypageAppBarWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 64px;
-  padding: 8px 16px;
+  margin: 8px 16px;
   span {
+    padding: 0px 0px 0px 2px;
     font-family: "Pretendard";
     font-style: normal;
     font-weight: 700;
