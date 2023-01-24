@@ -12,10 +12,8 @@ const MyPage = () => {
       <MypageWrapper>
         <StatusBar />
         <MypageAppBar />
-        <ContentWrapper>
-          <MyInfoBox />
-          <MyPostList />
-        </ContentWrapper>
+        <MyInfoBox />
+        <MyPostList />
         <IconNavigationBar />
       </MypageWrapper>
     </>
@@ -26,8 +24,4 @@ export default MyPage;
 
 const MypageWrapper = styled.div`
   background-color: #f6f6f6;
-`;
-
-const ContentWrapper = styled.div`
-  padding: 0 16px;
 `;

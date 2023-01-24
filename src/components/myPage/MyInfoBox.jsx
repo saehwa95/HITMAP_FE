@@ -4,16 +4,26 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import MyInfoCount from "./MyInfoCount";
 import { ReactComponent as ClickIcon } from "../../asset/icon/ClickIcon.svg";
+import { instance } from "../../redux/api/instance";
+import { useQuery } from "@tanstack/react-query";
 
 const MyInfoBox = () => {
+  const myInfoAPI = () => {
+    return instance.get("/me");
+  };
+
+  const { data } = useQuery(["myInfo"], myInfoAPI);
+
+  const myData = data?.data;
+
   return (
     <InfoBoxWrapper>
       <div className="top">
         <div className="profileImg">
-          <img alt="" src="" />
+          <img alt="" src={myData?.profile_image} />
         </div>
-        <div className="bottom">
-          <span>누구누구</span>
+        <div className="nickname">
+          <span>{myData?.nickname}</span>
           <div className="link">
             <EditMyInfoLink to={"/editMyInfo"}>
               내 정보 수정
@@ -22,7 +32,7 @@ const MyInfoBox = () => {
           </div>
         </div>
       </div>
-      <MyInfoCount />
+      <MyInfoCount countData={myData} />
     </InfoBoxWrapper>
   );
 };
@@ -33,33 +43,33 @@ const InfoBoxWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 343px;
-  height: 333px;
-  border: 1px solid #ececec;
-  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
-  border-radius: 16px;
-  background: #ffffff;
+  gap: 20px;
+  height: 285px;
   .top {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 126px;
     height: 173px;
-    margin-top: 40px;
+    margin-top: 16px;
   }
   .profileImg {
     width: 80px;
     height: 80px;
-    border-radius: 50px;
-    background-color: yellow;
+    margin-bottom: 16px;
   }
-  .bottom {
+  img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+  }
+  .nickname {
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-top: 16px;
     width: 126px;
     height: 77px;
+    gap: 16px;
     span {
       font-family: "Pretendard";
       font-style: normal;
@@ -71,15 +81,13 @@ const InfoBoxWrapper = styled.div`
       align-items: center;
     }
     .link {
+      box-sizing: border-box;
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      margin-top: 16px;
-      padding: 4px 16px;
       width: 126px;
       height: 32px;
-      padding: 4px 16px;
       border: 1px solid #006981;
       box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.04);
       border-radius: 100px;
