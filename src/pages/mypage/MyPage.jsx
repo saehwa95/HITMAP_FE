@@ -23,5 +23,6 @@ const MyPage = () => {
 export default MyPage;
 
 const MypageWrapper = styled.div`
+  height: 100vh;
   background-color: #f6f6f6;
 `;

@@ -8,8 +8,8 @@ import { instance } from "../../redux/api/instance";
 import { useQuery } from "@tanstack/react-query";
 
 const MyInfoBox = () => {
-  const myInfoAPI = () => {
-    return instance.get("/me");
+  const myInfoAPI = async() => {
+    return await instance.get("/me");
   };
 
   const { data } = useQuery(["myInfo"], myInfoAPI);
