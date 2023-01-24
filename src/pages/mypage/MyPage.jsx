@@ -1,10 +1,11 @@
 import React from "react";
+import styled from "styled-components";
 import StatusBar from "../../components/layout/appBar/StatusBar";
 import MypageAppBar from "../../components/layout/appBar/MypageAppBar";
 import MyInfoBox from "../../components/myPage/MyInfoBox";
 import MyPostList from "../../components/myPage/MyPostList";
 import IconNavigationBar from "../../components/layout/navigationBar/IconNavigationBar";
-import styled from "styled-components";
+
 
 const MyPage = () => {
   return (

@@ -1,13 +1,12 @@
-/* 내 게시글 목록 컴포넌트 */
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { instance } from "../../redux/api/instance";
 
 const MyPostList = () => {
-  const { userId } = useParams();
   const navigate = useNavigate();
+  const { userId } = useParams();
 
   const myPostListAPI = async () => {
     return await instance.get(`/me/${userId}`);
@@ -21,7 +20,12 @@ const MyPostList = () => {
     <MyPostListWrapper>
       {myPostLists?.map((value, index) => {
         return (
-          <div key={`my-post-list-${index}`} onClick={()=>{navigate(`/detail/${value.post_id}`)}}>
+          <div
+            key={`my-post-list-${index}`}
+            onClick={() => {
+              navigate(`/detail/${value.post_id}`);
+            }}
+          >
             <img alt="" src={value.PostImages[0].src} />
           </div>
         );

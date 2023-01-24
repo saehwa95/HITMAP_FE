@@ -1,14 +1,13 @@
-/* 마이페이지 내 정보 Frame 컴포넌트 */
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import MyInfoCount from "./MyInfoCount";
 import { ReactComponent as ClickIcon } from "../../asset/icon/ClickIcon.svg";
 import { instance } from "../../redux/api/instance";
-import { useQuery } from "@tanstack/react-query";
 
 const MyInfoBox = () => {
-  const myInfoAPI = async() => {
+  const myInfoAPI = async () => {
     return await instance.get("/me");
   };
 

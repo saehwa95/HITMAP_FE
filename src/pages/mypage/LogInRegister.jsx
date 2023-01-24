@@ -1,8 +1,7 @@
-/* 마이페이지 - 로그인&회원가입 페이지 */
 import React from "react";
+import styled from "styled-components";
 import StatusBar from "../../components/layout/appBar/StatusBar";
 import MypageAppBar from "../../components/layout/appBar/MypageAppBar";
-import styled from "styled-components";
 import LogInRegisterBox from "../../components/myPage/LogInRegister/LogInRegisterBox";
 
 const LogInRegister = () => {
