@@ -9,6 +9,8 @@ import CreatePost from "../pages/sns/CreatePost";
 import Login from "../pages/user/Login";
 import DetailPost from "../pages/sns/DetailPost";
 import Weather from "../pages/main/Weather";
+import EditMyInfo from "../pages/mypage/EditMyInfo";
+import LogInRegister from "../pages/mypage/LogInRegister";
 
 const Router = () => {
   return (
@@ -23,7 +25,8 @@ const Router = () => {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/editMyInfo" element={<EditMyInfo />} />
+        <Route path="/logInRegister" element={<LogInRegister />} />
       </Routes>
     </BrowserRouter>
   );
