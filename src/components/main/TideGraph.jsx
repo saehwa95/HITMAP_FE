@@ -7,7 +7,7 @@ const TideGraph = ({ weatherData }) => {
 
   return (
     <TideInfoWrapper>
-      <AreaChart width={1088} height={369} data={tideInfo}>
+      <AreaChart width={1095} height={369} data={tideInfo}>
         <YAxis domain={[0, "dataMax + 700"]} hide="true" />
         <Tooltip />
         <defs>
@@ -31,6 +31,6 @@ const TideGraph = ({ weatherData }) => {
 export default React.memo(TideGraph);
 
 const TideInfoWrapper = styled.div`
-  width: 1088px;
+  width: 1105px;
   background-color: #f6f6f6;
 `;

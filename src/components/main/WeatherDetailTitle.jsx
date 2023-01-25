@@ -69,7 +69,7 @@ const WeatherDetailTitleWrapper = styled.div`
     gap: 2px;
   }
   .tide_info {
-    height: 385px;
+    height: 369px;
     background-color: #f6f6f6;
   }
 `;

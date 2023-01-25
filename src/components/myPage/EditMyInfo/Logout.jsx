@@ -2,11 +2,20 @@
 import React from "react";
 import styled from "styled-components";
 import { ReactComponent as GreyClickIcon } from "../../../asset/icon/GreyClickIcon.svg";
+import { useDispatch } from "react-redux";
+
+import { __logOut } from "../../../redux/modules/userSlice";
 
 const Logout = () => {
+  const dispatch = useDispatch();
+  const logoutOnclickHandler = (e) => {
+    e.preventDefault();
+
+    dispatch(__logOut());
+  };
   return (
     <LogoutWrapper>
-      <button>
+      <button onClick={(e) => logoutOnclickHandler(e)}>
         <span>로그아웃</span>
         <GreyClickIcon />
       </button>

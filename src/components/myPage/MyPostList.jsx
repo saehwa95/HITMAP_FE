@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { instance } from "../../redux/api/instance";
 
 const MyPostList = () => {
   const navigate = useNavigate();
-  const { userId } = useParams();
+  const userId = localStorage.getItem("userId")
 
   const myPostListAPI = async () => {
     return await instance.get(`/me/${userId}`);

@@ -30,7 +30,7 @@ const ScrollView = styled.div`
   flex-direction: column;
   width: 311px;
   overflow-x: scroll;
-  /* ::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     display: none;
-  } */
+  }
 `;
