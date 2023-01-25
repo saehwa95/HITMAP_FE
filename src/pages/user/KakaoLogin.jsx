@@ -8,11 +8,13 @@ const KakaoLogin = () => {
   const REACT_APP_REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REACT_APP_REST_API_KEY}&redirect_uri=${REACT_APP_REDIRECT_URI}&response_type=code`;
 
+  const onClickKakaoLogin = async () => {
+    console.log("kakao_login click");
+    window.location.href = KAKAO_AUTH_URL;
+  };
   return (
     <>
-      <a href={KAKAO_AUTH_URL}>
-        <StKakaoBtn src={kakaobtn} />
-      </a>
+      <StKakaoBtn onClick={onClickKakaoLogin} src={kakaobtn} />
     </>
   );
 };

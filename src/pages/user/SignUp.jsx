@@ -18,7 +18,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [passwordCh, setPasswordCh] = useState("");
   const [fileimage, setFileImage] = useState();
-  const formData = new FormData();
+
   const imgRef = useRef();
   //프론트 유효성 검사
   const [emailValid, SetEmailValid] = useState(false);
@@ -40,27 +40,28 @@ const SignUp = () => {
   const navigate = useNavigate();
   //이미지 formData에 넣기
   const saveFileImage = (e) => {
-    setFileImage(e.target.files[0]);
-
-    formData.append("image", e.target.files);
-
+    // formData.append("image", fileimage);
     const reader = new FileReader();
     reader.onload = () => {
+      // 여기서 이미지를 FileReader를 통해 base64 형식으로 변환됩니다.
       if (reader.readyState === 2) {
-        setFileImage(reader.result);
+        setFileImage(reader.result); // 변환된 이미지 형식(base64)이 setFileImage를 통해 fileimage에 담깁니다.
       }
+
+      setFileImage(e.target.files[0]); // 이후 다시 정상적으로파일을 formdata로 담습니다. -> 결론 코드 순서의 문제 였습니다.
+      // 여기로 코드 순서를 바꾸고 해결된 문제였습니다. / - 끝 시마이 - 이대로 배포 다시 하시면 끝입니다.ㅎㅎ
     };
     reader.readAsDataURL(e.target.files[0]);
   };
   //formData submit
   const submitOnclickHandler = (e) => {
     e.preventDefault();
-
+    const formData = new FormData();
     formData.append("nickname", nickname);
     formData.append("email", email);
     formData.append("password", password);
     formData.append("passwordConfirm", passwordCh);
-
+    formData.append("image", fileimage);
     dispatch(__postSignup(formData)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         alert("회원가입이 완료되었습니다.");
