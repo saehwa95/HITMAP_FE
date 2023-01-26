@@ -1,12 +1,12 @@
 import React from "react";
-
 import styled from "styled-components";
-import kakaobtn from "../../asset/button/kakaobtn.svg";
+import kakaobtn from "../../../asset/button/kakaobtn.svg";
 
-const KakaoLogin = () => {
-  const REACT_APP_REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
-  const REACT_APP_REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REACT_APP_REST_API_KEY}&redirect_uri=${REACT_APP_REDIRECT_URI}&response_type=code`;
+const Start = () => {
+  const REST_API_KEY = "4a0253bc75728d0cc6a165b3b9b44538";
+  const REDIRECT_URI = "https://koyunhyeok.shop/user/kakaoLogin/start";
+
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   const onClickKakaoLogin = async () => {
     console.log("kakao_login click");
@@ -19,7 +19,7 @@ const KakaoLogin = () => {
   );
 };
 
-export default KakaoLogin;
+export default Start;
 
 const StKakaoBtn = styled.img`
   cursor: pointer;
@@ -28,5 +28,3 @@ const StKakaoBtn = styled.img`
   width: 343px;
   height: 48px;
 `;
-
-const Kakao = styled.a``;
