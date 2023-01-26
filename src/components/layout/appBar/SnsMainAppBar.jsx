@@ -14,7 +14,7 @@ const SnsMainAppBar = () => {
     <StSnsMainAppBarContainer>
       <StatusBar />
       <StSnsMainAppBarBox>
-        <StSnsMainAppBarTitle>커뮤니티</StSnsMainAppBarTitle>
+        <StSnsMainAppBarTitle>어장관리</StSnsMainAppBarTitle>
         <StSnsMainAppBarIcon
           src={writeButton}
           alt="글작성아이콘"
