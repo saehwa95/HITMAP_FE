@@ -1,11 +1,13 @@
 import React from "react";
+import ChatListAppBar from "../../components/layout/appBar/ChatListAppBar";
+import ChatList from "../../components/socket/ChatList";
 import IconNavigationBar from "../../components/layout/navigationBar/IconNavigationBar";
 
 const Chat = () => {
   return (
     <div>
-      <div>채팅앱바자리</div>
-      <div>채팅리스트자리</div>
+      <ChatListAppBar />
+      <ChatList />
       <IconNavigationBar />
     </div>
   );
