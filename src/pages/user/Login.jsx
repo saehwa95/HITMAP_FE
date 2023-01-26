@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import Start from "./kakaoLogin/Start";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { __postSignin } from "../../redux/modules/userSlice";
 import HitmapLogo from "../../asset/icon/HitmapLogo.svg";
-import kakaobtn from "../../asset/button/kakaobtn.svg";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -34,9 +34,6 @@ const Login = () => {
   };
 
   //kakao 소셜로그인 구현중...
-  const onkakao = (e) => {
-    alert("소셜로그인 카카오톡 구현중입니다.");
-  };
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -85,7 +82,7 @@ const Login = () => {
               <StSimpleLine>
                 <StSimpleLogintxt>간편 로그인</StSimpleLogintxt>
               </StSimpleLine>
-              <StKakaoBtn onClick={onkakao} src={kakaobtn}></StKakaoBtn>
+              <Start />
             </StKakaoContainner>
           </StSignin>
         </StSignInContainer>
@@ -228,14 +225,6 @@ const StLoginBtn = styled.button`
   cursor: pointer;
 
   color: #ffffff;
-`;
-
-const StKakaoBtn = styled.img`
-  cursor: pointer;
-  /* kakao_login_large_wide */
-  background-color: yellow;
-  width: 343px;
-  height: 48px;
 `;
 
 const StSignin = styled.div`

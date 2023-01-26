@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import closeBtnIcon from "../../asset/icon/closeBtnIcon.svg";
+import darkcloseBtn from "../../asset/icon/darkcloseBtn.svg";
 import duplicateIcon from "../../asset/icon/duplicateIcon.svg";
+import clickclickIcon from "../../asset/icon/clickclickIcon.svg";
 import {
   __emailItem,
   __nickItem,
@@ -17,15 +18,18 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [passwordCh, setPasswordCh] = useState("");
   const [fileimage, setFileImage] = useState();
-  const formData = new FormData();
+  const [social, setSocial] = useState(0);
+
   const imgRef = useRef();
-  //유효성 검사
+  //프론트 유효성 검사
   const [emailValid, SetEmailValid] = useState(false);
   const [nicklValid, SetNickValid] = useState(false);
-  const [isnick, setIsNick] = useState(false);
-  const [isemail, setIsEmail] = useState(false);
   const [isPassword, SetisPassword] = useState(false);
   const [isPasswordConfirm, SetisPasswordConfirm] = useState(false);
+  //서버 유효성 검사사
+  const [isnick, setIsNick] = useState();
+  const [isemail, setIsEmail] = useState();
+  //전체 유효성 통과 후 submit
   const [notAllow, setNotAllow] = useState(true);
 
   //오류메시지 상태저장
@@ -37,27 +41,30 @@ const SignUp = () => {
   const navigate = useNavigate();
   //이미지 formData에 넣기
   const saveFileImage = (e) => {
-    setFileImage(e.target.files[0]);
-
-    formData.append("image", e.target.files);
-
+    // formData.append("image", fileimage);
     const reader = new FileReader();
     reader.onload = () => {
+      // 여기서 이미지를 FileReader를 통해 base64 형식으로 변환됩니다.
       if (reader.readyState === 2) {
-        setFileImage(reader.result);
+        setFileImage(reader.result); // 변환된 이미지 형식(base64)이 setFileImage를 통해 fileimage에 담깁니다.
       }
+
+      setFileImage(e.target.files[0]); // 이후 다시 정상적으로파일을 formdata로 담습니다. -> 결론 코드 순서의 문제 였습니다.
+      // 여기로 코드 순서를 바꾸고 해결된 문제였습니다. / - 끝 시마이 - 이대로 배포 다시 하시면 끝입니다.ㅎㅎ
     };
     reader.readAsDataURL(e.target.files[0]);
   };
   //formData submit
   const submitOnclickHandler = (e) => {
+    setSocial(0);
     e.preventDefault();
-
+    const formData = new FormData();
     formData.append("nickname", nickname);
     formData.append("email", email);
     formData.append("password", password);
     formData.append("passwordConfirm", passwordCh);
-
+    formData.append("image", fileimage);
+    formData.append("social", social);
     dispatch(__postSignup(formData)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         alert("회원가입이 완료되었습니다.");
@@ -74,7 +81,7 @@ const SignUp = () => {
     e.preventDefault();
     setEmail(e.target.value);
     setEmailMessage("");
-    setIsEmail(false);
+    setIsEmail();
 
     const regex =
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
@@ -119,7 +126,7 @@ const SignUp = () => {
     e.preventDefault();
     setNickname(e.target.value);
     setNickeMessage("");
-    setIsNick(false);
+    setIsNick();
 
     const regex =
       // eslint-disable-next-line
@@ -130,9 +137,11 @@ const SignUp = () => {
       SetNickValid(false);
     }
   };
+
   //nickname 유효성 서버
   const onnick = (e) => {
     e.preventDefault();
+
     const regex =
       // eslint-disable-next-line
       /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
@@ -161,6 +170,7 @@ const SignUp = () => {
       setNickeMessage("닉네임 형식이 바르지 않습니다.");
       setIsNick(false);
     }
+    setIsNick();
   };
   //password 유효성 검사
   const onChangePassword = (e) => {
@@ -216,7 +226,7 @@ const SignUp = () => {
   // const submitOnclickHandler = () => {};
 
   // 프리뷰 이미지
-  const imageInput = useRef();
+  const imageInput = imgRef;
 
   const onClickImageUpload = () => {
     imageInput.current.click();
@@ -229,15 +239,17 @@ const SignUp = () => {
 
   return (
     <StSignupContainer>
+      {/* SignuptopNav */}
       <StTopNav>
         <StStatusBar />
         <StNavitem>
           <StTextField>
             회원가입
-            <StCloseImg src={closeBtnIcon} alt="" onClick={onClickbackmain} />
+            <StCloseImg src={darkcloseBtn} alt="" onClick={onClickbackmain} />
           </StTextField>
         </StNavitem>
       </StTopNav>
+      {/* SignupImgForm */}
       <StSignupList>
         <StProfileContainer>
           <StBackimage>
@@ -251,32 +263,42 @@ const SignUp = () => {
             ref={imageInput}
           />
           <StPostChangeBtn onClick={onClickImageUpload}>
-            사진변경 {">"}
+            사진변경 <StClickicon src={clickclickIcon} alt="" />
           </StPostChangeBtn>
         </StProfileContainer>
-
         <StInputWrapper>
+          {/* SignUpNickForm */}
           <StNickdiv>
             <StText>닉네임</StText>
             <StNIckName>
               <StErrMsg>
-                <StInput
-                  value={nickname}
-                  onChange={onNickChangeHandler}
-                  placeholder="닉네임을 입력해주세요"
-                />
-
-                {!nicklValid && nickname.length < 11 && (
-                  <StFalSpan>닉네임 형식이 바르지 않습니다.</StFalSpan>
+                {!isnick && nickname.length <= 12 && (
+                  <StInput
+                    onChange={onNickChangeHandler}
+                    placeholder="닉네임을 입력해주세요"
+                  />
                 )}
+                {isnick === false && (
+                  <StFalseInput
+                    value={nickname}
+                    onChange={onNickChangeHandler}
+                    placeholder="닉네임을 입력해주세요"
+                  />
+                )}
+                {isnick === true && (
+                  <StTrueInput
+                    value={nickname}
+                    onChange={onNickChangeHandler}
+                    placeholder="닉네임을 입력해주세요"
+                  />
+                )}
+
                 {!nicklValid && nickname.length > 10 && (
                   <StFalSpan>닉네임 형식이 바르지 않습니다.</StFalSpan>
                 )}
                 {isnick !== true && <StFalSpan>{nickMessage}</StFalSpan>}
                 {isnick === true && <StTruSpan>{nickMessage}</StTruSpan>}
-                {!nicklValid && nickname.length === 0 && (
-                  <Stspan>닉네임을 입력해주세요</Stspan>
-                )}
+                {nickname === "" && <Stspan>닉네임을 입력해주세요</Stspan>}
               </StErrMsg>
               <StBtn src={duplicateIcon} onClick={onnick} />
             </StNIckName>
@@ -286,18 +308,41 @@ const SignUp = () => {
               입력해주세요
             </StInputTxt>
           </StNickdiv>
+
+          {/* SignupEmailForm */}
           <StEmaildiv>
             <StText>이메일</StText>
             <StNIckName>
               <StEmailField>
                 <StErrMsg>
-                  <StInput
-                    value={email}
-                    type="email"
-                    placeholder="이메일"
-                    onChange={onEmailChangeHandler}
-                    // onClick={changeinput}
-                  />
+                  {!isemail && (
+                    <StInput
+                      value={email}
+                      type="email"
+                      placeholder="이메일"
+                      onChange={onEmailChangeHandler}
+                      // onClick={changeinput}
+                    />
+                  )}
+
+                  {isemail === false && (
+                    <StFalseInput
+                      value={email}
+                      type="email"
+                      placeholder="이메일"
+                      onChange={onEmailChangeHandler}
+                      // onClick={changeinput}
+                    />
+                  )}
+                  {isemail === true && (
+                    <StTrueInput
+                      value={email}
+                      type="email"
+                      placeholder="이메일"
+                      onChange={onEmailChangeHandler}
+                      // onClick={changeinput}
+                    />
+                  )}
 
                   {!emailValid && (
                     <StFalSpan>이메일 형식이 바르지 않습니다.</StFalSpan>
@@ -316,29 +361,39 @@ const SignUp = () => {
               <StBtn src={duplicateIcon} onClick={onemail} />
             </StNIckName>
           </StEmaildiv>
+
+          {/* SignupPwForm */}
           <StPassContainer>
             <StText>비밀번호</StText>
             <Stpwinputcontainer>
-              <StPsInput
-                value={password}
-                onChange={onChangePassword}
-                type="password"
-                placeholder="비밀번호를 입력해주세요"
-              />
-              {isPassword === true && <StTruSpan>{passwordMessage}</StTruSpan>}
-              {isPassword === false && <StFalSpan>{passwordMessage}</StFalSpan>}
-              <StPsInput
-                value={passwordCh}
-                onChange={onChangePassWordCh}
-                type="password"
-                placeholder="비밀번호를 다시 한번 입력해주세요"
-              />
-              {isPasswordConfirm === false && (
-                <StFalSpan>{passwordConfirmMessage}</StFalSpan>
-              )}
-              {isPasswordConfirm === true && (
-                <StTruSpan>{passwordConfirmMessage}</StTruSpan>
-              )}
+              <StInputErrMsg>
+                <StPsInput
+                  value={password}
+                  onChange={onChangePassword}
+                  type="password"
+                  placeholder="비밀번호를 입력해주세요"
+                />
+                {isPassword === true && (
+                  <StTruSpan>{passwordMessage}</StTruSpan>
+                )}
+                {isPassword === false && (
+                  <StFalSpan>{passwordMessage}</StFalSpan>
+                )}
+              </StInputErrMsg>
+              <StInputErrMsg>
+                <StPsInput
+                  value={passwordCh}
+                  onChange={onChangePassWordCh}
+                  type="password"
+                  placeholder="비밀번호를 다시 한번 입력해주세요"
+                />
+                {isPasswordConfirm === false && (
+                  <StFalSpan>{passwordConfirmMessage}</StFalSpan>
+                )}
+                {isPasswordConfirm === true && (
+                  <StTruSpan>{passwordConfirmMessage}</StTruSpan>
+                )}
+              </StInputErrMsg>
             </Stpwinputcontainer>
 
             <StInputTxt>
@@ -432,7 +487,7 @@ const StProfileContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px 0px 12px;
+
   gap: 16px;
 
   width: 343px;
@@ -460,24 +515,18 @@ const StInputWrapper = styled.div`
 `;
 
 const StInput = styled.input`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
   width: 243px;
   height: 48px;
 
   /* Gray/White */
-
-  background: #ffffff;
-  /* Gray/Gray_200 */
-
   &:focus {
     outline: none !important;
     border-color: red;
   }
+  border: 3px solid black;
+  background: #ffffff;
+  /* Gray/Gray_200 */
 
-  border: 1px solid #1a4066;
   border-radius: 8px;
 `;
 
@@ -499,7 +548,7 @@ const StNickdiv = styled.div`
 const StText = styled.span`
   width: 343px;
   height: 19px;
-  padding: 16px 16px 12px 16px;
+  padding: 16px 16px 0px 16px;
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 600;
@@ -536,12 +585,16 @@ const StPsInput = styled.input`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0px 0px 0px 0px;
+
   width: 343px;
   height: 48px;
 
   /* Gray/White */
-
+  &:focus {
+    outline: none !important;
+    border: 2px solid #e5294a;
+    border-radius: 8px;
+  }
   background: #ffffff;
   /* Gray/Gray_200 */
 
@@ -619,6 +672,7 @@ const Signupcontain = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 8px 16px 0px;
+
   gap: 10px;
 
   position: absolute;
@@ -637,8 +691,6 @@ const SignBtn = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
-  margin: 0 auto;
 
   width: 343px;
   height: 48px;
@@ -660,6 +712,7 @@ const Stpwinputcontainer = styled.div`
   align-items: flex-start;
   margin: 0 auto;
   gap: 10px;
+  padding-bottom: 18px;
 
   width: 343px;
   height: 132px;
@@ -672,17 +725,18 @@ const StSignupBtn = styled.span`
   font-size: 16px;
   line-height: 150%;
   /* identical to box height, or 24px */
-  padding-top: 15px;
+  padding-top: 25px;
   width: 100px;
   height: 50px;
   text-align: center;
-  margin: 0 auto;
+
   /* Gray/White */
 
   color: #ffffff;
 `;
 
 const Stspan = styled.span`
+  padding-top: 6px;
   position: absolute;
   width: 250px;
   height: 19px;
@@ -705,14 +759,17 @@ const StEmailField = styled.div`
   height: 74px;
 `;
 
-const StErrMsg = styled.div``;
+const StErrMsg = styled.div`
+  gap: 20px;
+  height: 80px;
+`;
 
 const StTruSpan = styled.span`
   position: absolute;
   width: 300px;
   height: 19px;
   padding-top: 6px;
-  color: blue;
+  color: #5e67de;
 
   /* Subtitle/Bold/16 */
 
@@ -728,6 +785,7 @@ const StTruSpan = styled.span`
 `;
 
 const StFalSpan = styled.span`
+  padding-top: 6px;
   position: absolute;
   width: 300px;
   height: 19px;
@@ -755,13 +813,10 @@ const StPostChangeBtn = styled.button`
 
   /* Auto layout */
 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   padding: 4px 16px;
   gap: 12px;
 
-  width: 120px;
+  width: 125px;
   height: 32px;
 
   /* Gray/White */
@@ -792,4 +847,41 @@ Small
   /* Primary/Primary */
 
   color: #006981;
+`;
+
+const StInputErrMsg = styled.div`
+  height: 80px;
+
+  padding-bottom: 20px;
+`;
+
+const StClickicon = styled.img`
+  width: 10px;
+  height: 15px;
+`;
+
+const StTrueInput = styled.input`
+  width: 243px;
+  height: 48px;
+
+  /* Gray/White */
+
+  background: #ffffff;
+  /* Gray/Gray_200 */
+
+  border: 2px solid #5e67de;
+  border-radius: 8px;
+`;
+
+const StFalseInput = styled.input`
+  width: 243px;
+  height: 48px;
+
+  /* Gray/White */
+
+  background: #ffffff;
+  /* Gray/Gray_200 */
+
+  border: 2px solid #e5294a;
+  border-radius: 8px;
 `;

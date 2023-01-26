@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import StatusBar from "../layout/appBar/StatusBar";
-import smallBackButton from "../../asset/button/smallBackButton.svg";
+import closeIcon from "../../asset/icon/closeIcon.svg";
 import { Link } from "react-router-dom";
 
 const PlaceName = ({ placeName }) => {
@@ -12,7 +12,7 @@ const PlaceName = ({ placeName }) => {
         <div>
           <Link to={"/"}>
             <button>
-              <img src={smallBackButton} alt="" />
+              <img src={closeIcon} alt="" />
             </button>
           </Link>
           <div className="place_name">
