@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import KakaoLogin from "./KakaoLogin";
+import Start from "./kakaoLogin/Start";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { __postSignin } from "../../redux/modules/userSlice";
@@ -82,7 +82,7 @@ const Login = () => {
               <StSimpleLine>
                 <StSimpleLogintxt>간편 로그인</StSimpleLogintxt>
               </StSimpleLine>
-              <KakaoLogin />
+              <Start />
             </StKakaoContainner>
           </StSignin>
         </StSignInContainer>

@@ -18,7 +18,8 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [passwordCh, setPasswordCh] = useState("");
   const [fileimage, setFileImage] = useState();
-  const formData = new FormData();
+  const [social, setSocial] = useState(0);
+
   const imgRef = useRef();
   //프론트 유효성 검사
   const [emailValid, SetEmailValid] = useState(false);
@@ -26,8 +27,8 @@ const SignUp = () => {
   const [isPassword, SetisPassword] = useState(false);
   const [isPasswordConfirm, SetisPasswordConfirm] = useState(false);
   //서버 유효성 검사사
-  const [isnick, setIsNick] = useState(false);
-  const [isemail, setIsEmail] = useState(false);
+  const [isnick, setIsNick] = useState();
+  const [isemail, setIsEmail] = useState();
   //전체 유효성 통과 후 submit
   const [notAllow, setNotAllow] = useState(true);
 
@@ -40,27 +41,30 @@ const SignUp = () => {
   const navigate = useNavigate();
   //이미지 formData에 넣기
   const saveFileImage = (e) => {
-    setFileImage(e.target.files[0]);
-
-    formData.append("image", e.target.files);
-
+    // formData.append("image", fileimage);
     const reader = new FileReader();
     reader.onload = () => {
+      // 여기서 이미지를 FileReader를 통해 base64 형식으로 변환됩니다.
       if (reader.readyState === 2) {
-        setFileImage(reader.result);
+        setFileImage(reader.result); // 변환된 이미지 형식(base64)이 setFileImage를 통해 fileimage에 담깁니다.
       }
+
+      setFileImage(e.target.files[0]); // 이후 다시 정상적으로파일을 formdata로 담습니다. -> 결론 코드 순서의 문제 였습니다.
+      // 여기로 코드 순서를 바꾸고 해결된 문제였습니다. / - 끝 시마이 - 이대로 배포 다시 하시면 끝입니다.ㅎㅎ
     };
     reader.readAsDataURL(e.target.files[0]);
   };
   //formData submit
   const submitOnclickHandler = (e) => {
+    setSocial(0);
     e.preventDefault();
-
+    const formData = new FormData();
     formData.append("nickname", nickname);
     formData.append("email", email);
     formData.append("password", password);
     formData.append("passwordConfirm", passwordCh);
-
+    formData.append("image", fileimage);
+    formData.append("social", social);
     dispatch(__postSignup(formData)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         alert("회원가입이 완료되었습니다.");
@@ -77,7 +81,7 @@ const SignUp = () => {
     e.preventDefault();
     setEmail(e.target.value);
     setEmailMessage("");
-    setIsEmail(false);
+    setIsEmail();
 
     const regex =
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
@@ -122,7 +126,7 @@ const SignUp = () => {
     e.preventDefault();
     setNickname(e.target.value);
     setNickeMessage("");
-    setIsNick(false);
+    setIsNick();
 
     const regex =
       // eslint-disable-next-line
@@ -137,6 +141,7 @@ const SignUp = () => {
   //nickname 유효성 서버
   const onnick = (e) => {
     e.preventDefault();
+
     const regex =
       // eslint-disable-next-line
       /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
@@ -165,6 +170,7 @@ const SignUp = () => {
       setNickeMessage("닉네임 형식이 바르지 않습니다.");
       setIsNick(false);
     }
+    setIsNick();
   };
   //password 유효성 검사
   const onChangePassword = (e) => {
@@ -266,15 +272,27 @@ const SignUp = () => {
             <StText>닉네임</StText>
             <StNIckName>
               <StErrMsg>
-                <StInput
-                  value={nickname}
-                  onChange={onNickChangeHandler}
-                  placeholder="닉네임을 입력해주세요"
-                />
-
-                {!nicklValid && nickname.length < 11 && (
-                  <StFalSpan>닉네임 형식이 바르지 않습니다.</StFalSpan>
+                {!isnick && nickname.length <= 12 && (
+                  <StInput
+                    onChange={onNickChangeHandler}
+                    placeholder="닉네임을 입력해주세요"
+                  />
                 )}
+                {isnick === false && (
+                  <StFalseInput
+                    value={nickname}
+                    onChange={onNickChangeHandler}
+                    placeholder="닉네임을 입력해주세요"
+                  />
+                )}
+                {isnick === true && (
+                  <StTrueInput
+                    value={nickname}
+                    onChange={onNickChangeHandler}
+                    placeholder="닉네임을 입력해주세요"
+                  />
+                )}
+
                 {!nicklValid && nickname.length > 10 && (
                   <StFalSpan>닉네임 형식이 바르지 않습니다.</StFalSpan>
                 )}
@@ -297,13 +315,34 @@ const SignUp = () => {
             <StNIckName>
               <StEmailField>
                 <StErrMsg>
-                  <StInput
-                    value={email}
-                    type="email"
-                    placeholder="이메일"
-                    onChange={onEmailChangeHandler}
-                    // onClick={changeinput}
-                  />
+                  {!isemail && (
+                    <StInput
+                      value={email}
+                      type="email"
+                      placeholder="이메일"
+                      onChange={onEmailChangeHandler}
+                      // onClick={changeinput}
+                    />
+                  )}
+
+                  {isemail === false && (
+                    <StFalseInput
+                      value={email}
+                      type="email"
+                      placeholder="이메일"
+                      onChange={onEmailChangeHandler}
+                      // onClick={changeinput}
+                    />
+                  )}
+                  {isemail === true && (
+                    <StTrueInput
+                      value={email}
+                      type="email"
+                      placeholder="이메일"
+                      onChange={onEmailChangeHandler}
+                      // onClick={changeinput}
+                    />
+                  )}
 
                   {!emailValid && (
                     <StFalSpan>이메일 형식이 바르지 않습니다.</StFalSpan>
@@ -480,16 +519,14 @@ const StInput = styled.input`
   height: 48px;
 
   /* Gray/White */
-
-  background: #ffffff;
-  /* Gray/Gray_200 */
-
   &:focus {
     outline: none !important;
     border-color: red;
   }
+  border: 3px solid black;
+  background: #ffffff;
+  /* Gray/Gray_200 */
 
-  border: 1px solid #1a4066;
   border-radius: 8px;
 `;
 
@@ -553,7 +590,11 @@ const StPsInput = styled.input`
   height: 48px;
 
   /* Gray/White */
-
+  &:focus {
+    outline: none !important;
+    border: 2px solid #e5294a;
+    border-radius: 8px;
+  }
   background: #ffffff;
   /* Gray/Gray_200 */
 
@@ -817,4 +858,30 @@ const StInputErrMsg = styled.div`
 const StClickicon = styled.img`
   width: 10px;
   height: 15px;
+`;
+
+const StTrueInput = styled.input`
+  width: 243px;
+  height: 48px;
+
+  /* Gray/White */
+
+  background: #ffffff;
+  /* Gray/Gray_200 */
+
+  border: 2px solid #5e67de;
+  border-radius: 8px;
+`;
+
+const StFalseInput = styled.input`
+  width: 243px;
+  height: 48px;
+
+  /* Gray/White */
+
+  background: #ffffff;
+  /* Gray/Gray_200 */
+
+  border: 2px solid #e5294a;
+  border-radius: 8px;
 `;
