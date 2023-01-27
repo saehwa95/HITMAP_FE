@@ -24,7 +24,7 @@ const Start = () => {
 
     if (access_token) {
       axios
-        .post("http://localhost:3065/user/kakaoLogin/finish", {
+        .post("https://koyunhyeok.shop/user/kakaoLogin/finish", {
           access_token: access_token,
           refresh_token: refresh_token,
           nickname: nickname,
