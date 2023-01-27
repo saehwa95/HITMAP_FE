@@ -21,7 +21,6 @@ const Start = () => {
     let access_token = params.get("access_token");
     let refresh_token = params.get("refresh_token");
     let nickname = params.get("nickname");
-    console.log(params);
 
     if (access_token) {
       axios
