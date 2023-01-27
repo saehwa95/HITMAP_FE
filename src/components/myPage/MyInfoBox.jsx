@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import MyInfoCount from "./MyInfoCount";
-import { ReactComponent as ClickIcon } from "../../asset/icon/ClickIcon.svg";
+import { ReactComponent as ClickIdIcon } from "../../asset/icon/ClickIdIcon.svg";
+// import { ReactComponent as ClickIcon } from "../../asset/icon/ClickIcon.svg";
 import { instance } from "../../redux/api/instance";
 
 const MyInfoBox = () => {
@@ -26,7 +27,7 @@ const MyInfoBox = () => {
           <div className="link">
             <EditMyInfoLink to={"/editMyInfo"}>
               내 정보 수정
-              <ClickIcon className="clickIcon" />
+              <ClickIdIcon className="clickIcon" />
             </EditMyInfoLink>
           </div>
         </div>
