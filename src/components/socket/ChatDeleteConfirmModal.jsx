@@ -1,56 +1,44 @@
 import React from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
-import { instance } from "../../../redux/api/instance";
 
-const CommentDeleteConfirmModal = ({
-  setMoreButtonModal,
-  setDeleteConfirmModal,
-  list,
-}) => {
-  //댓글 삭제 확인 모달창 끄는 함수
-  const closeCommentDeleteConfirmModal = () => {
-    setMoreButtonModal(false);
-    setDeleteConfirmModal(false);
+const ChatDeleteConfirmModal = ({ setDeleteChatConfirmModal }) => {
+  //채팅방 삭제 확인 모달창 끄는 함수
+  const closeDeleteChatConfirmModal = () => {
+    setDeleteChatConfirmModal(false);
   };
 
-  //댓글 삭제 mutation
-  const queryClient = useQueryClient();
-  const deleteComment = useMutation({
-    mutationFn: async () => {
-      return await instance.delete(`/comment/${list.comment_id}`);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["detailPost"] });
-    },
-  });
-
   return (
-    <StDeleteConfirmAll>
-      <StDeleteConfirmBox>
-        <StDeleteConfirmMessage>
-          댓글을 삭제하시겠습니까?
-        </StDeleteConfirmMessage>
+    <StDeleteChatConfirmAll>
+      <StDeleteChatConfirmBox>
+        <StDeleteChatConfirmMessage>
+          채팅방을 삭제하시겠습니까?
+          <StDeleteChatDetailMessage>
+            <p>
+              선택한 채팅방의 대화가 삭제됩니다. <br />
+              삭제된 채팅은 다시 복구할 수 없습니다.
+            </p>
+          </StDeleteChatDetailMessage>
+        </StDeleteChatConfirmMessage>
         <StDeleteConfirmButtonBox>
-          <StDeleteConfirmCancelButton onClick={closeCommentDeleteConfirmModal}>
+          <StDeleteConfirmCancelButton onClick={closeDeleteChatConfirmModal}>
             취소
           </StDeleteConfirmCancelButton>
           <StDeleteConfirmDeleteButton
-            onClick={() => {
-              deleteComment.mutate();
-            }}
+          // onClick={() => {
+          //   deleteComment.mutate();
+          // }}
           >
             삭제
           </StDeleteConfirmDeleteButton>
         </StDeleteConfirmButtonBox>
-      </StDeleteConfirmBox>
-    </StDeleteConfirmAll>
+      </StDeleteChatConfirmBox>
+    </StDeleteChatConfirmAll>
   );
 };
 
-export default CommentDeleteConfirmModal;
+export default ChatDeleteConfirmModal;
 
-const StDeleteConfirmAll = styled.div`
+const StDeleteChatConfirmAll = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -63,9 +51,9 @@ const StDeleteConfirmAll = styled.div`
   z-index: 1000;
 `;
 
-const StDeleteConfirmBox = styled.div`
+const StDeleteChatConfirmBox = styled.div`
   width: 312px;
-  height: 164px;
+  height: 215px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -74,17 +62,26 @@ const StDeleteConfirmBox = styled.div`
   border-radius: 16px;
 `;
 
-const StDeleteConfirmMessage = styled.div`
+const StDeleteChatConfirmMessage = styled.div`
   margin: 16px 0 12px 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 18px;
+  line-height: 21px;
   width: 280px;
-  height: 72px;
+  height: 123px;
   color: #1f1f1f;
+`;
+
+const StDeleteChatDetailMessage = styled.div`
+  text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  color: #979797;
 `;
 
 const StDeleteConfirmButtonBox = styled.div``;

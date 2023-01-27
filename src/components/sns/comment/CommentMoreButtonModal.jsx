@@ -71,6 +71,7 @@ const StGoCommentUpdateButton = styled.button`
   border: #3f3f3f;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
+  cursor: pointer;
 `;
 
 const StGoCommentDeleteComfirmButton = styled.button`
@@ -91,4 +92,5 @@ const StGoCommentDeleteComfirmButton = styled.button`
   border: #3f3f3f;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
+  cursor: pointer;
 `;
