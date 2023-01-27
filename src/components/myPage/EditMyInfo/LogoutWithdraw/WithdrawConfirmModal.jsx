@@ -1,45 +1,43 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
+import React, { useState } from "react";
 import styled from "styled-components";
-import { __logOut } from "../../../redux/modules/userSlice";
+import WithdrawModal from "./WithdrawModal";
 
-const LogoutConfirmModal = ({ setLogoutModalOpen }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+const WithdrawConfirmModal = ({ setWithdrawModalOpen }) => {
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
+
+  const showModal = () => {
+    setSuccessModalOpen(true);
+  };
 
   const closeModal = () => {
-    setLogoutModalOpen(false);
+    setWithdrawModalOpen(false);
   };
-
-  const logoutOnclickHandler = (e) => {
-    e.preventDefault();
-    dispatch(__logOut());
-    window.alert("로그아웃 되었습니다.");
-    navigate("/logInRegister");
-  };
-
+  
   return (
     <Container>
-      <LogoutConfirmModalWrapper>
+      <WithdrawConfirmModalWrapper>
         <div className="confirm-message">
-          <span>정말 로그아웃 하시겠나요?</span>
+          <span className="title">정말 탈퇴 하시겠습니까?</span>
+          <span className="sub-title">탈퇴하면 해당 계정의 모든 정보가</span>
+          <span className="sub-title">삭제되며 다시 복구할 수 없습니다.</span>
         </div>
         <div className="click-button">
           <button className="cancel-button" onClick={closeModal}>
             취소
           </button>
-          <button className="logout-button" onClick={logoutOnclickHandler}>
-            로그아웃
+          <button type="button" className="withdraw-button" onClick={showModal}>
+            탈퇴하기
           </button>
+          {successModalOpen && (
+            <WithdrawModal setSuccessModalOpen={setSuccessModalOpen} />
+          )}
         </div>
-      </LogoutConfirmModalWrapper>
+      </WithdrawConfirmModalWrapper>
     </Container>
   );
 };
 
-export default LogoutConfirmModal;
+export default WithdrawConfirmModal;
 
 const Container = styled.div`
   position: fixed;
@@ -54,13 +52,13 @@ const Container = styled.div`
   z-index: 1000;
 `;
 
-const LogoutConfirmModalWrapper = styled.div`
+const WithdrawConfirmModalWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 312px;
-  height: 161px;
+  height: 215px;
   background: #ffffff;
   box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
   border-radius: 16px;
@@ -70,18 +68,25 @@ const LogoutConfirmModalWrapper = styled.div`
     justify-content: center;
     align-items: center;
     width: 280px;
-    height: 69px;
+    height: 123px;
     margin-bottom: 12px;
-    span {
-      font-family: "Pretendard";
-      font-style: normal;
-      font-weight: 700;
-      font-size: 18px;
-      line-height: 21px;
+    .title {
       display: flex;
       align-items: center;
       text-align: center;
-      color: #1f1f1f;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 21px;
+      margin-bottom: 12px;
+    }
+    .sub-title {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 150%;
+      color: #979797;
     }
   }
   .click-button {
@@ -101,6 +106,7 @@ const LogoutConfirmModalWrapper = styled.div`
       font-size: 16px;
       line-height: 150%;
       text-align: center;
+      cursor: pointer;
     }
   }
   .cancel-button {
@@ -109,7 +115,7 @@ const LogoutConfirmModalWrapper = styled.div`
     border-radius: 8px;
     color: #006981;
   }
-  .logout-button {
+  .withdraw-button {
     background: #006981;
     border: 1px solid #006981;
     border-radius: 8px;

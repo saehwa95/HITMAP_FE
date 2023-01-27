@@ -1,5 +1,5 @@
 import React from "react";
-import LogoutWithdraw from "../../components/myPage/EditMyInfo/LogoutWithdraw";
+import LogoutWithdraw from "../../components/myPage/EditMyInfo/LogoutWithdraw/LogoutWithdraw";
 
 const EditMyInfo = () => {
   return (
