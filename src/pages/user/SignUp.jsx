@@ -4,122 +4,121 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import darkcloseBtn from "../../asset/icon/darkcloseBtn.svg";
 import duplicateIcon from "../../asset/icon/duplicateIcon.svg";
-import clickclickIcon from "../../asset/icon/clickclickIcon.svg";
+// import clickclickIcon from "../../asset/icon/clickclickIcon.svg";
 import {
   __emailItem,
   __nickItem,
   __postSignup,
 } from "../../redux/modules/userSlice";
+import Profileimage from "../../components/signup/Profileimage";
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCh, setPasswordCh] = useState("");
-  const [fileimage, setFileImage] = useState();
-  const [social, setSocial] = useState(0);
+  // const [fileimage, setFileImage] = useState();
 
-  const imgRef = useRef();
+  // const imgRef = useRef();
   //프론트 유효성 검사
-  const [emailValid, SetEmailValid] = useState(false);
+  // const [emailValid, SetEmailValid] = useState(false);
   const [nicklValid, SetNickValid] = useState(false);
   const [isPassword, SetisPassword] = useState(false);
   const [isPasswordConfirm, SetisPasswordConfirm] = useState(false);
   //서버 유효성 검사사
   const [isnick, setIsNick] = useState();
-  const [isemail, setIsEmail] = useState();
+  // const [isemail, setIsEmail] = useState();
   //전체 유효성 통과 후 submit
   const [notAllow, setNotAllow] = useState(true);
 
   //오류메시지 상태저장
   const [nickMessage, setNickeMessage] = useState("");
-  const [emailMessage, setEmailMessage] = useState("");
+  // const [emailMessage, setEmailMessage] = useState("");
   const [passwordMessage, SetpasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
 
   const navigate = useNavigate();
   //이미지 formData에 넣기
-  const saveFileImage = (e) => {
-    // formData.append("image", fileimage);
-    const reader = new FileReader();
-    reader.onload = () => {
-      // 여기서 이미지를 FileReader를 통해 base64 형식으로 변환됩니다.
-      if (reader.readyState === 2) {
-        setFileImage(reader.result); // 변환된 이미지 형식(base64)이 setFileImage를 통해 fileimage에 담깁니다.
-      }
+  // const saveFileImage = (e) => {
+  //   const reader = new FileReader();
 
-      setFileImage(e.target.files[0]); // 이후 다시 정상적으로파일을 formdata로 담습니다. -> 결론 코드 순서의 문제 였습니다.
-      // 여기로 코드 순서를 바꾸고 해결된 문제였습니다. / - 끝 시마이 - 이대로 배포 다시 하시면 끝입니다.ㅎㅎ
-    };
-    reader.readAsDataURL(e.target.files[0]);
-  };
+  //   reader.onload = () => {
+  //     setFileImage(e.target.files[0]);
+  //     // 여기서 이미지를 FileReader를 통해 base64 형식으로 변환됩니다.
+  //     if (reader.readyState === 2) {
+  //       setFileImage(reader.result); // 변환된 이미지 형식(base64)이 setFileImage를 통해 fileimage에 담깁니다.
+  //     }
+
+  //     // formData.append("image", fileimage);
+  //     // 이후 다시 정상적으로파일을 formdata로 담습니다. -> 결론 코드 순서의 문제 였습니다.
+  //     // 여기로 코드 순서를 바꾸고 해결된 문제였습니다. / - 끝 시마이 - 이대로 배포 다시 하시면 끝입니다.ㅎㅎ
+  //   };
+  //   reader.readAsDataURL(e.target.files[0]);
+  // };
   //formData submit
   const submitOnclickHandler = (e) => {
-    setSocial(0);
     e.preventDefault();
     const formData = new FormData();
     formData.append("nickname", nickname);
-    formData.append("email", email);
+    // formData.append("email", email);
     formData.append("password", password);
     formData.append("passwordConfirm", passwordCh);
-    formData.append("image", fileimage);
-    formData.append("social", social);
+    // formData.append("image", fileimage);
+
     dispatch(__postSignup(formData)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         alert("회원가입이 완료되었습니다.");
         navigate("/login");
       } else {
-        setEmailMessage("이메일 형식이 바르지 않습니다.");
-        setIsEmail(false);
       }
     });
   };
 
   //email 유효성 확인
-  const onEmailChangeHandler = (e) => {
-    e.preventDefault();
-    setEmail(e.target.value);
-    setEmailMessage("");
-    setIsEmail();
+  // const onEmailChangeHandler = (e) => {
+  //   e.preventDefault();
+  //   setEmail(e.target.value);
+  //   setEmailMessage("");
+  //   setIsEmail();
 
-    const regex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    if (regex.test(email)) {
-      SetEmailValid(true);
-    } else {
-      SetEmailValid(false);
-    }
-  };
-  //email 유효성 서버
-  const onemail = (e) => {
-    const regexcom =
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.com/;
-    const regexnet =
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.net/;
-    if (regexcom.test(email) || regexnet.test(email)) {
-      setIsEmail(true);
-      const payload = {
-        email: email,
-      };
+  //   const regex =
+  //     /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+  //   if (regex.test(email)) {
+  //     SetEmailValid(true);
+  //   } else {
+  //     SetEmailValid(false);
+  //   }
+  // };
+  // //email 유효성 서버
+  // const onemail = (e) => {
+  //   const regexcom =
+  //     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.com/;
+  //   const regexnet =
+  //     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.net/;
+  //   if (regexcom.test(email) || regexnet.test(email)) {
+  //     setIsEmail(true);
+  //     const payload = {
+  //       email: email,
+  //     };
 
-      dispatch(__emailItem(payload)).then((res) => {
-        if (res.meta.requestStatus === "fulfilled") {
-          setEmailMessage("사용 가능한 이메일 입니다.");
-          setIsEmail(true);
-        } else if (res.payload === 401) {
-          setEmailMessage("이미 사용중인 이메일입니다.");
-          setIsEmail(false);
-        } else {
-          setEmailMessage("이메일 형식이 바르지 않습니다.");
-          setIsEmail(false);
-        }
-      });
-    } else {
-      setEmailMessage("이메일 형식이 바르지 않습니다");
-      setIsEmail(false);
-    }
-  };
+  //     dispatch(__emailItem(payload)).then((res) => {
+  //       if (res.meta.requestStatus === "fulfilled") {
+  //         setEmailMessage("사용 가능한 이메일 입니다.");
+  //         setIsEmail(true);
+  //       } else if (res.payload === 401) {
+  //         setEmailMessage("이미 사용중인 이메일입니다.");
+  //         setIsEmail(false);
+  //       } else {
+  //         setEmailMessage("이메일 형식이 바르지 않습니다.");
+  //         setIsEmail(false);
+  //       }
+  //     });
+  //   } else {
+  //     setEmailMessage("이메일 형식이 바르지 않습니다");
+  //     setIsEmail(false);
+  //   }
+  // };
 
   //nickname 유효성 검사
   const onNickChangeHandler = (e) => {
@@ -205,9 +204,9 @@ const SignUp = () => {
   //회원가입 버튼 활성화/비활성화
   useEffect(() => {
     if (
-      isemail &&
+      // isemail &&
       isnick &&
-      emailValid &&
+      // emailValid &&
       nicklValid &&
       isPassword &&
       isPasswordConfirm
@@ -216,7 +215,7 @@ const SignUp = () => {
       return;
     }
     setNotAllow(true);
-  }, [isemail, isnick, emailValid, nicklValid, isPassword, isPasswordConfirm]);
+  }, [isnick, nicklValid, isPassword, isPasswordConfirm]);
 
   // 프리뷰 이미지 삭제
   //  const deleteFileImage = () => {
@@ -226,11 +225,11 @@ const SignUp = () => {
   // const submitOnclickHandler = () => {};
 
   // 프리뷰 이미지
-  const imageInput = imgRef;
+  // const imageInput = imgRef;
 
-  const onClickImageUpload = () => {
-    imageInput.current.click();
-  };
+  // const onClickImageUpload = () => {
+  //   imageInput.current.click();
+  // };
 
   //뒤로가기 버튼
   const onClickbackmain = (e) => {
@@ -251,7 +250,8 @@ const SignUp = () => {
       </StTopNav>
       {/* SignupImgForm */}
       <StSignupList>
-        <StProfileContainer>
+        <Profileimage />
+        {/* <StProfileContainer>
           <StBackimage>
             <Stimage src={fileimage}></Stimage>
           </StBackimage>
@@ -265,7 +265,7 @@ const SignUp = () => {
           <StPostChangeBtn onClick={onClickImageUpload}>
             사진변경 <StClickicon src={clickclickIcon} alt="" />
           </StPostChangeBtn>
-        </StProfileContainer>
+        </StProfileContainer> */}
         <StInputWrapper>
           {/* SignUpNickForm */}
           <StNickdiv>
@@ -296,8 +296,12 @@ const SignUp = () => {
                 {!nicklValid && nickname.length > 10 && (
                   <StFalSpan>닉네임 형식이 바르지 않습니다.</StFalSpan>
                 )}
-                {isnick !== true && <StFalSpan>{nickMessage}</StFalSpan>}
-                {isnick === true && <StTruSpan>{nickMessage}</StTruSpan>}
+                {isnick !== true ? (
+                  <StFalSpan>{nickMessage}</StFalSpan>
+                ) : (
+                  <StTruSpan>{nickMessage}</StTruSpan>
+                )}
+                {/* {isnick === true && <StTruSpan>{nickMessage}</StTruSpan>} */}
                 {nickname === "" && <Stspan>닉네임을 입력해주세요</Stspan>}
               </StErrMsg>
               <StBtn src={duplicateIcon} onClick={onnick} />
@@ -310,7 +314,7 @@ const SignUp = () => {
           </StNickdiv>
 
           {/* SignupEmailForm */}
-          <StEmaildiv>
+          {/* <StEmaildiv>
             <StText>이메일</StText>
             <StNIckName>
               <StEmailField>
@@ -360,7 +364,7 @@ const SignUp = () => {
 
               <StBtn src={duplicateIcon} onClick={onemail} />
             </StNIckName>
-          </StEmaildiv>
+          </StEmaildiv> */}
 
           {/* SignupPwForm */}
           <StPassContainer>
@@ -482,24 +486,24 @@ const StSignupList = styled.div`
   top: 108px;
 `;
 
-const StProfileContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+// const StProfileContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
 
-  gap: 16px;
+//   gap: 16px;
 
-  width: 343px;
-  height: 177px;
-`;
+//   width: 343px;
+//   height: 177px;
+// `;
 
-const Stimage = styled.img`
-  width: 100px;
-  height: 100px;
+// const Stimage = styled.img`
+//   width: 100px;
+//   height: 100px;
 
-  border-radius: 50%;
-`;
+//   border-radius: 50%;
+// `;
 
 const StInputWrapper = styled.div`
   display: flex;
@@ -555,6 +559,9 @@ const StText = styled.span`
   font-size: 16px;
   line-height: 19px;
 `;
+function Txt({ children }) {
+  return <StText>{children}</StText>;
+}
 
 const StBtn = styled.img`
   display: flex;
@@ -615,13 +622,13 @@ const StCloseImg = styled.img`
   bottom: -2.08%;
 `;
 
-const StBackimage = styled.div`
-  width: 100px;
-  height: 100px;
+// const StBackimage = styled.div`
+//   width: 100px;
+//   height: 100px;
 
-  border-radius: 50%;
-  background-image: url("data:image/svg+xml,%3Csvg width='101' height='100' viewBox='0 0 101 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50.5' cy='50' r='50' fill='%23ADB9C7'/%3E%3Ccircle cx='49.9804' cy='41.7999' r='15.7999' stroke='white' stroke-width='2'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M38.6472 51.8394C31.3835 55.7377 26.3591 63.2667 26.0008 71.9994C25.9782 72.5512 26.428 73.0003 26.9803 73.0003H72.9801C73.5324 73.0003 73.9823 72.5512 73.9596 71.9994C73.6023 63.2884 68.6019 55.7752 61.3675 51.8686C60.9045 52.3946 60.4055 52.8882 59.8743 53.3455C66.4919 56.6833 71.1939 63.2647 71.8905 71.0003H28.0699C28.7684 63.2451 33.4925 56.6499 40.1366 53.3201C39.6066 52.8615 39.1089 52.3666 38.6472 51.8394Z' fill='white'/%3E%3C/svg%3E%0A");
-`;
+//   border-radius: 50%;
+//   background-image: url("data:image/svg+xml,%3Csvg width='101' height='100' viewBox='0 0 101 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50.5' cy='50' r='50' fill='%23ADB9C7'/%3E%3Ccircle cx='49.9804' cy='41.7999' r='15.7999' stroke='white' stroke-width='2'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M38.6472 51.8394C31.3835 55.7377 26.3591 63.2667 26.0008 71.9994C25.9782 72.5512 26.428 73.0003 26.9803 73.0003H72.9801C73.5324 73.0003 73.9823 72.5512 73.9596 71.9994C73.6023 63.2884 68.6019 55.7752 61.3675 51.8686C60.9045 52.3946 60.4055 52.8882 59.8743 53.3455C66.4919 56.6833 71.1939 63.2647 71.8905 71.0003H28.0699C28.7684 63.2451 33.4925 56.6499 40.1366 53.3201C39.6066 52.8615 39.1089 52.3666 38.6472 51.8394Z' fill='white'/%3E%3C/svg%3E%0A");
+// `;
 
 const StInputTxt = styled.div`
   width: 343px;
@@ -637,20 +644,20 @@ const StInputTxt = styled.div`
   color: #66737f;
 `;
 
-const StEmaildiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+// const StEmaildiv = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: flex-start;
 
-  gap: 8px;
+//   gap: 8px;
 
-  width: 375px;
-  height: 137px;
+//   width: 375px;
+//   height: 137px;
 
-  /* Gray/White */
+//   /* Gray/White */
 
-  background: #ffffff;
-`;
+//   background: #ffffff;
+// `;
 
 const StPassContainer = styled.div`
   display: flex;
@@ -754,10 +761,10 @@ const Stspan = styled.span`
   align-items: flex-end;
 `;
 
-const StEmailField = styled.div`
-  width: 243px;
-  height: 74px;
-`;
+// const StEmailField = styled.div`
+//   width: 243px;
+//   height: 74px;
+// `;
 
 const StErrMsg = styled.div`
   gap: 20px;
@@ -804,50 +811,50 @@ const StFalSpan = styled.span`
   align-items: flex-end;
 `;
 
-const StPostProfileBtn = styled.input`
-  display: none;
-`;
+// const StPostProfileBtn = styled.input`
+//   display: none;
+// `;
 
-const StPostChangeBtn = styled.button`
-  box-sizing: border-box;
+// const StPostChangeBtn = styled.button`
+//   box-sizing: border-box;
 
-  /* Auto layout */
+//   /* Auto layout */
 
-  padding: 4px 16px;
-  gap: 12px;
+//   padding: 4px 16px;
+//   gap: 12px;
 
-  width: 125px;
-  height: 32px;
+//   width: 125px;
+//   height: 32px;
 
-  /* Gray/White */
+//   /* Gray/White */
 
-  background: #ffffff;
-  /* Primary/Primary */
+//   background: #ffffff;
+//   /* Primary/Primary */
 
-  border: 1px solid #006981; /* 2px 4px 16px 0px rgba(0, 0, 0, 4%)
-  
-Small
-*/
-  box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.04);
-  border-radius: 100px;
-  cursor: pointer;
+//   border: 1px solid #006981; /* 2px 4px 16px 0px rgba(0, 0, 0, 4%)
 
-  /* Button/Bold/16 */
+// Small
+// */
+//   box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.04);
+//   border-radius: 100px;
+//   cursor: pointer;
 
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 150%;
-  /* identical to box height, or 24px */
+//   /* Button/Bold/16 */
 
-  display: flex;
-  align-items: center;
+//   font-family: "Pretendard";
+//   font-style: normal;
+//   font-weight: 700;
+//   font-size: 16px;
+//   line-height: 150%;
+//   /* identical to box height, or 24px */
 
-  /* Primary/Primary */
+//   display: flex;
+//   align-items: center;
 
-  color: #006981;
-`;
+//   /* Primary/Primary */
+
+//   color: #006981;
+// `;
 
 const StInputErrMsg = styled.div`
   height: 80px;
@@ -855,10 +862,10 @@ const StInputErrMsg = styled.div`
   padding-bottom: 20px;
 `;
 
-const StClickicon = styled.img`
-  width: 10px;
-  height: 15px;
-`;
+// const StClickicon = styled.img`
+//   width: 10px;
+//   height: 15px;
+// `;
 
 const StTrueInput = styled.input`
   width: 243px;

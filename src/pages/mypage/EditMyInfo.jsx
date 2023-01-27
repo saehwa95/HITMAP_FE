@@ -1,6 +1,6 @@
 import React from "react";
-import Logout from '../../components/myPage/EditMyInfo/Logout'
-import Withdraw from '../../components/myPage/EditMyInfo/Withdraw'
+import Logout from "../../components/myPage/EditMyInfo/Logout";
+import Withdraw from "../../components/myPage/EditMyInfo/Withdraw";
 
 const EditMyInfo = () => {
   return (
