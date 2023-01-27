@@ -8,7 +8,7 @@ const ChatCard = () => {
     <>
       <ChattingAppBar />
       <StChattingContentContainer>
-        메시지 들어갈 자리
+        메시지 들어갈 자리임
       </StChattingContentContainer>
       <WriteChatBar />
     </>
