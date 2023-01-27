@@ -6,10 +6,9 @@ import { instance } from "../../redux/api/instance";
 
 const MyPostList = () => {
   const navigate = useNavigate();
-  const userId = localStorage.getItem("userId")
 
   const myPostListAPI = async () => {
-    return await instance.get(`/me/${userId}`);
+    return await instance.get(`/me/myPost`);
   };
 
   const { data } = useQuery(["myPostList"], myPostListAPI);
