@@ -1,11 +1,10 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../../shared/cookie";
 import StatusBar from "./StatusBar";
-import writeButton from "../../../asset/button/writeButton.svg";
 
-const SnsMainAppBar = () => {
+const ChatListAppBar = () => {
   const navigate = useNavigate();
   //토큰의 유무(로그인/비로그인)에 따라 접근권한 처리해주기 위해 가져온 값
   const authJudge = getCookie("auth");
@@ -14,22 +13,13 @@ const SnsMainAppBar = () => {
     <StSnsMainAppBarContainer>
       <StatusBar />
       <StSnsMainAppBarBox>
-        <StSnsMainAppBarTitle>어장관리</StSnsMainAppBarTitle>
-        <StSnsMainAppBarIcon
-          src={writeButton}
-          alt="글작성아이콘"
-          onClick={() => {
-            authJudge
-              ? navigate("/create")
-              : alert("로그인이 필요한 기능입니다");
-          }}
-        />
+        <StSnsMainAppBarTitle>채팅</StSnsMainAppBarTitle>
       </StSnsMainAppBarBox>
     </StSnsMainAppBarContainer>
   );
 };
 
-export default SnsMainAppBar;
+export default ChatListAppBar;
 
 const StSnsMainAppBarContainer = styled.div`
   display: flex;
@@ -51,12 +41,4 @@ const StSnsMainAppBarTitle = styled.label`
   font-weight: 700;
   font-size: 24px;
   line-height: 29px;
-`;
-
-const StSnsMainAppBarIcon = styled.img`
-  width: 48px;
-  height: 48px;
-  background: #006981;
-  border-radius: 16px;
-  cursor: pointer;
 `;

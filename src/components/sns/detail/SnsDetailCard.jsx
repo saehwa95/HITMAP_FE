@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
 import { instance } from "../../../redux/api/instance";
@@ -9,10 +9,16 @@ import SnsCommentList from "../comment/SnsCommentList";
 import likeIcon from "../../../asset/icon/likeIcon.svg";
 import likeActiveIcon from "../../../asset/icon/likeActiveIcon.svg";
 import commentIcon from "../../../asset/icon/commentIcon.svg";
+import { getCookie } from "../../../shared/cookie";
+import chattingIcon from "../../../asset/icon/chattingIcon.svg";
 
 //sns 상세카드 한 장 컴포넌트
 const SnsDetailCard = () => {
+  const navigate = useNavigate();
   const { postId } = useParams();
+
+  const authJudge = getCookie("auth");
+
   const queryClient = useQueryClient();
   const submitLike = useMutation({
     mutationFn: async () => {
@@ -36,6 +42,11 @@ const SnsDetailCard = () => {
   //get한 서버 데이터 중 created_at을 정해진 디자인에 쓰기 위해 시간 포맷 바꿔주는 변수
   const timeForCard = detailData.created_at.slice(0, 16).replace(/-/gi, ".");
 
+  //채팅아이콘 누르면 채팅페이지로 이동하는 함수
+  const onClickChattingHandler = () => {
+    navigate("/chat");
+  };
+
   return (
     <StDetailCardContainer>
       <StCardHeader>
@@ -49,11 +60,16 @@ const SnsDetailCard = () => {
           <StCardHeaderNickName>{detailData.nickname}</StCardHeaderNickName>
           <StCardHeaderCreateTime>{timeForCard}</StCardHeaderCreateTime>
         </div>
+        {authJudge ? (
+          <StChatIcon
+            alt="채팅아이콘"
+            src={chattingIcon}
+            onClick={onClickChattingHandler}
+          />
+        ) : null}
       </StCardHeader>
       <div>
         <StCardImgBox>
-          {/* 작성사진 들어갈 자리 */}
-          {/* <StCardImg alt="작성사진" src={detailData.PostImage[0].src} /> */}
           <StCarouselBox>
             <SnsDetailCarousel imageSrc={imageSrc} />
           </StCarouselBox>
@@ -112,7 +128,6 @@ const StCardHeader = styled.div`
   margin: 16px;
   display: flex;
   flex-direction: row;
-  padding: 0px 16px;
   gap: 16px;
 `;
 
@@ -132,6 +147,11 @@ const StCardHeaderCreateTime = styled.div`
   font-weight: 500;
   font-size: 14px;
   color: #c2c2c2;
+`;
+
+const StChatIcon = styled.img`
+  transform: translateX(90px);
+  cursor: pointer;
 `;
 
 const StCardImgBox = styled.div`
