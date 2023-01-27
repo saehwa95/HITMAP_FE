@@ -55,10 +55,7 @@ const IconNavigationBar = () => {
             //   alert("준비중인 기능입니다");
             // }}
             onClick={() => {
-              authJudge
-                ? navigate("/mypage")
-                : alert("로그인이 필요한 기능이므로 로그인페이지로 이동합니다");
-              authJudge ? navigate("/mypage") : navigate("/login");
+              authJudge ? navigate("/mypage") : navigate("/logInRegister");
             }}
           />
         </div>

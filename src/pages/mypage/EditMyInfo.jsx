@@ -1,12 +1,10 @@
 import React from "react";
-import Logout from "../../components/myPage/EditMyInfo/Logout";
-import Withdraw from "../../components/myPage/EditMyInfo/Withdraw";
+import LogoutWithdraw from "../../components/myPage/EditMyInfo/LogoutWithdraw";
 
 const EditMyInfo = () => {
   return (
     <div>
-      <Logout />
-      <Withdraw />
+      <LogoutWithdraw />
     </div>
   );
 };
