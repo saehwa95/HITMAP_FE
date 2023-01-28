@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
+import { setCookie } from "../../../shared/cookie";
 
 const Socialauth = () => {
   useEffect(() => {
@@ -15,6 +16,7 @@ const Socialauth = () => {
         })
         .then((res) => {
           console.log("res: ", res);
+          setCookie("auth", res.data.access_token);
           window.location.href = "/";
         })
         .catch((err) => {
@@ -26,7 +28,11 @@ const Socialauth = () => {
     }
   }, []);
 
-  return <></>;
+  return (
+    <>
+      <div>데모 에러페이지 ex.카카오로그인에 실패했습니다.</div>
+    </>
+  );
 };
 
 export default Socialauth;
