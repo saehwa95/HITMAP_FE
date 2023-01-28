@@ -9,7 +9,6 @@ const Socialauth = () => {
 
     if (code) {
       const URL = "https://koyunhyeok.shop/user/kakaoLogin";
-      // const DEV_URL = 'http://localhost:3065/user/kakaoLogin';
       axios
         .post(
           URL,
@@ -34,7 +33,7 @@ const Socialauth = () => {
 
   return (
     <>
-      <div>데모 에러페이지 ex.카카오로그인에 실패했습니다.</div>
+      <div>로딩중...</div>
     </>
   );
 };
