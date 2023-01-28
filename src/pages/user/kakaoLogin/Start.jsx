@@ -5,10 +5,12 @@ import kakaobtn from "../../../asset/button/kakaobtn.svg";
 
 const Start = () => {
   const devModeOrProductionMode = () => {
-    const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
-    const REDIRECT_URL = process.env.REACT_APP_REDIRECT_URL;
+    // const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
+    // const REDIRECT_URL = process.env.REACT_APP_REDIRECT_URL;
+    const REST_API_KEY = "";
+    const REDIRECT_URL = "";
 
-    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URL}&response_type=code`; // localhost:3000/social?code=sdgaksjghjhgljsdhfg
+    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=4a0253bc75728d0cc6a165b3b9b44538&redirect_uri=https://hitmap-fe.vercel.app/socialauth&response_type=code`; // localhost:3000/social?code=sdgaksjghjhgljsdhfg
     return KAKAO_AUTH_URL;
   };
 
