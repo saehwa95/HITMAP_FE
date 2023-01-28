@@ -1,20 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-
 import kakaobtn from "../../../asset/button/kakaobtn.svg";
 
 const Start = () => {
+  /*****************************************************************
+   * 2. 함수에서 return 하는 kakao server url로 이동
+   * 3. 우리가 설정한 리다이렉트 URL 주소로 이동되면서,
+   *    query로 인증 code를 받아옴 (SocialAuth 컴포넌트로 리다이렉트)
+   * ***************************************************************/
   const devModeOrProductionMode = () => {
-    // const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
-    // const REDIRECT_URL = process.env.REACT_APP_REDIRECT_URL;
-    // const REST_API_KEY = "";
-    // const REDIRECT_URL = "";
-
-    // const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=4a0253bc75728d0cc6a165b3b9b44538&redirect_uri=https://hitmap-fe.vercel.app/socialauth&response_type=code`; // localhost:3000/social?code=sdgaksjghjhgljsdhfg
-    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&response_type=code`; // localhost:3000/social?code=sdgaksjghjhgljsdhfg
+    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&response_type=code`;
     return KAKAO_AUTH_URL;
   };
-
+  /******************************************************
+   * 1. 카카오 로그인 클릭시 devModeOrProductionMode 작동  *
+   * ****************************************************/
   const onClickKakaoLogin = async () => {
     console.log("kakao_login click");
     window.location.href = devModeOrProductionMode();
@@ -30,7 +30,6 @@ export default Start;
 
 const StKakaoBtn = styled.img`
   cursor: pointer;
-  /* kakao_login_large_wide */
   background-color: yellow;
   width: 343px;
   height: 48px;
