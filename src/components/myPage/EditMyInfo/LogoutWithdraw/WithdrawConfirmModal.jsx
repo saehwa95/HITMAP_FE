@@ -1,18 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import WithdrawModal from "./WithdrawModal";
 
-const WithdrawConfirmModal = ({ setWithdrawModalOpen }) => {
-  const [successModalOpen, setSuccessModalOpen] = useState(false);
+const WithdrawConfirmModal = ({
+  setWithdrawModalOpen,
+  password,
+  withdrawMutation,
+  successModalOpen,
+  setSuccessModalOpen,
+}) => {
 
-  const showModal = () => {
-    setSuccessModalOpen(true);
-  };
 
   const closeModal = () => {
     setWithdrawModalOpen(false);
   };
-  
+
+  const showModal = () => {
+    withdrawMutation.mutate({ password: password });
+  };
+
   return (
     <Container>
       <WithdrawConfirmModalWrapper>
@@ -25,7 +31,12 @@ const WithdrawConfirmModal = ({ setWithdrawModalOpen }) => {
           <button className="cancel-button" onClick={closeModal}>
             취소
           </button>
-          <button type="button" className="withdraw-button" onClick={showModal}>
+          <button
+            type="button"
+            className="withdraw-button"
+            onClick={showModal}
+            password={password}
+          >
             탈퇴하기
           </button>
           {successModalOpen && (

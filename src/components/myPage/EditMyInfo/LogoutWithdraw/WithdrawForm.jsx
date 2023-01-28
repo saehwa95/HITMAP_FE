@@ -1,20 +1,47 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as SelectIcon } from "../../../../asset/icon/SelectIcon.svg";
+import { ReactComponent as SelectActive } from "../../../../asset/icon/SelectActive.svg";
 import WithdrawConfirmModal from "./WithdrawConfirmModal";
+import { instance } from "../../../../redux/api/instance";
+import { deleteCookie } from "../../../../shared/cookie";
 
 const WithdrawForm = () => {
+  const [click, setClick] = useState(false);
+  const [password, setPassword] = useState("");
   const [withdrawModalOpen, setWithdrawModalOpen] = useState(false);
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
+
+  const queryClient = useQueryClient();
+
+  const withdrawMutation = useMutation({
+    mutationFn: async (withdraw) => {
+      return await instance.post("/me", withdraw);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["withdrawPost"] });
+      setSuccessModalOpen(true);
+      deleteCookie("auth");
+    },
+    onError: () => {
+      setWithdrawModalOpen(false);
+    },
+  });
+  console.log(withdrawMutation.isError);
+
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
 
   const showModal = () => {
     setWithdrawModalOpen(true);
   };
-  
+
   return (
     <WithdrawFormWrapper>
       <GuideText>
         <span>히트맵 탈퇴 전, 확인하세요</span>
-
         <div className="guide_text">
           <ul>
             <li>탈퇴하시면 이용 중인 히트맵이 폐쇄됩니다.</li>
@@ -22,25 +49,59 @@ const WithdrawForm = () => {
             <li>글,댓글,프로필 등 모든 정보가 삭제됩니다.</li>
           </ul>
         </div>
-
         <div className="check_text">
-          <SelectIcon />
+          {click ? (
+            <SelectActive
+              className="selectIcon"
+              onClick={() => setClick(false)}
+            />
+          ) : (
+            <SelectIcon className="selectIcon" onClick={() => setClick(true)} />
+          )}
           <span>안내사항을 모두 확인하였으며, 이에 동의합니다.</span>
         </div>
       </GuideText>
-
       <form>
         <div className="password_input">
           <span>사용중인 비밀번호</span>
-          <input type="password" placeholder="현재 비밀번호를 입력해주세요." />
+          {withdrawMutation.isError ? (
+            <>
+              <input
+                type="password"
+                placeholder="현재 비밀번호를 입력해주세요."
+                value={password}
+                onChange={handlePassword}
+                className="error-input"
+              />
+              <span className="error-message">
+                비밀번호가 일치하지 않습니다.
+              </span>
+            </>
+          ) : (
+            <input
+              type="password"
+              placeholder="현재 비밀번호를 입력해주세요."
+              value={password}
+              onChange={handlePassword}
+            />
+          )}
         </div>
         <div className="withdrawButton">
-          <button type="button" onClick={showModal}>
+          <button
+            type="button"
+            onClick={showModal}
+            disabled={!password || !click}
+          >
             탈퇴하기
           </button>
         </div>
         {withdrawModalOpen && (
-          <WithdrawConfirmModal setWithdrawModalOpen={setWithdrawModalOpen} withdrawModalOpen={withdrawModalOpen} />
+          <WithdrawConfirmModal
+            setWithdrawModalOpen={setWithdrawModalOpen}
+            password={password}
+            withdrawMutation={withdrawMutation}
+            successModalOpen={successModalOpen}
+          />
         )}
       </form>
     </WithdrawFormWrapper>
@@ -72,9 +133,15 @@ const WithdrawFormWrapper = styled.div`
       width: 343px;
       height: 48px;
       padding: 12px 135px 12px 16px;
-      margin-bottom: 16px;
       border: 1px solid #dfdfdf;
       border-radius: 8px;
+    }
+    .error-input {
+      border: 2px solid #e5294a;
+    }
+    .error-message {
+      font-size: 16px;
+      color: #e5294a;
     }
   }
   .withdrawButton {
@@ -91,6 +158,10 @@ const WithdrawFormWrapper = styled.div`
       font-size: 16px;
       line-height: 150%;
       cursor: pointer;
+      &:disabled {
+        cursor: default;
+        background-color: #a6cad3;
+      }
     }
   }
 `;
@@ -130,6 +201,9 @@ const GuideText = styled.div`
     margin-top: 20px;
     width: 343px;
     height: 24px;
+    .selectIcon {
+      cursor: pointer;
+    }
     span {
       font-weight: 500;
       font-size: 14px;
