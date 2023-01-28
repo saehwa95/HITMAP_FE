@@ -11,9 +11,13 @@ const Socialauth = () => {
       const URL = "https://koyunhyeok.shop/user/kakaoLogin";
       // const DEV_URL = 'http://localhost:3065/user/kakaoLogin';
       axios
-        .post(URL, {
-          code: code,
-        })
+        .post(
+          URL,
+          {
+            code: code,
+          },
+          { withCredentials: true }
+        )
         .then((res) => {
           console.log("res: ", res);
           setCookie("auth", res.data.access_token);
