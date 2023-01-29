@@ -1,13 +1,12 @@
-/* 로그아웃 컴포넌트 */
-import React, {useState} from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { ReactComponent as GreyClickIcon } from "../../../../asset/icon/GreyClickIcon.svg";
 import LogoutConfirmModal from "./LogoutConfirmModal";
 
 const LogoutWithdraw = () => {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
-  
+
   const showModal = () => {
     setLogoutModalOpen(true);
   };

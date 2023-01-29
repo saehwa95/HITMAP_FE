@@ -1,23 +1,27 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { __logOut } from "../../../../redux/modules/userSlice";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { instance } from "../../../../redux/api/instance";
+import { deleteCookie } from "../../../../shared/cookie";
 
 const LogoutConfirmModal = ({ setLogoutModalOpen }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const closeModal = () => {
     setLogoutModalOpen(false);
   };
 
-  const logoutOnclickHandler = (e) => {
-    e.preventDefault();
-    dispatch(__logOut());
-    window.alert("로그아웃 되었습니다.");
-    navigate("/logInRegister");
-  };
+  const logoutMutation = useMutation({
+    mutationFn: async () => {
+      return await instance.post("user/logout");
+    },
+    onSuccess:()=>{
+      deleteCookie("auth")
+      window.alert("로그아웃 되었습니다.")
+      navigate("/logInRegister")
+    }
+  });
 
   return (
     <Container>
@@ -29,7 +33,7 @@ const LogoutConfirmModal = ({ setLogoutModalOpen }) => {
           <button className="cancel-button" onClick={closeModal}>
             취소
           </button>
-          <button className="logout-button" onClick={logoutOnclickHandler}>
+          <button className="logout-button" onClick={()=>{logoutMutation.mutate()}}>
             로그아웃
           </button>
         </div>

@@ -1,11 +1,11 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ReactComponent as SelectIcon } from "../../../../asset/icon/SelectIcon.svg";
 import { ReactComponent as SelectActive } from "../../../../asset/icon/SelectActive.svg";
-import WithdrawConfirmModal from "./WithdrawConfirmModal";
 import { instance } from "../../../../redux/api/instance";
 import { deleteCookie } from "../../../../shared/cookie";
+import WithdrawConfirmModal from "./WithdrawConfirmModal";
 
 const WithdrawForm = () => {
   const [click, setClick] = useState(false);
@@ -28,7 +28,6 @@ const WithdrawForm = () => {
       setWithdrawModalOpen(false);
     },
   });
-  console.log(withdrawMutation.isError);
 
   const handlePassword = (e) => {
     setPassword(e.target.value);
