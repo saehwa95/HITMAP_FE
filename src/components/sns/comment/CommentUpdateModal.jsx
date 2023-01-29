@@ -35,7 +35,16 @@ const CommentUpdateModal = ({
       queryClient.invalidateQueries({ queryKey: ["detailPost"] });
     },
   });
+  const updateCommentHandler = () => {
+    updateComment.mutate({ content: comment });
+  };
 
+  //댓글 쓰고 엔터키 누르면 댓글 작성되도록 하는 함수(input 태그에 적용)
+  const onKeyPress = (e) => {
+    if (e.key === "Enter") {
+      updateCommentHandler();
+    }
+  };
   return (
     <StDeleteConfirmAll>
       <SnsCommentUpdateAbbBar
@@ -46,15 +55,11 @@ const CommentUpdateModal = ({
         <StUpdateCommentInput
           defaultValue={list.comment}
           onChange={onChangeCommentHandler}
+          onKeyPress={onKeyPress}
         />
       </StInputContainer>
       <StButtonBox>
-        <StButton
-          disabled={!comment}
-          onClick={() => {
-            updateComment.mutate({ content: comment });
-          }}
-        >
+        <StButton disabled={!comment} onClick={updateCommentHandler}>
           등록하기
         </StButton>
       </StButtonBox>

@@ -29,6 +29,20 @@ const WriteCommentBar = () => {
       queryClient.invalidateQueries({ queryKey: ["detailPost"] });
     },
   });
+  //댓글 input창에 내용 없으면 등록 안되게 if문 처리
+  const postCommentHandler = () => {
+    if (comment) {
+      postComment.mutate({ content: comment });
+      setComment("");
+    }
+  };
+
+  //댓글 쓰고 엔터키 누르면 댓글 작성되도록 하는 함수(input 태그에 적용)
+  const onKeyPress = (e) => {
+    if (e.key === "Enter") {
+      postCommentHandler();
+    }
+  };
 
   //유저 정보 불러오는 fetchAPI와 data
   const userInfoAPI = () => {
@@ -48,16 +62,9 @@ const WriteCommentBar = () => {
             onChange={onChangeCommentHandler}
             placeholder="댓글 남기기(최대 20자)"
             value={comment}
+            onKeyPress={onKeyPress}
           />
-          <StSendButton
-            // disalbed={comment ? true : false}
-            onClick={() => {
-              postComment.mutate({ content: comment });
-              setComment("");
-            }}
-          >
-            등록
-          </StSendButton>
+          <StSendButton onClick={postCommentHandler}>등록</StSendButton>
         </StTextBar>
       </StWriteCommentBarBox>
     </StWriteCommentBarContainer>
