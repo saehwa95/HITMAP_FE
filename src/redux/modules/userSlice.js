@@ -50,6 +50,30 @@ export const __postSignup = createAsyncThunk(
   }
 );
 
+export const __editUser = createAsyncThunk(
+  "userSlice/__editUser",
+  async (arg, thunkAPI) => {
+    console.log("pay", arg);
+
+    try {
+      const signupData = await instance.patch(`/me`, arg);
+
+      return thunkAPI.fulfillWithValue(signupData.data);
+      // if (signupData.status === 201) {
+      //   return thunkAPI.fulfillWithValue(signupData.data);
+      // } else if (signupData.status === 412) {
+      //   return thunkAPI.rejectWithValue(412);
+      // } else if (signupData.status === 400) {
+      //   return thunkAPI.rejectWithValue(400);
+      // } else {
+      //   return thunkAPI.rejectWithValue(403);
+      // }
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+
 export const __emailItem = createAsyncThunk(
   `userSlice/__emailItem`,
   async (payload, thunkAPI) => {
@@ -76,6 +100,27 @@ export const __nickItem = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const checkNick = await instance.post(`user/nickname`, {
+        nickname: payload.nickname,
+      });
+
+      if (checkNick.status === 200) {
+        return thunkAPI.fulfillWithValue(checkNick.data);
+      } else if (checkNick.status === 400) {
+        return thunkAPI.rejectWithValue(400);
+      } else {
+        return thunkAPI.rejectWithValue(401);
+      }
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+
+export const __myNick = createAsyncThunk(
+  "userSlice/__nickItem",
+  async (payload, thunkAPI) => {
+    try {
+      const checkNick = await instance.post(`me/myNickname`, {
         nickname: payload.nickname,
       });
 
@@ -146,6 +191,19 @@ const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(__postSignup.rejected, (state) => {
+        state.error = true;
+        state.isLoading = false;
+      })
+
+      .addCase(__editUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(__editUser.fulfilled, (state, action) => {
+        state.userinfo = action.payload;
+        state.error = false;
+        state.isLoading = true;
+      })
+      .addCase(__editUser.rejected, (state) => {
         state.error = true;
         state.isLoading = false;
       }),
