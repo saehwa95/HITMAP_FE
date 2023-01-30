@@ -208,6 +208,7 @@ const StImageLabelButton = styled.label`
   font-size: 48px;
   font-weight: 100;
   color: white;
+  cursor: pointer;
 `;
 
 const StContentInputBox = styled.div`
@@ -273,4 +274,5 @@ const StButton = styled.button`
   font-size: 16px;
   line-height: 150%;
   border-radius: 8px;
+  cursor: pointer;
 `;

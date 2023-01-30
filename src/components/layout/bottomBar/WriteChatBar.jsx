@@ -88,7 +88,7 @@ const StWriteCommentBarBox = styled.div`
 const StUserProfileImg = styled.img`
   width: 36px;
   height: 36px;
-  border-radius: 15px;
+  border-radius: 50px;
 `;
 
 const StTextBar = styled.div`

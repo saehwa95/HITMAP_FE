@@ -25,6 +25,7 @@ const StSnsMainAppBarContainer = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  background: #f6f6f6;
   width: 375px;
   height: 108px;
   z-index: 100;
