@@ -46,6 +46,9 @@ const MyPostListWrapper = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+  div {
+    cursor: pointer;
+  }
   img {
     width: 122px;
     height: 122px;
