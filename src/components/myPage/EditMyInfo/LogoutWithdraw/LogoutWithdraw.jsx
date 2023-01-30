@@ -23,8 +23,10 @@ const LogoutWithdraw = () => {
         <LogoutConfirmModal setLogoutModalOpen={setLogoutModalOpen} />
       )}
       <ButtonLink to={"/withdraw"}>
-        <span>회원탈퇴</span>
-        <GreyClickIcon />
+        <div>
+          <span>회원탈퇴</span>
+          <GreyClickIcon />
+        </div>
       </ButtonLink>
     </>
   );
@@ -50,9 +52,11 @@ const ButtonLink = styled(Link)`
     color: #1f1f1f;
   }
   div {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 16px;
     width: 375px;
     height: 64px;
     border-bottom: 1px solid #dfdfdf;

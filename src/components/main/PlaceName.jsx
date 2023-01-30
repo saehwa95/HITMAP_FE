@@ -27,19 +27,19 @@ const PlaceName = ({ placeName }) => {
 export default React.memo(PlaceName);
 
 const Name = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   height: 64px;
   padding: 8px 16px;
-  background-color: #ffffff;
   margin-bottom: 16px;
   div {
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 343px;
     height: 48px;
-    background-color: #ffffff;
   }
   button {
     width: 48px;
@@ -50,12 +50,12 @@ const Name = styled.div`
     cursor: pointer;
   }
   span {
+    position: relative;
     font-family: "Pretendard";
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
     line-height: 24px;
-    text-align: center;
     color: #1f1f1f;
   }
   .place_name {
