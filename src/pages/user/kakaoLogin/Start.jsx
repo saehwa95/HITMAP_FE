@@ -10,9 +10,9 @@ const Start = () => {
     // const REDIRECT_URI = 'https://koyunhyeok.shop/user/kakaoLogin/start'; // process.env.REACT_APP_REDIRECT_URI;
 
     const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
-    const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
+    const REDIRECT_URL = process.env.REACT_APP_REDIRECT_URL;
 
-    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URL}&response_type=code`;
     return KAKAO_AUTH_URL;
   };
 
@@ -24,7 +24,7 @@ const Start = () => {
 
     if (access_token) {
       axios
-        .post("http://localhost:3065/user/kakaoLogin/finish", {
+        .post("https://koyunhyeok.shop/user/kakaoLogin/finish", {
           access_token: access_token,
           refresh_token: refresh_token,
           nickname: nickname,
