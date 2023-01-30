@@ -41,7 +41,7 @@ const MyPostListWrapper = styled.div`
   grid-template-rows: 122px 122px 122px;
   gap: 4px;
   margin-top: 16px;
-  height: 321px;
+  height: 415px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;

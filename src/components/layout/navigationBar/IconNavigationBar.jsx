@@ -2,63 +2,115 @@ import React from "react";
 import styled from "styled-components";
 import homeIcon from "../../../asset/icon/homeIcon.svg";
 import snsIcon from "../../../asset/icon/snsIcon.svg";
-import chatAlarmIcon from "../../../asset/icon/chatAlarmIcon.svg";
+import chatIcon from "../../../asset/icon/chatIcon.svg";
 import myPageIcon from "../../../asset/icon/myPageIcon.svg";
+import clickHomeIcon from "../../../asset/icon/clickHomeIcon.svg";
+import clickSnsIcon from "../../../asset/icon/clickSnsIcon.svg";
+import clickChatIcon from "../../../asset/icon/clickChatIcon.svg";
+import clickMyPageIcon from "../../../asset/icon/clickMyPageIcon.svg";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../../shared/cookie";
+import { useState } from "react";
 
 const IconNavigationBar = () => {
+  const [homeClick, setHomeClick] = useState(false);
+  const [snsClick, setSnsClick] = useState(false);
+  const [chatClick, setChatClick] = useState(false);
+  const [mypageClick, setMypageClick] = useState(false);
   const navigate = useNavigate();
+
   //토큰의 유무(로그인/비로그인)에 따라 접근권한 처리해주기 위해 가져온 값
   const authJudge = getCookie("auth");
+
+  console.log(homeClick, snsClick, chatClick, mypageClick);
   return (
     <BottomNavigationBar>
       <div className="icon-wrapper">
-        <div>
+        {homeClick ? (
+          <img
+            src={clickHomeIcon}
+            alt=""
+            onClick={() => {
+              navigate("/");
+              setHomeClick(false);
+            }}
+          />
+        ) : (
           <img
             src={homeIcon}
             alt=""
             onClick={() => {
               navigate("/");
+              setHomeClick(true);
             }}
           />
-        </div>
-        <div>
+        )}
+
+        {snsClick ? (
+          <img
+            src={clickSnsIcon}
+            alt=""
+            onClick={() => {
+              navigate("/postlist");
+              setSnsClick(false);
+            }}
+          />
+        ) : (
           <img
             src={snsIcon}
             alt=""
             onClick={() => {
               navigate("/postlist");
+              setSnsClick(true);
             }}
           />
-        </div>
-        <div>
+        )}
+
+        {chatClick ? (
           <img
-            src={chatAlarmIcon}
+            src={clickChatIcon}
             alt=""
-            // onClick={() => {
-            //   alert("준비중인 기능입니다");
-            // }}
             onClick={() => {
+              setChatClick(false);
               authJudge
                 ? navigate("/chat")
                 : alert("로그인이 필요한 기능이므로 로그인페이지로 이동합니다");
               authJudge ? navigate("/chat") : navigate("/login");
             }}
           />
-        </div>
-        <div>
+        ) : (
           <img
-            src={myPageIcon}
+            src={chatIcon}
             alt=""
-            // onClick={() => {
-            //   alert("준비중인 기능입니다");
-            // }}
             onClick={() => {
+              setChatClick(true);
+              authJudge
+                ? navigate("/chat")
+                : alert("로그인이 필요한 기능이므로 로그인페이지로 이동합니다");
+              authJudge ? navigate("/chat") : navigate("/login");
+            }}
+          />
+        )}
+
+        {mypageClick ? (
+          <img
+            src={clickMyPageIcon}
+            alt=""
+            onClick={() => {
+              setMypageClick(false);
               authJudge ? navigate("/mypage") : navigate("/logInRegister");
             }}
           />
-        </div>
+        ) : (
+          <img
+            src={myPageIcon}
+            alt=""
+            onClick={() => {
+              authJudge ? navigate("/mypage") : navigate("/logInRegister");
+              setMypageClick(true);
+            }}
+          />
+        )}
       </div>
     </BottomNavigationBar>
   );
@@ -70,8 +122,6 @@ const BottomNavigationBar = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 8px 0px;
-  gap: 12px;
   position: absolute;
   width: 375px;
   height: 83px;
@@ -85,27 +135,10 @@ const BottomNavigationBar = styled.div`
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding: 0px;
-    gap: 40px;
-    width: 312px;
-    height: 48px;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    div {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      padding: 12px;
-      gap: 10px;
-      width: 48px;
-      height: 48px;
-      border-radius: 100px;
-      cursor: pointer;
-    }
-    img {
-      width: 24px;
-      height: 24px;
-    }
+    gap: 36px;
+    margin-top: 8px;
+  }
+  img {
+    cursor: pointer;
   }
 `;

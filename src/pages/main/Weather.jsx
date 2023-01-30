@@ -23,7 +23,7 @@ const Weather = () => {
   const weatherInfo = useQuery(["weatherdata"], WeatherfetchAPI);
   const placeName = weatherInfo?.data?.data.place_name;
   const weatherData = weatherInfo?.data?.data;
-
+  console.log(placeName);
   return (
     <>
       <PlaceName placeName={placeName} />
