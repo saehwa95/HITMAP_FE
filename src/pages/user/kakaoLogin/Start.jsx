@@ -1,50 +1,20 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import axios from "axios";
-
 import kakaobtn from "../../../asset/button/kakaobtn.svg";
 
 const Start = () => {
+  /*****************************************************************
+   * 2. 함수에서 return 하는 kakao server url로 이동
+   * 3. 우리가 설정한 리다이렉트 URL 주소로 이동되면서,
+   *    query로 인증 code를 받아옴 (SocialAuth 컴포넌트로 리다이렉트)
+   * ***************************************************************/
   const devModeOrProductionMode = () => {
-    // const REST_API_KEY = '4a0253bc75728d0cc6a165b3b9b44538'; // process.env.REACT_APP_REST_API_KEY;
-    // const REDIRECT_URI = 'https://koyunhyeok.shop/user/kakaoLogin/start'; // process.env.REACT_APP_REDIRECT_URI;
-
-    const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
-    const REDIRECT_URL = process.env.REACT_APP_REDIRECT_URL;
-
-    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URL}&response_type=code`;
+    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&response_type=code`;
     return KAKAO_AUTH_URL;
   };
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    let access_token = params.get("access_token");
-    let refresh_token = params.get("refresh_token");
-    let nickname = params.get("nickname");
-
-    if (access_token) {
-      axios
-        .post("https://koyunhyeok.shop/user/kakaoLogin/finish", {
-          access_token: access_token,
-          refresh_token: refresh_token,
-          nickname: nickname,
-        })
-        .then((res) => {
-          console.log("res: ", res);
-          window.location.href = "/";
-        })
-        .catch((err) => {
-          const errorMessage = err.response.data.errorMessage;
-          console.log("errorMessage: ", errorMessage);
-          alert(errorMessage);
-          // if (errorMessage) {
-          //   alert(errorMessage);
-          // }
-          window.location.href = "/";
-        });
-    }
-  }, []);
-
+  /******************************************************
+   * 1. 카카오 로그인 클릭시 devModeOrProductionMode 작동  *
+   * ****************************************************/
   const onClickKakaoLogin = async () => {
     console.log("kakao_login click");
     window.location.href = devModeOrProductionMode();
@@ -60,7 +30,6 @@ export default Start;
 
 const StKakaoBtn = styled.img`
   cursor: pointer;
-  /* kakao_login_large_wide */
   background-color: yellow;
   width: 343px;
   height: 48px;
