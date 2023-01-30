@@ -127,4 +127,5 @@ const StSendButton = styled.button`
   color: #979797;
   border: none;
   background-color: transparent;
+  cursor: pointer;
 `;

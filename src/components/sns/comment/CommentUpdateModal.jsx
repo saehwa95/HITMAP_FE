@@ -120,4 +120,5 @@ const StButton = styled.button`
   font-size: 16px;
   line-height: 150%;
   border-radius: 8px;
+  cursor: pointer;
 `;

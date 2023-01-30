@@ -189,4 +189,5 @@ const StCommentStatusCount = styled.div`
   font-size: 18px;
   width: 58px;
   height: 32px;
+  cursor: pointer;
 `;
