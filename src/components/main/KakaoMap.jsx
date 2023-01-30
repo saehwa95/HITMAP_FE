@@ -97,9 +97,6 @@ const KakaoMap = ({ searchPlace }) => {
         image: markerImage,
       });
 
-      //키워드에 맞는 장소 정보
-      // console.log(place);
-
       const iwContent = `<div class="info-title_div"><span class="info-title_span">${place.place_name}</span></div>`;
 
       const customOverlay = new kakao.maps.CustomOverlay({
