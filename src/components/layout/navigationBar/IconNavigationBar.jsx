@@ -1,5 +1,7 @@
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { getCookie } from "../../../shared/cookie";
 import homeIcon from "../../../asset/icon/homeIcon.svg";
 import snsIcon from "../../../asset/icon/snsIcon.svg";
 import chatIcon from "../../../asset/icon/chatIcon.svg";
@@ -8,31 +10,24 @@ import clickHomeIcon from "../../../asset/icon/clickHomeIcon.svg";
 import clickSnsIcon from "../../../asset/icon/clickSnsIcon.svg";
 import clickChatIcon from "../../../asset/icon/clickChatIcon.svg";
 import clickMyPageIcon from "../../../asset/icon/clickMyPageIcon.svg";
-import { useNavigate } from "react-router-dom";
-import { getCookie } from "../../../shared/cookie";
-import { useState } from "react";
 
 const IconNavigationBar = () => {
-  const [homeClick, setHomeClick] = useState(false);
-  const [snsClick, setSnsClick] = useState(false);
-  const [chatClick, setChatClick] = useState(false);
-  const [mypageClick, setMypageClick] = useState(false);
+  const locationName = useLocation();
+  const pathName = locationName.pathname;
   const navigate = useNavigate();
 
   //토큰의 유무(로그인/비로그인)에 따라 접근권한 처리해주기 위해 가져온 값
   const authJudge = getCookie("auth");
 
-  console.log(homeClick, snsClick, chatClick, mypageClick);
   return (
     <BottomNavigationBar>
       <div className="icon-wrapper">
-        {homeClick ? (
+        {pathName === "/" ? (
           <img
             src={clickHomeIcon}
             alt=""
             onClick={() => {
               navigate("/");
-              setHomeClick(false);
             }}
           />
         ) : (
@@ -41,18 +36,15 @@ const IconNavigationBar = () => {
             alt=""
             onClick={() => {
               navigate("/");
-              setHomeClick(true);
             }}
           />
         )}
-
-        {snsClick ? (
+        {pathName === "/postlist" ? (
           <img
             src={clickSnsIcon}
             alt=""
             onClick={() => {
               navigate("/postlist");
-              setSnsClick(false);
             }}
           />
         ) : (
@@ -61,17 +53,14 @@ const IconNavigationBar = () => {
             alt=""
             onClick={() => {
               navigate("/postlist");
-              setSnsClick(true);
             }}
           />
         )}
-
-        {chatClick ? (
+        {pathName === "/chat" ? (
           <img
             src={clickChatIcon}
             alt=""
             onClick={() => {
-              setChatClick(false);
               authJudge
                 ? navigate("/chat")
                 : alert("로그인이 필요한 기능이므로 로그인페이지로 이동합니다");
@@ -83,7 +72,6 @@ const IconNavigationBar = () => {
             src={chatIcon}
             alt=""
             onClick={() => {
-              setChatClick(true);
               authJudge
                 ? navigate("/chat")
                 : alert("로그인이 필요한 기능이므로 로그인페이지로 이동합니다");
@@ -91,13 +79,11 @@ const IconNavigationBar = () => {
             }}
           />
         )}
-
-        {mypageClick ? (
+        {pathName === "/mypage" ? (
           <img
             src={clickMyPageIcon}
             alt=""
             onClick={() => {
-              setMypageClick(false);
               authJudge ? navigate("/mypage") : navigate("/logInRegister");
             }}
           />
@@ -107,7 +93,6 @@ const IconNavigationBar = () => {
             alt=""
             onClick={() => {
               authJudge ? navigate("/mypage") : navigate("/logInRegister");
-              setMypageClick(true);
             }}
           />
         )}
