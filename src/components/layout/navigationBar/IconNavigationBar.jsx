@@ -1,20 +1,36 @@
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { getCookie } from "../../../shared/cookie";
 import homeIcon from "../../../asset/icon/homeIcon.svg";
 import snsIcon from "../../../asset/icon/snsIcon.svg";
-import chatAlarmIcon from "../../../asset/icon/chatAlarmIcon.svg";
+import chatIcon from "../../../asset/icon/chatIcon.svg";
 import myPageIcon from "../../../asset/icon/myPageIcon.svg";
-import { useNavigate } from "react-router-dom";
-import { getCookie } from "../../../shared/cookie";
+import clickHomeIcon from "../../../asset/icon/clickHomeIcon.svg";
+import clickSnsIcon from "../../../asset/icon/clickSnsIcon.svg";
+import clickChatIcon from "../../../asset/icon/clickChatIcon.svg";
+import clickMyPageIcon from "../../../asset/icon/clickMyPageIcon.svg";
 
 const IconNavigationBar = () => {
+  const locationName = useLocation();
+  const pathName = locationName.pathname;
   const navigate = useNavigate();
+
   //토큰의 유무(로그인/비로그인)에 따라 접근권한 처리해주기 위해 가져온 값
   const authJudge = getCookie("auth");
+
   return (
     <BottomNavigationBar>
       <div className="icon-wrapper">
-        <div>
+        {pathName === "/" ? (
+          <img
+            src={clickHomeIcon}
+            alt=""
+            onClick={() => {
+              navigate("/");
+            }}
+          />
+        ) : (
           <img
             src={homeIcon}
             alt=""
@@ -22,8 +38,16 @@ const IconNavigationBar = () => {
               navigate("/");
             }}
           />
-        </div>
-        <div>
+        )}
+        {pathName === "/postlist" ? (
+          <img
+            src={clickSnsIcon}
+            alt=""
+            onClick={() => {
+              navigate("/postlist");
+            }}
+          />
+        ) : (
           <img
             src={snsIcon}
             alt=""
@@ -31,14 +55,11 @@ const IconNavigationBar = () => {
               navigate("/postlist");
             }}
           />
-        </div>
-        <div>
+        )}
+        {pathName === "/chat" ? (
           <img
-            src={chatAlarmIcon}
+            src={clickChatIcon}
             alt=""
-            // onClick={() => {
-            //   alert("준비중인 기능입니다");
-            // }}
             onClick={() => {
               authJudge
                 ? navigate("/chat")
@@ -46,22 +67,35 @@ const IconNavigationBar = () => {
               authJudge ? navigate("/chat") : navigate("/login");
             }}
           />
-        </div>
-        <div>
+        ) : (
+          <img
+            src={chatIcon}
+            alt=""
+            onClick={() => {
+              authJudge
+                ? navigate("/chat")
+                : alert("로그인이 필요한 기능이므로 로그인페이지로 이동합니다");
+              authJudge ? navigate("/chat") : navigate("/login");
+            }}
+          />
+        )}
+        {pathName === "/mypage" ? (
+          <img
+            src={clickMyPageIcon}
+            alt=""
+            onClick={() => {
+              authJudge ? navigate("/mypage") : navigate("/logInRegister");
+            }}
+          />
+        ) : (
           <img
             src={myPageIcon}
             alt=""
-            // onClick={() => {
-            //   alert("준비중인 기능입니다");
-            // }}
             onClick={() => {
-              authJudge
-                ? navigate("/mypage")
-                : alert("로그인이 필요한 기능이므로 로그인페이지로 이동합니다");
-              authJudge ? navigate("/mypage") : navigate("/login");
+              authJudge ? navigate("/mypage") : navigate("/logInRegister");
             }}
           />
-        </div>
+        )}
       </div>
     </BottomNavigationBar>
   );
@@ -73,8 +107,6 @@ const BottomNavigationBar = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 8px 0px;
-  gap: 12px;
   position: absolute;
   width: 375px;
   height: 83px;
@@ -88,27 +120,10 @@ const BottomNavigationBar = styled.div`
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding: 0px;
-    gap: 40px;
-    width: 312px;
-    height: 48px;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    div {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      padding: 12px;
-      gap: 10px;
-      width: 48px;
-      height: 48px;
-      border-radius: 100px;
-      cursor: pointer;
-    }
-    img {
-      width: 24px;
-      height: 24px;
-    }
+    gap: 36px;
+    margin-top: 8px;
+  }
+  img {
+    cursor: pointer;
   }
 `;

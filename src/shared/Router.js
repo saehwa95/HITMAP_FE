@@ -11,6 +11,9 @@ import DetailPost from "../pages/sns/DetailPost";
 import Weather from "../pages/main/Weather";
 import EditMyInfo from "../pages/mypage/EditMyInfo";
 import LogInRegister from "../pages/mypage/LogInRegister";
+import SocialAuth from "../pages/user/kakaoLogin/SocialAuth";
+import Withdraw from "../components/myPage/EditMyInfo/LogoutWithdraw/Withdraw";
+
 
 const Router = () => {
   return (
@@ -27,6 +30,8 @@ const Router = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/editMyInfo" element={<EditMyInfo />} />
         <Route path="/logInRegister" element={<LogInRegister />} />
+        <Route path="/socialauth" element={<SocialAuth />} />
+        <Route path="/withdraw" element={<Withdraw />} />
       </Routes>
     </BrowserRouter>
   );
