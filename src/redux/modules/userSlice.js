@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { instance } from "../../redux/api/instance";
-import { deleteCookie, setCookie } from "../../shared/cookie";
+import { setCookie } from "../../shared/cookie";
 
 const initialState = {
   userinfo: {},
@@ -86,27 +86,6 @@ export const __nickItem = createAsyncThunk(
       } else {
         return thunkAPI.rejectWithValue(401);
       }
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e);
-    }
-  }
-);
-
-export const __logOut = createAsyncThunk(
-  "userSlice/__logOut",
-  async (payload, thunkAPI) => {
-    try {
-      const logout = await instance.post(`user/logout`, {});
-      deleteCookie("auth");
-
-      // console.log("최종", logout);
-
-      // if (logout.status === 204) {
-      //   console.log(logout);
-      //   return thunkAPI.fulfillWithValue(logout.message);
-      // } else {
-      //   return thunkAPI.rejectWithValue(400);
-      // }
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
     }
