@@ -111,7 +111,7 @@ const StSnsCommentBody = styled.div`
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
-  padding: 10px 0 12px 52px;
+  padding: 10px 20px 12px 52px;
 `;
 
 const StMoreIconImgBox = styled.div`
