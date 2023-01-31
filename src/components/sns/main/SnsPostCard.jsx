@@ -87,6 +87,7 @@ const StCardContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 16px 16px 20px 16px;
+  background-color: white;
   padding: 16px 0px 16px;
   gap: 16px;
 `;
