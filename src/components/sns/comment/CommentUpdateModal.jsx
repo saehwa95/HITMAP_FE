@@ -53,6 +53,8 @@ const CommentUpdateModal = ({
       />
       <StInputContainer>
         <StUpdateCommentInput
+          maxLength="50"
+          placeholder="댓글 남기기(최대 50자)"
           defaultValue={list.comment}
           onChange={onChangeCommentHandler}
           onKeyPress={onKeyPress}
