@@ -33,7 +33,6 @@ export default React.memo(WeatherDetailInfo);
 const WeatherDetailTitleWrapper = styled.div`
   width: 64px;
   height: 688px;
-  background-color: #f6f6f6;
   border-right: 1px solid #ececec;
   span {
     font-family: "Pretendard";
@@ -69,6 +68,5 @@ const WeatherDetailTitleWrapper = styled.div`
   }
   .tide_info {
     height: 320px;
-    background-color: #f6f6f6;
   }
 `;

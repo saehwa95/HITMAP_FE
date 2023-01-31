@@ -21,13 +21,14 @@ const Weather = () => {
   };
 
   const weatherInfo = useQuery(["weatherdata"], WeatherfetchAPI);
+
   const placeName = weatherInfo?.data?.data.place_name;
   const weatherData = weatherInfo?.data?.data;
-
+  const Loding = weatherInfo.isLoading;
   return (
     <>
       <PlaceName placeName={placeName} />
-      <WeatherDetail weatherData={weatherData} />
+      <WeatherDetail weatherData={weatherData} Loding={Loding}/>
     </>
   );
 };

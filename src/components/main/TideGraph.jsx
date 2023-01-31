@@ -7,7 +7,7 @@ const TideGraph = ({ weatherData }) => {
 
   return (
     <TideInfoWrapper>
-      <AreaChart width={976} height={320} data={tideInfo}>
+      <AreaChart width={1088} height={293} data={tideInfo}>
         <YAxis domain={[0, "dataMax + 700"]} hide="true" />
         <Tooltip />
         <defs>
