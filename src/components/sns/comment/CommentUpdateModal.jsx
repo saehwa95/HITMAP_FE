@@ -106,6 +106,7 @@ const StUpdateCommentInput = styled.textarea`
 `;
 
 const StButtonBox = styled.div`
+  box-sizing: border-box;
   padding: 8px 16px 27px 16px;
   width: 375px;
   height: 83px;

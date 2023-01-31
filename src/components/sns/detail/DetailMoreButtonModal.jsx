@@ -70,6 +70,7 @@ const StGoUpdatePageButton = styled.button`
   border: #3f3f3f;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
+  cursor: pointer;
 `;
 
 const StGoDeleteButton = styled.button`
@@ -90,4 +91,5 @@ const StGoDeleteButton = styled.button`
   border: #3f3f3f;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
+  cursor: pointer;
 `;

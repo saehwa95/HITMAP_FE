@@ -257,11 +257,11 @@ const StFishNameInput = styled.input`
 `;
 
 const StButtonBox = styled.div`
+  box-sizing: border-box;
   margin-top: 100px;
   padding: 8px 16px 27px 16px;
   width: 375px;
   height: 83px;
-  background-color: #ffffff;
 `;
 
 const StButton = styled.button`
