@@ -12,9 +12,9 @@ import clickChatIcon from "../../../asset/icon/clickChatIcon.svg";
 import clickMyPageIcon from "../../../asset/icon/clickMyPageIcon.svg";
 
 const IconNavigationBar = () => {
+  const navigate = useNavigate();
   const locationName = useLocation();
   const pathName = locationName.pathname;
-  const navigate = useNavigate();
 
   //토큰의 유무(로그인/비로그인)에 따라 접근권한 처리해주기 위해 가져온 값
   const authJudge = getCookie("auth");
@@ -79,7 +79,7 @@ const IconNavigationBar = () => {
             }}
           />
         )}
-        {pathName === "/mypage" ? (
+        {pathName === "/mypage" || pathName === "/logInRegister" ? (
           <img
             src={clickMyPageIcon}
             alt=""
