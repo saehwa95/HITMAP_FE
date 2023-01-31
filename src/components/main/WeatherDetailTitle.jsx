@@ -32,7 +32,7 @@ export default React.memo(WeatherDetailInfo);
 
 const WeatherDetailTitleWrapper = styled.div`
   width: 64px;
-  height: 704px;
+  height: 688px;
   background-color: #f6f6f6;
   border-right: 1px solid #ececec;
   span {
@@ -50,7 +50,6 @@ const WeatherDetailTitleWrapper = styled.div`
     justify-content: center;
     align-items: center;
     width: 64px;
-    gap: 12px;
   }
   .time {
     height: 48px;
@@ -69,7 +68,7 @@ const WeatherDetailTitleWrapper = styled.div`
     gap: 2px;
   }
   .tide_info {
-    height: 369px;
+    height: 320px;
     background-color: #f6f6f6;
   }
 `;

@@ -68,7 +68,7 @@ const Wrapper = styled.div`
 
 const WeatherDetailInfoWrapper = styled.div`
   width: 64px;
-  height: 416px;
+  height: 368px;
   background-color: #f6f6f6;
   border-right: 1px solid #ececec;
   span {
@@ -85,7 +85,6 @@ const WeatherDetailInfoWrapper = styled.div`
     justify-content: center;
     align-items: center;
     width: 64px;
-    gap: 12px;
   }
   .icon_relative {
     position: relative;

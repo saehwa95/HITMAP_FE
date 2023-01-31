@@ -5,6 +5,7 @@ import WeatherDetailTitle from "./WeatherDetailTitle";
 import TideGraph from "../../components/main/TideGraph";
 
 const WeatherDetail = ({ weatherData }) => {
+
   return (
     <>
       <TableWrapper>
@@ -29,8 +30,8 @@ const ScrollView = styled.div`
   display: flex;
   flex-direction: column;
   width: 311px;
-  overflow-x: scroll;
-  ::-webkit-scrollbar {
+  /* overflow-x: scroll; */
+  /* ::-webkit-scrollbar {
     display: none;
-  }
+  } */
 `;
