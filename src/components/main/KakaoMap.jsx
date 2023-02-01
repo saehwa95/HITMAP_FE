@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { useNavigate } from "react-router-dom";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 import myLocationIcon from "../../asset/icon/myLocationIcon.svg";
 import pinMarker from "../../asset/icon/pinMarker.svg";
 import "./KakaoMap.css";

@@ -1,19 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import darkcloseBtn from "../../asset/icon/darkcloseBtn.svg";
-import duplicateIcon from "../../asset/icon/duplicateIcon.svg";
-import clickclickIcon from "../../asset/icon/clickclickIcon.svg";
-import imgdeleteButton from "../../asset/button/imgdeleteButton.svg";
-import Profile from "../../asset/icon/Profile.svg";
+import styled from "styled-components";
 import {
   __emailItem,
   __nickItem,
   __postSignup,
 } from "../../redux/modules/userSlice";
 import SignupAppBar from "../../components/layout/appBar/SignupAppBar";
+import darkcloseBtn from "../../asset/icon/darkcloseBtn.svg";
+import duplicateIcon from "../../asset/icon/duplicateIcon.svg";
+import clickclickIcon from "../../asset/icon/clickclickIcon.svg";
+import imgdeleteButton from "../../asset/button/imgdeleteButton.svg";
+import Profile from "../../asset/icon/Profile.svg";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -611,6 +610,7 @@ const StPassContainer = styled.div`
 `;
 
 const Signupcontain = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   margin: 0 auto;

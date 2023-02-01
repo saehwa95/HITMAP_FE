@@ -1,8 +1,8 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
+import { instance } from "../../redux/api/instance";
 import PlaceName from "../../components/main/PlaceName";
 import WeatherDetail from "../../components/main/WeatherDetail";
-import { instance } from "../../redux/api/instance";
 
 const Weather = () => {
   const WeatherfetchAPI = async () => {
