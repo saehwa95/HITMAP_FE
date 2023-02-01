@@ -6,10 +6,13 @@ import commentIcon from "../../../asset/icon/commentIcon.svg";
 import likeIcon from "../../../asset/icon/likeIcon.svg";
 import { instance } from "../../../redux/api/instance";
 import likeActiveIcon from "../../../asset/icon/likeActiveIcon.svg";
+import { getCookie } from "../../../shared/cookie.js";
 
 //sns 포스트카드 한 장 컴포넌트
 const SnsPostCard = ({ posts }) => {
   const navigate = useNavigate();
+  const authJudge = getCookie("auth");
+
   //get한 서버 데이터 중 created_at을 정해진 디자인에 쓰기 위해 시간 포맷 바꿔주는 역할
   const timeForCard = posts.created_at.slice(0, 16).replace(/-/gi, ".");
 
@@ -27,6 +30,11 @@ const SnsPostCard = ({ posts }) => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
+
+  // 좋아요 기능 함수(비로그인시 alert)
+  const postLikeHandler = () => {
+    authJudge ? submitLike.mutate() : alert("로그인이 필요한 기능입니다");
+  };
 
   return (
     <StCardContainer>
@@ -55,18 +63,10 @@ const SnsPostCard = ({ posts }) => {
             <img
               alt="좋아요 아이콘"
               src={likeActiveIcon}
-              onClick={() => {
-                submitLike.mutate();
-              }}
+              onClick={postLikeHandler}
             />
           ) : (
-            <img
-              alt="좋아요 아이콘"
-              src={likeIcon}
-              onClick={() => {
-                submitLike.mutate();
-              }}
-            />
+            <img alt="좋아요 아이콘" src={likeIcon} onClick={postLikeHandler} />
           )}
           <span>{posts.like_count}</span>
         </StLikeStatusCount>
