@@ -7,10 +7,12 @@ import {
   __nickItem,
   __postSignup,
 } from "../../redux/modules/userSlice";
+import SignupAppBar from "../../components/layout/appBar/SignupAppBar";
 import darkcloseBtn from "../../asset/icon/darkcloseBtn.svg";
 import duplicateIcon from "../../asset/icon/duplicateIcon.svg";
 import clickclickIcon from "../../asset/icon/clickclickIcon.svg";
 import imgdeleteButton from "../../asset/button/imgdeleteButton.svg";
+import Profile from "../../asset/icon/Profile.svg";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -40,8 +42,8 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  // const { error } = useSelector((state) => state.userSlice);
-  // const validerror = error;
+  const { error } = useSelector((state) => state.userSlice);
+  const validerror = error;
 
   //이미지 formData에 넣기
   const saveFileImage = (e) => {
@@ -232,29 +234,17 @@ const SignUp = () => {
     setFileImage();
   };
 
-  //뒤로가기 버튼
-  const onClickbackmain = (e) => {
-    navigate("/");
-  };
-
   return (
     <StSignupContainer>
       {/* SignuptopNav */}
-      <StTopNav>
-        <StStatusBar />
-        <StNavitem>
-          <StTextField>
-            회원가입
-            <StCloseImg src={darkcloseBtn} alt="" onClick={onClickbackmain} />
-          </StTextField>
-        </StNavitem>
-      </StTopNav>
-      {/* SignupImgForm */}
+      <SignupAppBar />
+      {/* SignupImgForm */}``
       <StSignupList>
         <StProfileContainer>
           <StBackimage>
             <StImgContainer>
-              <Stimage src={fileimage}></Stimage>
+              <Stimage src={fileimage || Profile}></Stimage>
+
               <StImgdelete
                 onClick={deleteFileImage}
                 src={imgdeleteButton}
@@ -270,86 +260,32 @@ const SignUp = () => {
             ref={imageInput}
           />
           <StPostChangeBtn onClick={onClickImageUpload}>
-            사진변경 <StClickicon src={clickclickIcon} alt="" />
+            <StImageSpan>
+              사진변경
+              <StClickicon src={clickclickIcon} alt="" />
+            </StImageSpan>
           </StPostChangeBtn>
         </StProfileContainer>
         <StInputWrapper>
-          {/* <StNickdiv>
-            <StText>닉네임</StText>
-            <StNIckName>
-              <StErrMsg>
-                {!isnick && (
-                  <StInput
-                    value={nickname || ""}
-                    onChange={onNickChangeHandler}
-                    placeholder={"닉네임을 입력해주세요"}
-                    maxLength={10}
-                  />
-                )} */}
-          {/* {isnick === false && (
-            <StFalseInput
-              value={nickname}
-              onChange={onNickChangeHandler}
-              placeholder="닉네임을 입력해주세요"
-              maxLength={10}
-            />
-          )} */}
-          {/* {isnick === true && (
-                  <StTrueInput
-                    value={nickname || ""}
-                    onChange={onNickChangeHandler}
-                    placeholder={"닉네임을 입력해주세요"}
-                    maxLength={10}
-                  />
-                )}
-                {!nicklValid && nickname.length > 10 && (
-                  <StFalSpan>닉네임 형식이 바르지 않습니다.</StFalSpan>
-                )}
-                {isnick !== true && <StFalSpan>{nickMessage}</StFalSpan>}
-                {isnick === true && <StTruSpan>{nickMessage}</StTruSpan>}
-                {nickname === "" && <Stspan>닉네임을 입력해주세요</Stspan>}
-              </StErrMsg>
-              <StBtn src={duplicateIcon} onClick={onnick} />
-            </StNIckName>
-
-            <StInputTxt>
-              닉네임은 한글, 영문, 숫자만 가능하며 2자 이상 10자 이하로
-              입력해주세요
-            </StInputTxt>
-          </StNickdiv> */}
           {/* SignUpNickForm */}
           <StNickdiv>
             <StText>닉네임</StText>
             <StNIckName>
-              <StErrMsg>
-                <form>
-                  <div className="inputcontainer_input">
-                    {onnick ? (
-                      <input
-                        value={nickname}
-                        onChange={onNickChangeHandler}
-                        placeholder="닉네임을 입력해주세요."
-                        maxLength={10}
-                        className="success_input"
-                      />
-                    ) : (
-                      <input
-                        value={nickname}
-                        onChange={onNickChangeHandler}
-                        placeholder="닉네임을 입력해주세요."
-                        maxLength={10}
-                        className="error_input"
-                      />
-                    )}
-                  </div>
-                </form>
+              <StNickErrMsg>
+                <StNickInput
+                  validerror={validerror}
+                  value={nickname}
+                  onChange={onNickChangeHandler}
+                  placeholder="닉네임을 입력해주세요."
+                  maxLength={10}
+                />
 
                 {!nicklValid && nickname.length > 10 && (
                   <StFalSpan>닉네임 형식이 바르지 않습니다.</StFalSpan>
                 )}
                 {isnick !== true && <StFalSpan>{nickMessage}</StFalSpan>}
                 {isnick === true && <StTruSpan>{nickMessage}</StTruSpan>}
-              </StErrMsg>
+              </StNickErrMsg>
               <StBtn src={duplicateIcon} onClick={onnick} />
             </StNIckName>
 
@@ -363,21 +299,19 @@ const SignUp = () => {
           <StEmaildiv>
             <StText>이메일</StText>
             <StNIckName>
-              <StEmailField>
-                <StErrMsg>
-                  <StInput
-                    value={email || ""}
-                    type="email"
-                    placeholder="이메일을 입력해주세요."
-                    onChange={onEmailChangeHandler}
-                    // onClick={changeinput}
-                  />
+              <StemailErrMsg>
+                <StInput
+                  value={email || ""}
+                  type="email"
+                  placeholder="이메일을 입력해주세요."
+                  onChange={onEmailChangeHandler}
+                  // onClick={changeinput}
+                />
 
-                  {isemail === true && <StTruSpan>{emailMessage}</StTruSpan>}
+                {isemail === true && <StTruSpan>{emailMessage}</StTruSpan>}
 
-                  {isemail !== true && <StFalSpan>{emailMessage}</StFalSpan>}
-                </StErrMsg>
-              </StEmailField>
+                {isemail !== true && <StFalSpan>{emailMessage}</StFalSpan>}
+              </StemailErrMsg>
 
               <StBtn src={duplicateIcon} onClick={onemail} />
             </StNIckName>
@@ -394,9 +328,6 @@ const SignUp = () => {
                   type="password"
                   placeholder="비밀번호를 입력해주세요."
                 />
-                {isPassword === true && (
-                  <StTruSpan>{passwordMessage}</StTruSpan>
-                )}
                 {isPassword === false && (
                   <StFalSpan>{passwordMessage}</StFalSpan>
                 )}
@@ -410,9 +341,6 @@ const SignUp = () => {
                 />
                 {isPasswordConfirm === false && (
                   <StFalSpan>{passwordConfirmMessage}</StFalSpan>
-                )}
-                {isPasswordConfirm === true && (
-                  <StTruSpan>{passwordConfirmMessage}</StTruSpan>
                 )}
               </StInputErrMsg>
             </Stpwinputcontainer>
@@ -635,7 +563,6 @@ const StBackimage = styled.div`
   height: 100px;
 
   border-radius: 50%;
-  background-image: url("data:image/svg+xml,%3Csvg width='101' height='100' viewBox='0 0 101 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50.5' cy='50' r='50' fill='%23ADB9C7'/%3E%3Ccircle cx='49.9804' cy='41.7999' r='15.7999' stroke='white' stroke-width='2'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M38.6472 51.8394C31.3835 55.7377 26.3591 63.2667 26.0008 71.9994C25.9782 72.5512 26.428 73.0003 26.9803 73.0003H72.9801C73.5324 73.0003 73.9823 72.5512 73.9596 71.9994C73.6023 63.2884 68.6019 55.7752 61.3675 51.8686C60.9045 52.3946 60.4055 52.8882 59.8743 53.3455C66.4919 56.6833 71.1939 63.2647 71.8905 71.0003H28.0699C28.7684 63.2451 33.4925 56.6499 40.1366 53.3201C39.6066 52.8615 39.1089 52.3666 38.6472 51.8394Z' fill='white'/%3E%3C/svg%3E%0A");
 `;
 
 const StInputTxt = styled.div`
@@ -657,7 +584,7 @@ const StEmaildiv = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
-  gap: 8px;
+  gap: 12px;
 
   width: 375px;
   height: 137px;
@@ -686,9 +613,7 @@ const Signupcontain = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 8px 16px 0px;
-
+  margin: 0 auto;
   gap: 10px;
 
   position: absolute;
@@ -707,7 +632,7 @@ const SignBtn = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
+  margin: 0 auto;
   width: 343px;
   height: 48px;
   cursor: pointer;
@@ -775,24 +700,9 @@ const StEmailField = styled.div`
   height: 74px;
 `;
 
-const StErrMsg = styled.div`
+const StNickErrMsg = styled.div`
   gap: 20px;
   height: 80px;
-  .inputcontainer_input {
-    input {
-      width: 243px;
-      height: 48px;
-      background: #ffffff;
-      border: 1px solid #1a4066;
-      border-radius: 8px;
-    }
-  }
-  .error_input {
-    border: 2px solid #e5294a;
-  }
-  .success_input {
-    border: 2px solid black;
-  }
 `;
 
 const StTruSpan = styled.span`
@@ -816,7 +726,7 @@ const StTruSpan = styled.span`
 `;
 
 const StFalSpan = styled.span`
-  padding-top: 6px;
+  padding-top: 1px;
   position: absolute;
   width: 300px;
   height: 19px;
@@ -843,10 +753,10 @@ const StPostChangeBtn = styled.button`
   box-sizing: border-box;
 
   /* Auto layout */
-
+  grid-auto-flow: column;
   padding: 4px 16px;
   gap: 12px;
-
+  margin: 0 auto;
   width: 125px;
   height: 32px;
 
@@ -865,16 +775,6 @@ Small
 
   /* Button/Bold/16 */
 
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 150%;
-  /* identical to box height, or 24px */
-
-  display: flex;
-  align-items: center;
-
   /* Primary/Primary */
 
   color: #006981;
@@ -882,11 +782,10 @@ Small
 
 const StInputErrMsg = styled.div`
   height: 80px;
-
-  padding-bottom: 20px;
 `;
 
 const StClickicon = styled.img`
+  margin-left: 10px;
   width: 10px;
   height: 15px;
 `;
@@ -921,6 +820,7 @@ const StImgContainer = styled.div`
   width: 100px;
   height: 100px;
 
+  border-radius: 50%;
   display: flex;
   justify-content: end;
 `;
@@ -932,4 +832,32 @@ const StImgdelete = styled.img`
   float: right;
   z-index: 100;
   cursor: pointer;
+`;
+
+const StImageSpan = styled.span`
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+
+  padding-left: 12px;
+`;
+
+const StemailErrMsg = styled.div``;
+
+const StNickInput = styled.input`
+  width: 243px;
+  height: 48px;
+  background: #ffffff;
+  border: 1px solid #1a4066;
+  border-radius: 8px;
+  border: ${(props) =>
+    props.validerror ? "1px solid #1a4066" : "1px solid black"};
+  :focus {
+    border: 1px solid black;
+  }
 `;
