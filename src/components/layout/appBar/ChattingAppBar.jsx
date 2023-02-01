@@ -1,11 +1,10 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import StatusBar from "./StatusBar";
+import ChatDeleteConfirmModal from "../../socket/ChatDeleteConfirmModal";
 import backButton from "../../../asset/button/backButton.svg";
 import deleteChatIcon from "../../../asset/icon/deleteChatIcon.svg";
-import ChatDeleteConfirmModal from "../../socket/ChatDeleteConfirmModal";
 
 const ChattingAppBar = () => {
   const navigate = useNavigate();

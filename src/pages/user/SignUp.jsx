@@ -1,15 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
-import styled from "styled-components";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import darkcloseBtn from "../../asset/icon/darkcloseBtn.svg";
-import duplicateIcon from "../../asset/icon/duplicateIcon.svg";
-import clickclickIcon from "../../asset/icon/clickclickIcon.svg";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
 import {
   __emailItem,
   __nickItem,
   __postSignup,
 } from "../../redux/modules/userSlice";
+import darkcloseBtn from "../../asset/icon/darkcloseBtn.svg";
+import duplicateIcon from "../../asset/icon/duplicateIcon.svg";
+import clickclickIcon from "../../asset/icon/clickclickIcon.svg";
 
 const SignUp = () => {
   const dispatch = useDispatch();

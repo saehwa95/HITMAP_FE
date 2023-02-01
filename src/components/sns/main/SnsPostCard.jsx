@@ -2,9 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
+import { instance } from "../../../redux/api/instance";
 import commentIcon from "../../../asset/icon/commentIcon.svg";
 import likeIcon from "../../../asset/icon/likeIcon.svg";
-import { instance } from "../../../redux/api/instance";
 import likeActiveIcon from "../../../asset/icon/likeActiveIcon.svg";
 
 //sns 포스트카드 한 장 컴포넌트

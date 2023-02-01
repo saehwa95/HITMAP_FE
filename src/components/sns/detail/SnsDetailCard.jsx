@@ -3,13 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
 import { instance } from "../../../redux/api/instance";
+import { getCookie } from "../../../shared/cookie";
 import SnsDetailCarousel from "./SnsDetailCarousel";
 import WriteCommentBar from "../../layout/bottomBar/WriteCommentBar";
 import SnsCommentList from "../comment/SnsCommentList";
 import likeIcon from "../../../asset/icon/likeIcon.svg";
 import likeActiveIcon from "../../../asset/icon/likeActiveIcon.svg";
 import commentIcon from "../../../asset/icon/commentIcon.svg";
-import { getCookie } from "../../../shared/cookie";
 import chattingIcon from "../../../asset/icon/chattingIcon.svg";
 
 //sns 상세카드 한 장 컴포넌트

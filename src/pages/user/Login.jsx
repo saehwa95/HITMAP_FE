@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import Start from "./kakaoLogin/Start";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
 import { __postSignin } from "../../redux/modules/userSlice";
+import Start from "./kakaoLogin/Start";
 import HitmapLogo from "../../asset/icon/HitmapLogo.svg";
 
 const Login = () => {

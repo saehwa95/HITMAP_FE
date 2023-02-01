@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
 import useInputProfilimage from "../../../hooks/useInputProfilimage";
-
 import clickclickIcon from "../../../asset/icon/clickclickIcon.svg";
+
 const Profileimage = () => {
   const { fileimage, saveFileImage } = useInputProfilimage([]);
 

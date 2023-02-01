@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { ReactComponent as GreyClickIcon } from "../../../../asset/icon/GreyClickIcon.svg";
+import styled from "styled-components";
 import LogoutConfirmModal from "./LogoutConfirmModal";
+import { ReactComponent as GreyClickIcon } from "../../../../asset/icon/GreyClickIcon.svg";
 
 const LogoutWithdraw = () => {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);

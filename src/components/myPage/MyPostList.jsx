@@ -1,7 +1,7 @@
 import React from "react";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import styled from "styled-components";
 import { instance } from "../../redux/api/instance";
 
 const MyPostList = () => {
