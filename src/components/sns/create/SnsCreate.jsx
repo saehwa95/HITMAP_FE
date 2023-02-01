@@ -19,7 +19,7 @@ const SnsCreate = () => {
     setInput({ ...input, [name]: value });
   };
 
-  const onChangImages = (e) => {
+  const onChangeImages = (e) => {
     setPostImages(e.target.files);
   };
 
@@ -69,7 +69,7 @@ const SnsCreate = () => {
                 id="input-file"
                 accept="image/jpeg, image/jpg, image/png"
                 style={{ display: "none" }}
-                onChange={onChangImages}
+                onChange={onChangeImages}
                 multiple
               />
             </div>
