@@ -17,7 +17,6 @@ const App = () => {
           <Router />
         </Container>
       </Wrapper>
-
       <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>
   );
