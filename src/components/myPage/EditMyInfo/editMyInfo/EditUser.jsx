@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import LogoutWithdraw from "../LogoutWithdraw/LogoutWithdraw";
+import LogoutWithdraw from "../logoutWithdraw/LogoutWithdraw";
 import { ReactComponent as ClickIdIcon } from "../../../../asset/icon/ClickIdIcon.svg";
+import { Link } from "react-router-dom";
 const EditUser = () => {
   return (
     <>
@@ -27,7 +28,9 @@ const EditUser = () => {
           </NicknameBox>
           <PasswordBox>
             <StSpan>비밀번호</StSpan>
-            <button>비밀번호 변경</button>
+            <PasswordLink to={"/editPassword"}>
+              <button>비밀번호 변경</button>
+            </PasswordLink>
           </PasswordBox>
         </TextBox>
       </EditMyInfo>
@@ -46,6 +49,7 @@ const EditMyInfo = styled.div`
   width: 375px;
   height: 456px;
 `;
+
 const ImageBox = styled.div`
   box-sizing: border-box;
   height: 180px;
@@ -56,12 +60,14 @@ const ImageBox = styled.div`
   padding: 20px 0px 12px;
   gap: 16px;
 `;
+
 const MyImage = styled.div`
   width: 100px;
   height: 100px;
   border-radius: 50%;
   background-color: grey;
 `;
+
 const EditImageBtn = styled.button`
   display: flex;
   flex-direction: row;
@@ -91,6 +97,7 @@ const TextBox = styled.div`
   width: 100%;
   height: 276px;
 `;
+
 const InputDivBox = styled.div`
   display: flex;
   flex-direction: row;
@@ -130,6 +137,7 @@ const InputDivBox = styled.div`
     font-weight: 700;
     font-size: 16px;
     line-height: 150%;
+    cursor: pointer;
   }
 `;
 
@@ -184,7 +192,12 @@ const PasswordBox = styled.div`
     font-size: 16px;
     line-height: 150%;
     color: #006981;
+    cursor: pointer;
   }
+`;
+
+const PasswordLink = styled(Link)`
+  text-decoration: none;
 `;
 
 const MarginBar = styled.div`
