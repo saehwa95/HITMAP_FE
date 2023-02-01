@@ -1,29 +1,151 @@
-import React from "react";
+import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
+import { instance } from "../../../../redux/api/instance";
 import LogoutWithdraw from "../LogoutWithdraw/LogoutWithdraw";
 import { ReactComponent as ClickIdIcon } from "../../../../asset/icon/ClickIdIcon.svg";
+import imgdeleteButton from "../../../../asset/button/imgdeleteButton.svg";
+
 const EditUser = () => {
+  const imgRef = useRef();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  //유저 정보 가져오는 리액트쿼리함수
+  const userInfoAPI = () => {
+    return instance.get("/me");
+  };
+  const { data } = useQuery(["userInfo"], userInfoAPI);
+  const userInformation = data?.data;
+
+  //닉네임 유효성 검사
+  const regNickname = /^[A-Z|a-z|가-힣|0-9]{1,9}$/;
+
+  const [nickname, setNickname] = useState("");
+  const [nicknameAlert, setNicknameAlert] = useState("");
+  const [isNickname, setIsNickname] = useState(false);
+
+  const onChangeNicknameHandler = (e) => {
+    e.preventDefault();
+    setNickname(e.target.value);
+
+    if (!regNickname.test(nickname)) {
+      setNicknameAlert(
+        "닉네임은 한글, 영문, 숫자만 가능하며 2자 이상 10자 이하로 입력해주세요."
+      );
+      setIsNickname(false);
+    } else {
+      setNicknameAlert("");
+      setIsNickname(true);
+    }
+  };
+
+  //닉네임 중복검사 mutation
+  const nicknameValidation = useMutation({
+    mutationFn: async (nickname) => {
+      return await instance.post("/me/myNickname", nickname);
+    },
+    onSuccess: () => {
+      alert("사용 가능한 닉네임입니다.");
+    },
+    onError: (error) => {
+      alert(error.response.data.errorMessage);
+    },
+  });
+  //댓글 input창에 내용 없으면 등록 안되게 if문 처리
+  const nicknameValidationHandler = () => {
+    if (nickname) {
+      nicknameValidation.mutate({ nickname: nickname });
+    }
+  };
+
+  // 사진수정 이미지 확인
+  const [fileImage, setFileImage] = useState();
+
+  const saveFileImage = (e) => {
+    setFileImage(e.target.files[0]);
+  };
+
+  // 프리뷰 이미지 삭제
+  const deleteFileImage = () => {
+    setFileImage();
+  };
+
+  // 프리뷰 이미지
+  const imageInput = imgRef;
+
+  const onClickImageUpload = () => {
+    imageInput.current.click();
+    setFileImage();
+  };
+
+  const formData = new FormData();
+  formData.append("image", fileImage);
+  formData.append("nickname", nickname);
+
+  const submitEditedUserInfoMutation = useMutation({
+    mutationFn: async (formData) => {
+      return await instance.patch("/me", formData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["userInfo"] });
+      alert("회원 정보가 수정되었습니다.");
+      navigate("/mypage");
+    },
+  });
+
+  const submitEditedUserInfoHandler = (e) => {
+    e.preventDefault();
+    submitEditedUserInfoMutation.mutate(formData);
+  };
+
   return (
     <>
       <EditMyInfo>
-        <ImageBox>
-          <MyImage />
-          <EditImageBtn>
+        <StProfileContainer>
+          <div>
+            <StImgContainer>
+              {fileImage ? (
+                <Stimage src={URL.createObjectURL(fileImage)}></Stimage>
+              ) : (
+                <Stimage src={userInformation?.profile_image}></Stimage>
+              )}
+              <StImgdelete
+                onClick={deleteFileImage}
+                src={imgdeleteButton}
+                alt="미리보기 삭제 버튼"
+              />
+            </StImgContainer>
+          </div>
+          <StPostProfileBtn
+            type="file"
+            accept="image/jpeg, image/jpg, image/png"
+            onChange={saveFileImage}
+            ref={imageInput}
+          />
+          <EditImageBtn onClick={onClickImageUpload}>
             <span>사진변경</span>
             <ClickIdIcon />
           </EditImageBtn>
-        </ImageBox>
+        </StProfileContainer>
         <TextBox>
           <NicknameBox>
             <StSpan>닉네임</StSpan>
             <InputDivBox>
-              <input type="text" />
-              <button>중복확인</button>
+              <input
+                type="text"
+                defaultValue={userInformation?.nickname}
+                onChange={onChangeNicknameHandler}
+              />
+              <StNickValidationBtn
+                onClick={nicknameValidationHandler}
+                disabled={!isNickname || nickname.trim() === ""}
+              >
+                중복확인
+              </StNickValidationBtn>
             </InputDivBox>
-            <span>
-              닉네임은 한글, 영문, 숫자만 가능하며 2자 이상 10자 이하로
-              입력해주세요.
-            </span>
+            <p>{nicknameAlert}</p>
           </NicknameBox>
           <PasswordBox>
             <StSpan>비밀번호</StSpan>
@@ -34,7 +156,7 @@ const EditUser = () => {
       <MarginBar />
       <LogoutWithdraw />
       <EditButtonWrapper>
-        <button>수정 완료</button>
+        <button onClick={submitEditedUserInfoHandler}>수정 완료</button>
       </EditButtonWrapper>
     </>
   );
@@ -46,22 +168,7 @@ const EditMyInfo = styled.div`
   width: 375px;
   height: 456px;
 `;
-const ImageBox = styled.div`
-  box-sizing: border-box;
-  height: 180px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 0px 12px;
-  gap: 16px;
-`;
-const MyImage = styled.div`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: grey;
-`;
+
 const EditImageBtn = styled.button`
   display: flex;
   flex-direction: row;
@@ -82,6 +189,41 @@ const EditImageBtn = styled.button`
     color: #006981;
     margin: 0 11px;
   }
+`;
+
+const StProfileContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  flex-direction: column;
+  gap: 16px;
+  width: 343px;
+  height: 177px;
+`;
+
+const Stimage = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+`;
+
+const StImgContainer = styled.div`
+  display: flex;
+  justify-content: end;
+`;
+
+const StImgdelete = styled.img`
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  float: right;
+  z-index: 100;
+  cursor: pointer;
+`;
+
+const StPostProfileBtn = styled.input`
+  display: none;
 `;
 
 const TextBox = styled.div`
@@ -113,24 +255,25 @@ const InputDivBox = styled.div`
     line-height: 150%;
     color: #1f1f1f;
   }
-  button {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 90px;
-    height: 48px;
-    background: #006981;
-    border-radius: 8px;
-    border: none;
-    color: #ffffff;
-    font-family: "Pretendard";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 150%;
-  }
+`;
+
+const StNickValidationBtn = styled.button`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 90px;
+  height: 48px;
+  background-color: ${(props) => (props.disabled ? "#A6CAD3" : "#006981")};
+  border-radius: 8px;
+  border: none;
+  color: #ffffff;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
 `;
 
 const StSpan = styled.span`
