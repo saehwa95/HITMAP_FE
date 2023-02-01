@@ -64,12 +64,16 @@
 // `;
 
 // const StOtherPersonNickName = styled.div`
+// font-family: "Pretendard";
+// font-style: normal;
 //   font-weight: 700;
 //   font-size: 18px;
 //   color: #3f3f3f;
 // `;
 
 // const StChatLastCreateTime = styled.div`
+// font-family: "Pretendard";
+// font-style: normal;
 //   font-weight: 500;
 //   font-size: 12px;
 //   color: #c2c2c2;
@@ -82,6 +86,8 @@
 // `;
 
 // const StChatLastContent = styled.div`
+// font-family: "Pretendard";
+// font-style: normal;
 //   font-weight: 500;
 //   font-size: 14px;
 //   color: #979797;
@@ -101,6 +107,8 @@
 //   background: #e5294a;
 //   border-radius: 50px;
 //   color: white;
+// font-family: "Pretendard";
+// font-style: normal;
 //   font-weight: 400;
 //   font-size: 10px;
 // `;

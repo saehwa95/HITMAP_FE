@@ -77,6 +77,8 @@ const StDeleteConfirmMessage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
@@ -94,6 +96,8 @@ const StDeleteConfirmCancelButton = styled.button`
   border: 1px solid #006981;
   margin-right: 4px;
   border-radius: 8px;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 16px;
   color: #006981;
@@ -103,6 +107,8 @@ const StDeleteConfirmDeleteButton = styled.button`
   width: 136px;
   height: 48px;
   margin-left: 4px;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 16px;
   color: #ffffff;

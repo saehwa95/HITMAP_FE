@@ -182,6 +182,8 @@ const StImgPreviewDeleteButton = styled.img`
 `;
 
 const StImageLabel = styled.label`
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;
@@ -205,6 +207,8 @@ const StImageLabelButton = styled.label`
   margin-right: 16px;
   background: #979797;
   border-radius: 8px;
+  font-family: "Pretendard";
+  font-style: normal;
   font-size: 48px;
   font-weight: 100;
   color: white;
@@ -241,6 +245,8 @@ const StFishNameBox = styled.div`
 `;
 
 const StFishNameLabel = styled.label`
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;
@@ -270,6 +276,8 @@ const StButton = styled.button`
   color: white;
   border: none;
   background-color: ${(props) => (props.disabled ? "#A6CAD3" : "#006981")};
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;
