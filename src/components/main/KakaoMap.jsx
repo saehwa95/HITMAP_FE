@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { useNavigate } from "react-router-dom";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 import myLocationIcon from "../../asset/icon/myLocationIcon.svg";
 import pinMarker from "../../asset/icon/pinMarker.svg";
 import "./KakaoMap.css";
@@ -96,9 +96,6 @@ const KakaoMap = ({ searchPlace }) => {
         position: new kakao.maps.LatLng(place.y, place.x),
         image: markerImage,
       });
-
-      //키워드에 맞는 장소 정보
-      // console.log(place);
 
       const iwContent = `<div class="info-title_div"><span class="info-title_span">${place.place_name}</span></div>`;
 

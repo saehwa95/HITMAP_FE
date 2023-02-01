@@ -6,7 +6,6 @@ import MyInfoBox from "../../components/myPage/MyInfoBox";
 import MyPostList from "../../components/myPage/MyPostList";
 import IconNavigationBar from "../../components/layout/navigationBar/IconNavigationBar";
 
-
 const MyPage = () => {
   return (
     <>

@@ -16,6 +16,7 @@ const Search = () => {
     setPlace(inputText);
     setInputText("");
   };
+
   return (
     <>
       <SearchBar>
@@ -38,6 +39,7 @@ const Search = () => {
 export default Search;
 
 const SearchBar = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

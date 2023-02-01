@@ -37,4 +37,5 @@ const StSnsList = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+  background: #f6f6f6;
 `;

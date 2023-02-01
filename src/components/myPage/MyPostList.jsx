@@ -1,7 +1,7 @@
 import React from "react";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import styled from "styled-components";
 import { instance } from "../../redux/api/instance";
 
 const MyPostList = () => {
@@ -41,10 +41,13 @@ const MyPostListWrapper = styled.div`
   grid-template-rows: 122px 122px 122px;
   gap: 4px;
   margin-top: 16px;
-  height: 321px;
+  height: 415px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
+  }
+  div {
+    cursor: pointer;
   }
   img {
     width: 122px;

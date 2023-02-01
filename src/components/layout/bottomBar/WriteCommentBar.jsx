@@ -29,6 +29,20 @@ const WriteCommentBar = () => {
       queryClient.invalidateQueries({ queryKey: ["detailPost"] });
     },
   });
+  //댓글 input창에 내용 없으면 등록 안되게 if문 처리
+  const postCommentHandler = () => {
+    if (comment) {
+      postComment.mutate({ content: comment });
+      setComment("");
+    }
+  };
+
+  //댓글 쓰고 엔터키 누르면 댓글 작성되도록 하는 함수(input 태그에 적용)
+  const onKeyPress = (e) => {
+    if (e.key === "Enter") {
+      postCommentHandler();
+    }
+  };
 
   //유저 정보 불러오는 fetchAPI와 data
   const userInfoAPI = () => {
@@ -44,20 +58,13 @@ const WriteCommentBar = () => {
         />
         <StTextBar>
           <StTextInput
-            maxLength="20"
+            maxLength="50"
             onChange={onChangeCommentHandler}
-            placeholder="댓글 남기기(최대 20자)"
+            placeholder="댓글 남기기(최대 50자)"
             value={comment}
+            onKeyPress={onKeyPress}
           />
-          <StSendButton
-            // disalbed={comment ? true : false}
-            onClick={() => {
-              postComment.mutate({ content: comment });
-              setComment("");
-            }}
-          >
-            등록
-          </StSendButton>
+          <StSendButton onClick={postCommentHandler}>등록</StSendButton>
         </StTextBar>
       </StWriteCommentBarBox>
     </StWriteCommentBarContainer>
@@ -85,7 +92,7 @@ const StWriteCommentBarBox = styled.div`
 const StUserProfileImg = styled.img`
   width: 36px;
   height: 36px;
-  border-radius: 15px;
+  border-radius: 50px;
 `;
 
 const StTextBar = styled.div`
@@ -103,6 +110,8 @@ const StTextInput = styled.input`
   border: none;
   border-radius: 16px;
   ::placeholder {
+    font-family: "Pretendard";
+    font-style: normal;
     font-weight: 500;
     font-size: 16px;
     color: #c2c2c2;
@@ -115,9 +124,12 @@ const StTextInput = styled.input`
 
 const StSendButton = styled.button`
   width: 50px;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 16px;
   color: #979797;
   border: none;
   background-color: transparent;
+  cursor: pointer;
 `;

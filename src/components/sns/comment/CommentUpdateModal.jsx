@@ -35,7 +35,16 @@ const CommentUpdateModal = ({
       queryClient.invalidateQueries({ queryKey: ["detailPost"] });
     },
   });
+  const updateCommentHandler = () => {
+    updateComment.mutate({ content: comment });
+  };
 
+  //댓글 쓰고 엔터키 누르면 댓글 작성되도록 하는 함수(input 태그에 적용)
+  const onKeyPress = (e) => {
+    if (e.key === "Enter") {
+      updateCommentHandler();
+    }
+  };
   return (
     <StDeleteConfirmAll>
       <SnsCommentUpdateAbbBar
@@ -44,17 +53,15 @@ const CommentUpdateModal = ({
       />
       <StInputContainer>
         <StUpdateCommentInput
+          maxLength="50"
+          placeholder="댓글 남기기(최대 50자)"
           defaultValue={list.comment}
           onChange={onChangeCommentHandler}
+          onKeyPress={onKeyPress}
         />
       </StInputContainer>
       <StButtonBox>
-        <StButton
-          disabled={!comment}
-          onClick={() => {
-            updateComment.mutate({ content: comment });
-          }}
-        >
+        <StButton disabled={!comment} onClick={updateCommentHandler}>
           등록하기
         </StButton>
       </StButtonBox>
@@ -99,6 +106,7 @@ const StUpdateCommentInput = styled.textarea`
 `;
 
 const StButtonBox = styled.div`
+  box-sizing: border-box;
   padding: 8px 16px 27px 16px;
   width: 375px;
   height: 83px;
@@ -111,8 +119,11 @@ const StButton = styled.button`
   color: white;
   border: none;
   background-color: ${(props) => (props.disabled ? "#A6CAD3" : "#006981")};
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;
   border-radius: 8px;
+  cursor: pointer;
 `;
