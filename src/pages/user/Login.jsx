@@ -298,7 +298,7 @@ const StSignupcontain = styled.div`
   padding: 4px 20px;
   gap: 8px;
 
-  width: 310px;
+  width: 245px;
   height: 32px;
 
   font-family: "Pretendard";
@@ -321,7 +321,7 @@ const StSignupcontain = styled.div`
 const StGoSignup = styled.span`
   width: 80px;
   height: 24px;
-
+  margin-left: 10px;
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
