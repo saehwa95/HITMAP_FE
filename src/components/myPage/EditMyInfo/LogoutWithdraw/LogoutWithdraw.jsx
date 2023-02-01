@@ -14,7 +14,7 @@ const LogoutWithdraw = () => {
   return (
     <>
       <ButtonLink onClick={showModal}>
-        <div>
+        <div className="logout">
           <span>로그아웃</span>
           <GreyClickIcon />
         </div>
@@ -38,10 +38,9 @@ const ButtonLink = styled(Link)`
   align-items: center;
   justify-content: space-between;
   border: none;
-  width: 375px;
+  width: 100%;
   height: 64px;
   cursor: pointer;
-  background: #ffffff;
   text-decoration: none;
   span {
     font-family: "Pretendard";
@@ -59,6 +58,8 @@ const ButtonLink = styled(Link)`
     padding: 16px;
     width: 375px;
     height: 64px;
+  }
+  .logout {
     border-bottom: 1px solid #dfdfdf;
   }
 `;
