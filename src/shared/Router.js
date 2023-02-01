@@ -12,7 +12,7 @@ import Chat from "../pages/socket/Chat";
 import MyPage from "../pages/mypage/MyPage";
 import EditMyInfo from "../pages/mypage/EditMyInfo";
 import LogInRegister from "../pages/mypage/LogInRegister";
-import Withdraw from "../components/myPage/EditMyInfo/logoutWithdraw/Withdraw";
+import Withdraw from "../components/myPage/EditMyInfo/LogoutWithdraw/Withdraw";
 
 const Router = () => {
   return (

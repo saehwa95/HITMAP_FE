@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import StatusBar from "../../components/layout/appBar/StatusBar";
 import MypageAppBar from "../../components/layout/appBar/MypageAppBar";
-import LogInRegisterBox from "../../components/myPage/logInRegister/LogInRegisterBox";
-import IconNavigationBar from '../../components/layout/navigationBar/IconNavigationBar'
+import LogInRegisterBox from "../../components/myPage/LogInRegister/LogInRegisterBox";
+import IconNavigationBar from "../../components/layout/navigationBar/IconNavigationBar";
 
 const LogInRegister = () => {
   return (

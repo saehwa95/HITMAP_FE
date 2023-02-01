@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import LogoutWithdraw from "../logoutWithdraw/LogoutWithdraw";
+import LogoutWithdraw from "../LogoutWithdraw/LogoutWithdraw";
 import { ReactComponent as ClickIdIcon } from "../../../../asset/icon/ClickIdIcon.svg";
 const EditUser = () => {
   return (
