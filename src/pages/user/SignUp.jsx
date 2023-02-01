@@ -238,7 +238,7 @@ const SignUp = () => {
     <StSignupContainer>
       {/* SignuptopNav */}
       <SignupAppBar />
-      {/* SignupImgForm */}``
+      {/* SignupImgForm */}
       <StSignupList>
         <StProfileContainer>
           <StBackimage>
