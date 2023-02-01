@@ -102,7 +102,9 @@ const UserEdit = () => {
 
   return (
     <>
-      <div>회원 정보 수정기능을 준비중입니다.</div>
+      <Wrapper>
+        <div>회원 정보 수정기능을 준비중입니다.</div>
+      </Wrapper>
     </>
   ); // <StEditContainer>
   //   <StProfileContainer>
@@ -215,6 +217,28 @@ const UserEdit = () => {
 };
 
 export default UserEdit;
+const Wrapper = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 465px;
+  padding: 10px;
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    height: 450px;
+    width: 100%;
+    border-radius: 10px;
+    color: black;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: "Pretendard";
+  }
+`;
 
 // const StEditContainer = styled.div`
 //   display: flex;
