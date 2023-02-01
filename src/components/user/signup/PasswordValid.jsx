@@ -17,7 +17,7 @@ const PasswordValid = () => {
 
   return (
     <StPassContainer>
-      <StText>비밀번호</StText>
+      <StText>비밀번호 수정</StText>
       <Stpwinputcontainer>
         <StInputErrMsg>
           <StPsInput
@@ -58,7 +58,7 @@ const StPassContainer = styled.div`
   align-items: flex-start;
   gap: 12px;
   width: 375px;
-  height: 249px;
+  height: 409px;
   background: #ffffff;
 `;
 

@@ -5,7 +5,7 @@ import { setCookie } from "../../shared/cookie";
 const initialState = {
   userinfo: {},
   isLoading: true,
-  error: false,
+  error: true,
   auth: false,
 };
 
@@ -30,10 +30,10 @@ export const __postSignin = createAsyncThunk(
 export const __postSignup = createAsyncThunk(
   "userSlice/__postSignup",
   async (arg, thunkAPI) => {
-    console.log(arg);
+    console.log("arg", arg);
     try {
       const signupData = await instance.post(`/user/signup`, arg);
-
+      console.log("adwd", signupData);
       return thunkAPI.fulfillWithValue(signupData.data);
       // if (signupData.status === 201) {
       //   return thunkAPI.fulfillWithValue(signupData.data);
@@ -53,17 +53,37 @@ export const __postSignup = createAsyncThunk(
 export const __editUser = createAsyncThunk(
   "userSlice/__editUser",
   async (arg, thunkAPI) => {
-    console.log("pay", arg);
-
     try {
-      const signupData = await instance.patch(`/me`, arg);
+      const editUser = await instance.patch(`/me`, arg);
 
-      return thunkAPI.fulfillWithValue(signupData.data);
-      // if (signupData.status === 201) {
-      //   return thunkAPI.fulfillWithValue(signupData.data);
-      // } else if (signupData.status === 412) {
+      return thunkAPI.fulfillWithValue(editUser.data);
+      // if (editUser.status === 201) {
+      //   return thunkAPI.fulfillWithValue(editUser.data);
+      // } else if (editUser.status === 412) {
       //   return thunkAPI.rejectWithValue(412);
-      // } else if (signupData.status === 400) {
+      // } else if (editUser.status === 400) {
+      //   return thunkAPI.rejectWithValue(400);
+      // } else {
+      //   return thunkAPI.rejectWithValue(403);
+      // }
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+
+export const __editpass = createAsyncThunk(
+  "userSlice/__editpass",
+  async (arg, thunkAPI) => {
+    try {
+      const editUser = await instance.patch(`/me/updatePassword`, arg);
+
+      return thunkAPI.fulfillWithValue(editUser.data);
+      // if (editUser.status === 201) {
+      //   return thunkAPI.fulfillWithValue(editUser.data);
+      // } else if (editUser.status === 412) {
+      //   return thunkAPI.rejectWithValue(412);
+      // } else if (editUser.status === 400) {
       //   return thunkAPI.rejectWithValue(400);
       // } else {
       //   return thunkAPI.rejectWithValue(403);

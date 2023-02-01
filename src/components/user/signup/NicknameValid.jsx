@@ -1,12 +1,17 @@
 import React from "react";
+import { forwardRef } from "react";
+import { useImperativeHandle } from "react";
 import { useState } from "react";
+import { useEffect } from "react";
 
 import styled from "styled-components";
 import duplicateIcon from "../../../asset/icon/duplicateIcon.svg";
+
 import useInputnickname from "../../../hooks/useInputnickname";
 
 const NicknameValid = () => {
   const {
+    nickdata,
     nickname,
     nicklValid,
     onNickChangeHandler,
@@ -14,7 +19,7 @@ const NicknameValid = () => {
     nickMessage,
     onnick,
   } = useInputnickname();
-
+  console.log("2", nickname, nickdata);
   return (
     <StNickdiv>
       <StText>닉네임</StText>
