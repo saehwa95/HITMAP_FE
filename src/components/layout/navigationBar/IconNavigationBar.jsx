@@ -56,7 +56,14 @@ const IconNavigationBar = () => {
             }}
           />
         )}
-        {pathName === "/chat" ? (
+        <img
+          src={chatIcon}
+          alt=""
+          onClick={() => {
+            alert("준비중인 기능입니다.");
+          }}
+        />
+        {/* {pathName === "/chat" ? (
           <img
             src={clickChatIcon}
             alt=""
@@ -78,7 +85,7 @@ const IconNavigationBar = () => {
               authJudge ? navigate("/chat") : navigate("/login");
             }}
           />
-        )}
+        )} */}
         {pathName === "/mypage" || pathName === "/logInRegister" ? (
           <img
             src={clickMyPageIcon}
