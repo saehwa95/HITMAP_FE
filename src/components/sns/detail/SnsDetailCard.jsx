@@ -140,12 +140,16 @@ const StCardHeaderProfileImg = styled.img`
 `;
 
 const StCardHeaderNickName = styled.div`
+  font-family: "Pretendard";
+  font-style: normal;
   font-size: 16px;
   font-weight: 700;
   color: #3f3f3f;
 `;
 
 const StCardHeaderCreateTime = styled.div`
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 500;
   font-size: 14px;
   color: #c2c2c2;
@@ -175,6 +179,8 @@ const StCarouselBox = styled.div`
 
 const StCardContent = styled.div`
   margin: 16px;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
@@ -194,12 +200,16 @@ const StFishNameContainer = styled.div`
 `;
 
 const StFishNameLabel = styled.label`
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;
 `;
 
 const StFishName = styled.div`
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
@@ -227,6 +237,8 @@ const StLikeStatusCount = styled.div`
   align-items: center;
   gap: 4px;
   color: #979797;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 18px;
   width: 58px;
@@ -244,6 +256,8 @@ const StCommentStatusCount = styled.div`
   align-items: center;
   gap: 4px;
   color: #979797;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 18px;
   width: 58px;

@@ -68,6 +68,8 @@
 //   align-items: center;
 //   justify-content: center;
 //   flex-direction: column;
+// font-family: "Pretendard";
+// font-style: normal;
 //   font-weight: 700;
 //   font-size: 18px;
 //   line-height: 21px;
@@ -78,6 +80,8 @@
 
 // const StDeleteChatDetailMessage = styled.div`
 //   text-align: center;
+// font-family: "Pretendard";
+// font-style: normal;
 //   font-weight: 500;
 //   font-size: 14px;
 //   line-height: 150%;
@@ -93,6 +97,8 @@
 //   border: 1px solid #006981;
 //   margin-right: 4px;
 //   border-radius: 8px;
+// font-family: "Pretendard";
+// font-style: normal;
 //   font-weight: 700;
 //   font-size: 16px;
 //   color: #006981;
@@ -103,6 +109,8 @@
 //   width: 136px;
 //   height: 48px;
 //   margin-left: 4px;
+// font-family: "Pretendard";
+// font-style: normal;
 //   font-weight: 700;
 //   font-size: 16px;
 //   color: #ffffff;

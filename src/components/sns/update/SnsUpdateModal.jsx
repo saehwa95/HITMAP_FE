@@ -167,6 +167,8 @@ const StUpdateFishNameBox = styled.div`
 const StUpdateFishNameLabel = styled.label`
   width: 343px;
   margin-top: 16px;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 18px;
   color: #1f1f1f;
@@ -182,6 +184,8 @@ const StUpdateFishName = styled.textarea`
   margin-bottom: 16px;
   font-weight: 500;
   line-height: 2.5;
+  font-family: "Pretendard";
+  font-style: normal;
   font-size: 16px;
   &:focus {
     outline: none;
@@ -205,6 +209,8 @@ const StButton = styled.button`
   color: white;
   border: none;
   background-color: ${(props) => (props.disabled ? "#A6CAD3" : "#006981")};
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;

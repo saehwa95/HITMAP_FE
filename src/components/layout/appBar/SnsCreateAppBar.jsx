@@ -53,6 +53,8 @@ const StSnsCreateAppBarIcon = styled.img`
 
 const StAppBarTitle = styled.div`
   margin-right: 126px;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;

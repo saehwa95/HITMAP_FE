@@ -119,6 +119,8 @@ const StButton = styled.button`
   color: white;
   border: none;
   background-color: ${(props) => (props.disabled ? "#A6CAD3" : "#006981")};
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;

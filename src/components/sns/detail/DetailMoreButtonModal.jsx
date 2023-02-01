@@ -63,6 +63,8 @@ const StGoUpdatePageButton = styled.button`
   height: 56px;
   border-bottom: 1px solid #979797;
   background-color: #3f3f3f;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;
@@ -83,6 +85,8 @@ const StGoDeleteButton = styled.button`
   width: 150px;
   height: 56px;
   background-color: #3f3f3f;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;

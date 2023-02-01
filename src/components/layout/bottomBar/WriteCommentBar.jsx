@@ -110,6 +110,8 @@ const StTextInput = styled.input`
   border: none;
   border-radius: 16px;
   ::placeholder {
+    font-family: "Pretendard";
+    font-style: normal;
     font-weight: 500;
     font-size: 16px;
     color: #c2c2c2;
@@ -122,6 +124,8 @@ const StTextInput = styled.input`
 
 const StSendButton = styled.button`
   width: 50px;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 16px;
   color: #979797;
