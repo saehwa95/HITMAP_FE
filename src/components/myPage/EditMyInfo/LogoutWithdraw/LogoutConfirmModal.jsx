@@ -1,7 +1,7 @@
 import React from "react";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
+import styled from "styled-components";
 import { instance } from "../../../../redux/api/instance";
 import { deleteCookie } from "../../../../shared/cookie";
 
@@ -16,11 +16,11 @@ const LogoutConfirmModal = ({ setLogoutModalOpen }) => {
     mutationFn: async () => {
       return await instance.post("user/logout");
     },
-    onSuccess:()=>{
-      deleteCookie("auth")
-      window.alert("로그아웃 되었습니다.")
-      navigate("/logInRegister")
-    }
+    onSuccess: () => {
+      deleteCookie("auth");
+      window.alert("로그아웃 되었습니다.");
+      navigate("/logInRegister");
+    },
   });
 
   return (
@@ -33,7 +33,12 @@ const LogoutConfirmModal = ({ setLogoutModalOpen }) => {
           <button className="cancel-button" onClick={closeModal}>
             취소
           </button>
-          <button className="logout-button" onClick={()=>{logoutMutation.mutate()}}>
+          <button
+            className="logout-button"
+            onClick={() => {
+              logoutMutation.mutate();
+            }}
+          >
             로그아웃
           </button>
         </div>

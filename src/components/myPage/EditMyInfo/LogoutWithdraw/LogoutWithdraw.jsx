@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 import { ReactComponent as GreyClickIcon } from "../../../../asset/icon/GreyClickIcon.svg";
 import LogoutConfirmModal from "./LogoutConfirmModal";
 

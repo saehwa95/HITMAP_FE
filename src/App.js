@@ -1,10 +1,10 @@
 import React from "react";
 import Router from "./shared/Router";
-import styled from "styled-components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import "./App.css";
+import styled from "styled-components";
 import { ReactComponent as BackGround } from "./asset/image/BackGround.svg";
+import "./App.css";
 
 const queryClient = new QueryClient();
 
