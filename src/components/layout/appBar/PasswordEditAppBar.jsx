@@ -3,34 +3,31 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import backButton from "../../../asset/button/backButton.svg";
 
-const WithdrawAppBar = () => {
+const PasswordEditAppBar = () => {
   return (
-    <WithdrawAppBarWrapper>
+    <EditPasswordAppBarWrapper>
       <Link to={"/editMyInfo"}>
         <img src={backButton} alt="" />
       </Link>
-      <div>
-        <span>회원탈퇴</span>
-      </div>
-    </WithdrawAppBarWrapper>
+      <span>비밀번호 변경</span>
+    </EditPasswordAppBarWrapper>
   );
 };
 
-export default WithdrawAppBar;
+export default PasswordEditAppBar;
 
-const WithdrawAppBarWrapper = styled.div`
+const EditPasswordAppBarWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 343px;
   height: 48px;
   padding: 8px 16px;
   span {
-    margin-left: 88px;
+    margin-left: 69px;
     font-family: "Pretendard";
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
     line-height: 24px;
-    text-align: center;
   }
 `;

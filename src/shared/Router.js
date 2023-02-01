@@ -11,6 +11,7 @@ import CreatePost from "../pages/sns/CreatePost";
 import Chat from "../pages/socket/Chat";
 import MyPage from "../pages/mypage/MyPage";
 import EditMyInfo from "../pages/mypage/EditMyInfo";
+import EditPasswordPage from "../pages/mypage/EditPasswordPage";
 import LogInRegister from "../pages/mypage/LogInRegister";
 import Withdraw from "../components/myPage/EditMyInfo/LogoutWithdraw/Withdraw";
 
@@ -29,6 +30,7 @@ const Router = () => {
         <Route path="/chat" element={<Chat />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/editMyInfo" element={<EditMyInfo />} />
+        <Route path="/editPassword" element={<EditPasswordPage />} />
         <Route path="/logInRegister" element={<LogInRegister />} />
         <Route path="/withdraw" element={<Withdraw />} />
       </Routes>

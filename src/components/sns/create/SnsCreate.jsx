@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { instance } from "../../../redux/api/instance";
 import SnsCreateAppBar from "../../layout/appBar/SnsCreateAppBar";
 import deletePhotoButton from "../../../asset/button/deletePhotoButton.svg";
+import photoAddIcon from "../../../asset/icon/photoAddIcon.svg";
 
 const SnsCreate = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const SnsCreate = () => {
     setInput({ ...input, [name]: value });
   };
 
-  const onChangImages = (e) => {
+  const onChangeImages = (e) => {
     setPostImages(e.target.files);
   };
 
@@ -61,16 +62,16 @@ const SnsCreate = () => {
           <StImageFileBox>
             <div>
               <StImageLabelButton htmlFor="input-file">
-                +
-                <input
-                  type="file"
-                  id="input-file"
-                  accept="image/jpeg, image/jpg, image/png"
-                  style={{ display: "none" }}
-                  onChange={onChangImages}
-                  multiple
-                />
+                <img alt="사진추가 아이콘" src={photoAddIcon} />
               </StImageLabelButton>
+              <input
+                type="file"
+                id="input-file"
+                accept="image/jpeg, image/jpg, image/png"
+                style={{ display: "none" }}
+                onChange={onChangeImages}
+                multiple
+              />
             </div>
             <StPreviewImgContainer>
               {Array.from(postImages).map((item, id) => {
@@ -102,7 +103,7 @@ const SnsCreate = () => {
             name="content"
             value={input.content}
             onChange={onChangeTextHandler}
-            placeholder="내용을 작성해주세요.(최대 150자)"
+            placeholder=" 내용을 작성해주세요.(최대 150자)"
           />
         </StContentInputBox>
         <StFishNameBox>
@@ -113,7 +114,7 @@ const SnsCreate = () => {
             name="fishName"
             value={input.fishName}
             onChange={onChangeTextHandler}
-            placeholder="어종을 작성해주세요.(최대 20자)"
+            placeholder=" 어종을 작성해주세요.(최대 20자)"
           />
         </StFishNameBox>
         <StButtonBox>
@@ -142,6 +143,8 @@ const StCreateContainer = styled.form`
 `;
 
 const StPreviewImgContainer = styled.div`
+  width: 250px;
+  /* min-width: 1%; */
   padding-top: 10px;
   display: flex;
   align-items: flex-start;
@@ -200,18 +203,7 @@ const StImageFileBox = styled.div`
 const StImageLabelButton = styled.label`
   transform: translateY(10px);
   display: flex;
-  align-items: inherit;
-  justify-content: center;
-  width: 84px;
-  height: 84px;
   margin-right: 16px;
-  background: #979797;
-  border-radius: 8px;
-  font-family: "Pretendard";
-  font-style: normal;
-  font-size: 48px;
-  font-weight: 100;
-  color: white;
   cursor: pointer;
 `;
 
