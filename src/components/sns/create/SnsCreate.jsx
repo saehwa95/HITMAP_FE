@@ -61,7 +61,7 @@ const SnsCreate = () => {
           <StImageLabel>사진 선택 (최대 5장)</StImageLabel>
           <StImageFileBox>
             <div>
-              <StImageLabelButton for="input-file">
+              <StImageLabelButton htmlFor="input-file">
                 <img alt="사진추가 아이콘" src={photoAddIcon} />
               </StImageLabelButton>
               <input
