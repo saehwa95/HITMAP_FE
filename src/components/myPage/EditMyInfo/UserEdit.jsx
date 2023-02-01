@@ -1,15 +1,12 @@
-import styled from "styled-components";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-
+import styled from "styled-components";
 import useInputnickname from "../../../hooks/useInputnickname";
 import useInputProfilimage from "../../../hooks/useInputProfilimage";
 import useInputpassword from "../../../hooks/useInputpassword";
-
 import { __editUser, __editpass } from "../../../redux/modules/userSlice";
-
 import duplicateIcon from "../../../asset/icon/duplicateIcon.svg";
 import clickclickIcon from "../../../asset/icon/clickclickIcon.svg";
 import imgdeleteButton from "../../../asset/button/imgdeleteButton.svg";

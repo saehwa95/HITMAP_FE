@@ -1,8 +1,8 @@
 import React from "react";
-import StatusBar from "./StatusBar";
-import styled from "styled-components";
-import backButton from "../../../asset/button/backButton.svg";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import StatusBar from "./StatusBar";
+import backButton from "../../../asset/button/backButton.svg";
 
 const EditMypageAppBar = () => {
   const navigate = useNavigate();

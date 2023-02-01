@@ -1,8 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import StatusBar from "../layout/appBar/StatusBar";
 import closeIcon from "../../asset/icon/closeIcon.svg";
-import { Link } from "react-router-dom";
 
 const PlaceName = ({ placeName }) => {
   return (
