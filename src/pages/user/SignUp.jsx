@@ -47,7 +47,6 @@ const SignUp = () => {
 
   //이미지 formData에 넣기
   const saveFileImage = (e) => {
-    setFileImage(URL.createObjectURL(e.target.files[0]));
     // formData.append("image", fileimage);
     const reader = new FileReader();
     reader.onload = () => {
@@ -58,6 +57,7 @@ const SignUp = () => {
       // 이후 다시 정상적으로파일을 formdata로 담습니다. -> 결론 코드 순서의 문제 였습니다.
       // 여기로 코드 순서를 바꾸고 해결된 문제였습니다. / - 끝 시마이 - 이대로 배포 다시 하시면 끝입니다.ㅎㅎ
     };
+    setFileImage(URL.createObjectURL(e.target.files[0]));
     reader.readAsDataURL(e.target.files[0]);
   };
 
