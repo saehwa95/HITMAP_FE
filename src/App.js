@@ -1,24 +1,34 @@
 import React from "react";
 import Router from "./shared/Router";
-import "./App.css";
-import styled from "styled-components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import styled from "styled-components";
+import { ReactComponent as BackGround } from "./asset/image/BackGround.svg";
+import "./App.css";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <Container>
-        <Router />
-      </Container>
+      <Wrapper>
+        <BackGround className="back-ground" />
+        <Container>
+          <Router />
+        </Container>
+      </Wrapper>
       <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>
   );
 };
 
 export default App;
+const Wrapper = styled.div`
+  .back-ground {
+    width: 100%;
+    height: 99.6vh;
+  }
+`;
 
 const Container = styled.div`
   width: 375px;
@@ -27,4 +37,5 @@ const Container = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  background-color: #ffffff;
 `;

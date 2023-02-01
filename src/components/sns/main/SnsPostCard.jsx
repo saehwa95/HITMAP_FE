@@ -6,10 +6,13 @@ import commentIcon from "../../../asset/icon/commentIcon.svg";
 import likeIcon from "../../../asset/icon/likeIcon.svg";
 import { instance } from "../../../redux/api/instance";
 import likeActiveIcon from "../../../asset/icon/likeActiveIcon.svg";
+import { getCookie } from "../../../shared/cookie.js";
 
 //sns 포스트카드 한 장 컴포넌트
 const SnsPostCard = ({ posts }) => {
   const navigate = useNavigate();
+  const authJudge = getCookie("auth");
+
   //get한 서버 데이터 중 created_at을 정해진 디자인에 쓰기 위해 시간 포맷 바꿔주는 역할
   const timeForCard = posts.created_at.slice(0, 16).replace(/-/gi, ".");
 
@@ -27,6 +30,11 @@ const SnsPostCard = ({ posts }) => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
+
+  // 좋아요 기능 함수(비로그인시 alert)
+  const postLikeHandler = () => {
+    authJudge ? submitLike.mutate() : alert("로그인이 필요한 기능입니다");
+  };
 
   return (
     <StCardContainer>
@@ -55,18 +63,10 @@ const SnsPostCard = ({ posts }) => {
             <img
               alt="좋아요 아이콘"
               src={likeActiveIcon}
-              onClick={() => {
-                submitLike.mutate();
-              }}
+              onClick={postLikeHandler}
             />
           ) : (
-            <img
-              alt="좋아요 아이콘"
-              src={likeIcon}
-              onClick={() => {
-                submitLike.mutate();
-              }}
-            />
+            <img alt="좋아요 아이콘" src={likeIcon} onClick={postLikeHandler} />
           )}
           <span>{posts.like_count}</span>
         </StLikeStatusCount>
@@ -87,6 +87,7 @@ const StCardContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 16px 16px 20px 16px;
+  background-color: white;
   padding: 16px 0px 16px;
   gap: 16px;
 `;
@@ -105,12 +106,16 @@ const StCardHeaderProfileImg = styled.img`
 `;
 
 const StCardHeaderNickName = styled.div`
+  font-family: "Pretendard";
+  font-style: normal;
   font-size: 16px;
   font-weight: 700;
   color: #3f3f3f;
 `;
 
 const StCardHeaderCreateTime = styled.div`
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 500;
   font-size: 14px;
   color: #c2c2c2;
@@ -118,6 +123,8 @@ const StCardHeaderCreateTime = styled.div`
 
 const StCardContent = styled.div`
   margin: 16px;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
@@ -168,6 +175,8 @@ const StLikeStatusCount = styled.div`
   align-items: center;
   gap: 4px;
   color: #979797;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 18px;
   width: 58px;
@@ -185,8 +194,11 @@ const StCommentStatusCount = styled.div`
   align-items: center;
   gap: 4px;
   color: #979797;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 18px;
   width: 58px;
   height: 32px;
+  cursor: pointer;
 `;

@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { instance } from "../../redux/api/instance";
-import { deleteCookie, setCookie } from "../../shared/cookie";
+import { setCookie } from "../../shared/cookie";
 
 const initialState = {
   userinfo: {},
   isLoading: true,
-  error: false,
+  error: true,
   auth: false,
 };
 
@@ -30,16 +30,60 @@ export const __postSignin = createAsyncThunk(
 export const __postSignup = createAsyncThunk(
   "userSlice/__postSignup",
   async (arg, thunkAPI) => {
-    console.log(arg);
+    console.log("arg", arg);
     try {
       const signupData = await instance.post(`/user/signup`, arg);
-
+      console.log("adwd", signupData);
       return thunkAPI.fulfillWithValue(signupData.data);
       // if (signupData.status === 201) {
       //   return thunkAPI.fulfillWithValue(signupData.data);
       // } else if (signupData.status === 412) {
       //   return thunkAPI.rejectWithValue(412);
       // } else if (signupData.status === 400) {
+      //   return thunkAPI.rejectWithValue(400);
+      // } else {
+      //   return thunkAPI.rejectWithValue(403);
+      // }
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+
+export const __editUser = createAsyncThunk(
+  "userSlice/__editUser",
+  async (arg, thunkAPI) => {
+    try {
+      const editUser = await instance.patch(`/me`, arg);
+
+      return thunkAPI.fulfillWithValue(editUser.data);
+      // if (editUser.status === 201) {
+      //   return thunkAPI.fulfillWithValue(editUser.data);
+      // } else if (editUser.status === 412) {
+      //   return thunkAPI.rejectWithValue(412);
+      // } else if (editUser.status === 400) {
+      //   return thunkAPI.rejectWithValue(400);
+      // } else {
+      //   return thunkAPI.rejectWithValue(403);
+      // }
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+
+export const __editpass = createAsyncThunk(
+  "userSlice/__editpass",
+  async (arg, thunkAPI) => {
+    try {
+      const editUser = await instance.patch(`/me/updatePassword`, arg);
+
+      return thunkAPI.fulfillWithValue(editUser.data);
+      // if (editUser.status === 201) {
+      //   return thunkAPI.fulfillWithValue(editUser.data);
+      // } else if (editUser.status === 412) {
+      //   return thunkAPI.rejectWithValue(412);
+      // } else if (editUser.status === 400) {
       //   return thunkAPI.rejectWithValue(400);
       // } else {
       //   return thunkAPI.rejectWithValue(403);
@@ -92,21 +136,21 @@ export const __nickItem = createAsyncThunk(
   }
 );
 
-export const __logOut = createAsyncThunk(
-  "userSlice/__logOut",
+export const __myNick = createAsyncThunk(
+  "userSlice/__nickItem",
   async (payload, thunkAPI) => {
     try {
-      const logout = await instance.post(`user/logout`, {});
-      deleteCookie("auth");
+      const checkNick = await instance.post(`me/myNickname`, {
+        nickname: payload.nickname,
+      });
 
-      // console.log("최종", logout);
-
-      // if (logout.status === 204) {
-      //   console.log(logout);
-      //   return thunkAPI.fulfillWithValue(logout.message);
-      // } else {
-      //   return thunkAPI.rejectWithValue(400);
-      // }
+      if (checkNick.status === 200) {
+        return thunkAPI.fulfillWithValue(checkNick.data);
+      } else if (checkNick.status === 400) {
+        return thunkAPI.rejectWithValue(400);
+      } else {
+        return thunkAPI.rejectWithValue(401);
+      }
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
     }
@@ -167,6 +211,19 @@ const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(__postSignup.rejected, (state) => {
+        state.error = true;
+        state.isLoading = false;
+      })
+
+      .addCase(__editUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(__editUser.fulfilled, (state, action) => {
+        state.userinfo = action.payload;
+        state.error = false;
+        state.isLoading = true;
+      })
+      .addCase(__editUser.rejected, (state) => {
         state.error = true;
         state.isLoading = false;
       }),

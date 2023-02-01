@@ -59,6 +59,8 @@ const StSnsCommentUpdateAbbBarIcon = styled.img`
 const StAppBarTitle = styled.div`
   padding-right: 15px;
   margin-right: 126px;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;

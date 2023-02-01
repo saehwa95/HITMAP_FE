@@ -85,7 +85,7 @@ const SnsUpdateModal = ({ setUpdateModal, setMoreButtonModal }) => {
               fishName: input.fishName,
             });
           }}
-          disabled={!(input.fishName && input.content)}
+          disabled={!(input.fishName || input.content)}
         >
           등록하기
         </StButton>
@@ -167,6 +167,8 @@ const StUpdateFishNameBox = styled.div`
 const StUpdateFishNameLabel = styled.label`
   width: 343px;
   margin-top: 16px;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 18px;
   color: #1f1f1f;
@@ -182,6 +184,8 @@ const StUpdateFishName = styled.textarea`
   margin-bottom: 16px;
   font-weight: 500;
   line-height: 2.5;
+  font-family: "Pretendard";
+  font-style: normal;
   font-size: 16px;
   &:focus {
     outline: none;
@@ -192,6 +196,7 @@ const StUpdateFishName = styled.textarea`
 `;
 
 const StButtonBox = styled.div`
+  box-sizing: border-box;
   padding: 8px 16px 27px 16px;
   width: 375px;
   height: 83px;
@@ -204,8 +209,11 @@ const StButton = styled.button`
   color: white;
   border: none;
   background-color: ${(props) => (props.disabled ? "#A6CAD3" : "#006981")};
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;
   border-radius: 8px;
+  cursor: pointer;
 `;

@@ -30,7 +30,7 @@ export default Start;
 
 const StKakaoBtn = styled.img`
   cursor: pointer;
-  background-color: yellow;
+  background-color: #fada0a;
   width: 343px;
   height: 48px;
 `;

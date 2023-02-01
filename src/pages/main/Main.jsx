@@ -1,6 +1,6 @@
 import React from "react";
-import IconNavigationBar from "../../components/layout/navigationBar/IconNavigationBar";
 import Search from "../../components/main/Search";
+import IconNavigationBar from "../../components/layout/navigationBar/IconNavigationBar";
 
 const Main = () => {
   return (

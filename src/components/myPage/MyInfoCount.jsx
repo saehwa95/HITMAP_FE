@@ -1,4 +1,3 @@
-/* 게시물, 좋아요 개수 */
 import React from "react";
 import styled from "styled-components";
 

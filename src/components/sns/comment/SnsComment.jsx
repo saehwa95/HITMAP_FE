@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-import CommentMoreButtonModal from "./CommentMoreButtonModal";
 import { instance } from "../../../redux/api/instance";
 import { getCookie } from "../../../shared/cookie";
+import CommentMoreButtonModal from "./CommentMoreButtonModal";
 import moreIcon from "../../../asset/icon/moreIcon.svg";
 
 //댓글 하나 컴포넌트
@@ -92,12 +92,16 @@ const StSnsCommentWriterNameTimeBox = styled.div`
 `;
 
 const StSnsCommentCreateTime = styled.div`
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 500;
   font-size: 14px;
   color: #c2c2c2;
 `;
 
 const StSnsCommentWriterNickName = styled.div`
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
@@ -108,10 +112,12 @@ const StSnsCommentBody = styled.div`
   color: #3f3f3f;
   display: flex;
   align-items: center;
+  font-family: "Pretendard";
+  font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
-  padding: 10px 0 12px 52px;
+  padding: 10px 20px 12px 52px;
 `;
 
 const StMoreIconImgBox = styled.div`

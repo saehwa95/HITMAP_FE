@@ -1,11 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import styled from "styled-components";
+import { instance } from "../../redux/api/instance";
 import MyInfoCount from "./MyInfoCount";
 import { ReactComponent as ClickIdIcon } from "../../asset/icon/ClickIdIcon.svg";
-// import { ReactComponent as ClickIcon } from "../../asset/icon/ClickIcon.svg";
-import { instance } from "../../redux/api/instance";
 
 const MyInfoBox = () => {
   const myInfoAPI = async () => {
