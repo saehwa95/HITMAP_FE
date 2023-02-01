@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 const useInputpassword = () => {
+  const [prevPassword, SetPrevPassword] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCh, setPasswordCh] = useState("");
   const [isPassword, SetisPassword] = useState(false);
@@ -22,6 +23,11 @@ const useInputpassword = () => {
       SetisPassword(true);
     }
   };
+
+  const onChangeprevPassword = (e) => {
+    SetPrevPassword(e.target.value);
+  };
+
   //paassword 확인
   const onChangePassWordCh = (e) => {
     const passwordeConfirmCurrent = e.target.value;
@@ -37,12 +43,14 @@ const useInputpassword = () => {
     }
   };
   return {
+    prevPassword,
     password,
     passwordCh,
     isPassword,
     isPasswordConfirm,
     passwordMessage,
     passwordConfirmMessage,
+    onChangeprevPassword,
     onChangePassword,
     onChangePassWordCh,
   };

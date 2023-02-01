@@ -15,8 +15,12 @@ const useInputProfilimage = () => {
     };
     reader.readAsDataURL(e.target.files[0]);
   };
-
-  return { fileimage, saveFileImage };
+  // 프리뷰 이미지 삭제
+  const deleteFileImage = () => {
+    URL.revokeObjectURL(fileimage);
+    setFileImage("");
+  };
+  return { fileimage, saveFileImage, deleteFileImage };
 };
 
 export default useInputProfilimage;

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { __myNick } from "../redux/modules/userSlice";
 
 const useInputnickname = () => {
+  const [nickdata, SetNickdata] = useState();
   const [nicklValid, SetNickValid] = useState(false);
   const [nickname, setNickname] = useState("");
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const useInputnickname = () => {
 
     const regex =
       // eslint-disable-next-line
-      /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
+      /^(?=.*[A-Za-z0-9가-힣])[A-Za-z0-9가-힣]{2,10}$/;
     if (regex.test(nickname)) {
       SetNickValid(true);
     } else {
@@ -27,7 +28,7 @@ const useInputnickname = () => {
 
     const regex =
       // eslint-disable-next-line
-      /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
+      /^(?=.*[A-Za-z0-9가-힣])[A-Za-z0-9가-힣]{2,10}$/;
     if (regex.test(nickname)) {
       setIsNick(true);
       const payload = {
@@ -38,9 +39,7 @@ const useInputnickname = () => {
         if (res.meta.requestStatus === "fulfilled") {
           setNickeMessage("사용 가능한 닉네임입니다.");
           setIsNick(true);
-          if (nicklValid(false)) {
-            setIsNick(false);
-          }
+          SetNickdata(nickname);
         } else if (res.meta.requestStatus === "rejected") {
           setNickeMessage("이미 사용중인 닉네임입니다.");
           setIsNick(false);
@@ -58,6 +57,7 @@ const useInputnickname = () => {
   };
 
   return {
+    nickdata,
     nickname,
     onNickChangeHandler,
     isnick,
