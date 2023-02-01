@@ -30,6 +30,7 @@ export default EditMypageAppBar;
 const StEditMypageContainer = styled.div`
   width: 375px;
   height: 108px;
+  background: #ffffff;
 `;
 
 const StEditMypageTitle = styled.div`
