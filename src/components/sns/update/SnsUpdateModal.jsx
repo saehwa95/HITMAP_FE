@@ -85,7 +85,7 @@ const SnsUpdateModal = ({ setUpdateModal, setMoreButtonModal }) => {
               fishName: input.fishName,
             });
           }}
-          disabled={!(input.fishName && input.content)}
+          disabled={!(input.fishName || input.content)}
         >
           등록하기
         </StButton>
@@ -192,6 +192,7 @@ const StUpdateFishName = styled.textarea`
 `;
 
 const StButtonBox = styled.div`
+  box-sizing: border-box;
   padding: 8px 16px 27px 16px;
   width: 375px;
   height: 83px;
@@ -208,4 +209,5 @@ const StButton = styled.button`
   font-size: 16px;
   line-height: 150%;
   border-radius: 8px;
+  cursor: pointer;
 `;

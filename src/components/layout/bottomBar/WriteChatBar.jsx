@@ -42,8 +42,8 @@ const WriteCommentBar = () => {
   };
   const { data } = useQuery(["userInfo"], userInfoAPI);
   return authJudge ? (
-    <StWriteCommentBarContainer>
-      <StWriteCommentBarBox>
+    <StWriteChatContainer>
+      <StWriteChatBarBox>
         <StUserProfileImg
           alt="유저 프로필이미지"
           src={data?.data.profile_image}
@@ -62,14 +62,14 @@ const WriteCommentBar = () => {
             등록
           </StSendButton>
         </StTextBar>
-      </StWriteCommentBarBox>
-    </StWriteCommentBarContainer>
+      </StWriteChatBarBox>
+    </StWriteChatContainer>
   ) : null;
 };
 
 export default WriteCommentBar;
 
-const StWriteCommentBarContainer = styled.div`
+const StWriteChatContainer = styled.div`
   box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
   bottom: 0px;
   width: 375px;
@@ -78,7 +78,7 @@ const StWriteCommentBarContainer = styled.div`
   position: absolute;
 `;
 
-const StWriteCommentBarBox = styled.div`
+const StWriteChatBarBox = styled.div`
   display: flex;
   flex-direction: row;
   gap: 8px;
@@ -88,7 +88,7 @@ const StWriteCommentBarBox = styled.div`
 const StUserProfileImg = styled.img`
   width: 36px;
   height: 36px;
-  border-radius: 15px;
+  border-radius: 50px;
 `;
 
 const StTextBar = styled.div`

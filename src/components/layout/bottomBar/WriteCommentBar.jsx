@@ -58,9 +58,9 @@ const WriteCommentBar = () => {
         />
         <StTextBar>
           <StTextInput
-            maxLength="20"
+            maxLength="50"
             onChange={onChangeCommentHandler}
-            placeholder="댓글 남기기(최대 20자)"
+            placeholder="댓글 남기기(최대 50자)"
             value={comment}
             onKeyPress={onKeyPress}
           />
