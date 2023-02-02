@@ -21,7 +21,7 @@ const EditUser = () => {
   const userInformation = data?.data;
 
   //닉네임 유효성 검사
-  const regNickname = /^[A-Za-z가-힣0-9]{2,10}$/;
+  const regNickname = /^[A-Z|a-z|가-힣|0-9]{2,10}$/;
 
   const [nickname, setNickname] = useState("");
   const [nicknameAlert, setNicknameAlert] = useState("");
@@ -30,6 +30,7 @@ const EditUser = () => {
   const onChangeNicknameHandler = (e) => {
     e.preventDefault();
 
+    setNickname(e.target.value);
     if (!regNickname.test(nickname)) {
       setNicknameAlert(
         "닉네임은 한글, 영문, 숫자만 가능하며 2자 이상 10자 이하로 입력해주세요."
@@ -39,7 +40,6 @@ const EditUser = () => {
       setNicknameAlert("");
       setIsNickname(true);
     }
-    setNickname(e.target.value);
   };
 
   //닉네임 중복검사 mutation
