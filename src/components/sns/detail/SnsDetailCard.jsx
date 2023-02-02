@@ -86,19 +86,11 @@ const SnsDetailCard = () => {
           <StFishName>{detailData.fishName}</StFishName>
         </StFishNameContainer>
         <StCardStatusBox>
-          <StLikeStatusCount>
+          <StLikeStatusCount onClick={postLikeHandler}>
             {detailData.like ? (
-              <img
-                alt="좋아요 아이콘"
-                src={likeActiveIcon}
-                onClick={postLikeHandler}
-              ></img>
+              <img alt="좋아요 아이콘" src={likeActiveIcon}></img>
             ) : (
-              <img
-                alt="좋아요 아이콘"
-                src={likeIcon}
-                onClick={postLikeHandler}
-              ></img>
+              <img alt="좋아요 아이콘" src={likeIcon}></img>
             )}
 
             <span>{detailData.like_count}</span>

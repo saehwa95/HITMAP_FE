@@ -58,15 +58,11 @@ const SnsPostCard = ({ posts }) => {
       </StCardImgBox>
       <StCardContent>{posts.content}</StCardContent>
       <StCardStatus>
-        <StLikeStatusCount>
+        <StLikeStatusCount onClick={postLikeHandler}>
           {posts.like ? (
-            <img
-              alt="좋아요 아이콘"
-              src={likeActiveIcon}
-              onClick={postLikeHandler}
-            />
+            <img alt="좋아요 아이콘" src={likeActiveIcon} />
           ) : (
-            <img alt="좋아요 아이콘" src={likeIcon} onClick={postLikeHandler} />
+            <img alt="좋아요 아이콘" src={likeIcon} />
           )}
           <span>{posts.like_count}</span>
         </StLikeStatusCount>
