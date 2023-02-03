@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
 import { instance } from "../../../../redux/api/instance";
-import LogoutWithdraw from "../LogoutWithdraw/LogoutWithdraw";
+import LogoutWithdraw from "../logoutWithdraw/LogoutWithdraw";
 import { ReactComponent as ClickIdIcon } from "../../../../asset/icon/ClickIdIcon.svg";
 import imgdeleteButton from "../../../../asset/button/imgdeleteButton.svg";
 
