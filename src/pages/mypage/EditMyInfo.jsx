@@ -1,6 +1,6 @@
 import React from "react";
 import EditMypageAppBar from "../../components/layout/appBar/EditMypageAppBar";
-import EditUser from "../../components/myPage/editMyInfo/editMyInfo/EditUser";
+import EditUser from "../../components/myPage/editMyInfo/editUser/EditUser";
 
 const EditMyInfo = () => {
   return (
