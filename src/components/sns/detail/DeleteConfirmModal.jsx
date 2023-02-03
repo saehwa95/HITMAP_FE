@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { instance } from "../../../redux/api/instance";
 
 const DeleteConfirmModal = ({ setMoreButtonModal, setDeleteConfirmModal }) => {
@@ -48,6 +48,15 @@ const DeleteConfirmModal = ({ setMoreButtonModal, setDeleteConfirmModal }) => {
 
 export default DeleteConfirmModal;
 
+const LoadEffect = keyframes`
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+`;
+
 const StDeleteConfirmAll = styled.div`
   position: fixed;
   top: 0;
@@ -59,6 +68,7 @@ const StDeleteConfirmAll = styled.div`
   height: 99.9vh;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 1000;
+  animation: ${LoadEffect} 0.3s ease-in-out;
 `;
 
 const StDeleteConfirmBox = styled.div`
