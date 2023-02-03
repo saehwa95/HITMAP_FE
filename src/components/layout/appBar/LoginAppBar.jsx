@@ -4,7 +4,7 @@ import styled from "styled-components";
 import closeButton from "../../../asset/button/closeButton.svg";
 import { useNavigate } from "react-router-dom";
 
-const SignupAppBar = () => {
+const LoginAppBar = () => {
   const navigate = useNavigate();
 
   return (
@@ -15,21 +15,18 @@ const SignupAppBar = () => {
           <StCloseIconImg
             src={closeButton}
             onClick={() => {
-              navigate("/login");
+              navigate("/");
             }}
           />
-          <TitleSpan>회원가입</TitleSpan>
         </StSignupItem>
       </StSignupTitle>
     </StSignupContainer>
   );
 };
 
-export default SignupAppBar;
+export default LoginAppBar;
 
 const StSignupContainer = styled.div`
-  position: sticky;
-  top: 0px;
   width: 375px;
   height: 108px;
 `;
@@ -37,25 +34,15 @@ const StSignupContainer = styled.div`
 const StSignupTitle = styled.div`
   height: 64px;
   display: flex;
-  padding: 8px 16px;
+
   flex-direction: column;
-  padding: 8px 16px;
+  padding: 2px 16px;
 `;
 
 const StSignupItem = styled.div`
   width: 343px;
   height: 48px;
   background: #ffffff;
-`;
-const TitleSpan = styled.div`
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  text-align: center;
-  color: #1f1f1f;
-  margin: 10px 50px 0px 0px;
 `;
 
 const StCloseIconImg = styled.img`
