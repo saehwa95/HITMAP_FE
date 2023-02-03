@@ -9,13 +9,14 @@ import clickclickIcon from "../../asset/icon/clickclickIcon.svg";
 import imgdeleteButton from "../../asset/button/imgdeleteButton.svg";
 import Profile from "../../asset/icon/Profile.svg";
 
-import UseInputProfilimage from "../../hooks/UseInputProfilimage";
-import UseInputNickname from "../../hooks/UseInputNickname";
-import UseInputEmail from "../../hooks/UseInputEmail";
-import UseInputPassword from "../../hooks/UseInputPassword";
+import UseInputProfilimage from "../../hooks/signup/UseInputProfilimage";
+import UseInputNickname from "../../hooks/signup/UseInputNickname";
+import UseInputEmail from "../../hooks/signup/UseInputEmail";
+import UseInputPassword from "../../hooks/signup/UseInputPassword";
 
 const UserSignup = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     fileimage,
@@ -63,10 +64,6 @@ const UserSignup = () => {
     pwchRef,
   } = UseInputPassword();
 
-  const [notAllow, setNotAllow] = useState(true);
-
-  const navigate = useNavigate();
-
   //formData submit
   const submitOnclickHandler = (e) => {
     e.preventDefault();
@@ -87,6 +84,7 @@ const UserSignup = () => {
   };
 
   //회원가입 버튼 활성화/비활성화
+  const [notAllow, setNotAllow] = useState(true);
   useEffect(() => {
     if (
       isemail &&

@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { __nickItem } from "../redux/modules/userSlice";
+import { __nickItem } from "../../redux/modules/userSlice";
 
 const UseInputNickname = () => {
   const dispatch = useDispatch();

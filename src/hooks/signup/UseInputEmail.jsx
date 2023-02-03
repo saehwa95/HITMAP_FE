@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { __emailItem } from "../redux/modules/userSlice";
+import { __emailItem } from "../../redux/modules/userSlice";
 import { useDispatch } from "react-redux";
 
 const UseInputEmail = () => {
