@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import SnsUpdateModal from "../update/SnsUpdateModal";
 
@@ -41,6 +41,15 @@ const DetailMoreButtonModal = ({ setMoreButtonModal }) => {
 
 export default DetailMoreButtonModal;
 
+const LoadEffect = keyframes`
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+`;
+
 const StModalContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -52,6 +61,7 @@ const StModalContainer = styled.div`
   left: 209px;
   top: 92px;
   z-index: 1000;
+  animation: ${LoadEffect} 0.2s ease-in-out;
 `;
 
 const StGoUpdatePageButton = styled.button`

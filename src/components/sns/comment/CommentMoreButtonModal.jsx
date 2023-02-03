@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import CommentDeleteConfirmModal from "./CommentDeleteConfirmModal";
 import CommentUpdateModal from "./CommentUpdateModal";
 
@@ -43,6 +43,15 @@ const CommentMoreButtonModal = ({ setMoreButtonModal, list }) => {
 
 export default CommentMoreButtonModal;
 
+const LoadEffect = keyframes`
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+`;
+
 const StModalContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -53,6 +62,7 @@ const StModalContainer = styled.div`
   height: 112px;
   left: 160px;
   top: 0px;
+  animation: ${LoadEffect} 0.2s ease-in-out;
 `;
 
 const StGoCommentUpdateButton = styled.button`

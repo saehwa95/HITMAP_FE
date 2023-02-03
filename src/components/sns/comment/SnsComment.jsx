@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { instance } from "../../../redux/api/instance";
 import { getCookie } from "../../../shared/cookie";
 import CommentMoreButtonModal from "./CommentMoreButtonModal";
@@ -65,11 +65,21 @@ const SnsComment = ({ list }) => {
 
 export default SnsComment;
 
+const LoadEffect = keyframes`
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+`;
+
 const StSnsCommentContainer = styled.div`
   border-bottom: 1px solid #dfdfdf;
   position: relative;
   margin: 0 16px;
   padding: 16px 0 0 0;
+  animation: ${LoadEffect} 0.2s ease-in-out;
 `;
 
 const StSnsCommentWriterInfo = styled.div`

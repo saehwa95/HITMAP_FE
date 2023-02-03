@@ -8,7 +8,6 @@ import {
   __postSignup,
 } from "../../redux/modules/userSlice";
 import SignupAppBar from "../../components/layout/appBar/SignupAppBar";
-import darkcloseBtn from "../../asset/icon/darkcloseBtn.svg";
 import duplicateIcon from "../../asset/icon/duplicateIcon.svg";
 import clickclickIcon from "../../asset/icon/clickclickIcon.svg";
 import imgdeleteButton from "../../asset/button/imgdeleteButton.svg";
@@ -21,7 +20,6 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [passwordCh, setPasswordCh] = useState("");
   const [fileimage, setFileImage] = useState();
-
   const imgRef = useRef();
   //프론트 유효성 검사
   const [emailValid, SetEmailValid] = useState(false);
@@ -40,24 +38,34 @@ const SignUp = () => {
   const [passwordMessage, SetpasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
 
+  const [emptynickmessage, SetEmptyNcimessage] = useState("");
+  const [emptyemailmessage, SetEmptyemailmessage] = useState("");
+
   const navigate = useNavigate();
+
+  const inputRef = useRef(null);
+  const emailRef = useRef(null);
+  const pwRef = useRef(null);
+  const pwchRef = useRef(null);
 
   const { error } = useSelector((state) => state.userSlice);
   const validerror = error;
 
+  const [visible, setVisible] = useState(false);
+
   //이미지 formData에 넣기
   const saveFileImage = (e) => {
-    setFileImage(URL.createObjectURL(e.target.files[0]));
     // formData.append("image", fileimage);
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
         setFileImage(reader.result);
       }
-
+      setVisible(true);
       // 이후 다시 정상적으로파일을 formdata로 담습니다. -> 결론 코드 순서의 문제 였습니다.
       // 여기로 코드 순서를 바꾸고 해결된 문제였습니다. / - 끝 시마이 - 이대로 배포 다시 하시면 끝입니다.ㅎㅎ
     };
+    setFileImage(URL.createObjectURL(e.target.files[0]));
     reader.readAsDataURL(e.target.files[0]);
   };
 
@@ -112,12 +120,15 @@ const SignUp = () => {
         if (res.meta.requestStatus === "fulfilled") {
           setEmailMessage("사용 가능한 이메일 입니다.");
           setIsEmail(true);
+          emailRef.current.focus();
         } else if (res.error.message === "Rejected") {
           setEmailMessage("이미 사용중인 이메일입니다.");
           setIsEmail(false);
+          emailRef.current.focus();
         } else {
           setEmailMessage("이메일 형식이 바르지 않습니다.");
           setIsEmail(false);
+          emailRef.current.focus();
         }
       });
     } else {
@@ -135,7 +146,7 @@ const SignUp = () => {
 
     const regex =
       // eslint-disable-next-line
-      /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{1,10}$/;
+      /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
     if (regex.test(nickname)) {
       SetNickValid(true);
     } else {
@@ -146,6 +157,7 @@ const SignUp = () => {
   //nickname 유효성 서버
   const onnick = (e) => {
     e.preventDefault();
+
     const regex =
       // eslint-disable-next-line
       /^(?=.*[A-Za-z0-9가-힣])[A-Za-z0-9가-힣]{2,10}$/;
@@ -158,19 +170,38 @@ const SignUp = () => {
 
       dispatch(__nickItem(payload)).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
+          SetNickValid(true);
           setNickeMessage("사용 가능한 닉네임입니다.");
           setIsNick(true);
+          inputRef.current.focus();
         } else if (res.meta.requestStatus === "rejected") {
+          SetNickValid(true);
           setNickeMessage("이미 사용중인 닉네임입니다.");
           setIsNick(false);
+
+          inputRef.current.focus();
         } else {
           setNickeMessage("닉네임 형식이 바르지 않습니다.");
           setIsNick(false);
+
+          inputRef.current.focus();
         }
       });
     } else {
       setNickeMessage("닉네임 형식이 바르지 않습니다.");
+      nicklValid(true);
       setIsNick(false);
+    }
+  };
+  const emptyvalue = (e) => {
+    if (nickname.length === 0) {
+      SetEmptyNcimessage("닉네임이 입력되지 않았습니다.");
+    }
+  };
+
+  const emptyemailvalue = (e) => {
+    if (email.length === 0) {
+      SetEmptyemailmessage("이메일이 입력되지 않았습니다.");
     }
   };
   //password 유효성 검사
@@ -182,6 +213,7 @@ const SignUp = () => {
 
     if (!passwordRegex.test(passwordeCurrent)) {
       SetpasswordMessage("비밀번호 조건에 충족하지않습니다.");
+      pwRef.current.focus();
       SetisPassword(false);
     } else {
       SetpasswordMessage("");
@@ -198,6 +230,7 @@ const SignUp = () => {
       SetisPasswordConfirm(true);
     } else {
       setPasswordConfirmMessage("비밀번호가 일치하지 않습니다.");
+      pwchRef.current.focus();
       SetpasswordMessage("");
       SetisPasswordConfirm(false);
     }
@@ -223,6 +256,7 @@ const SignUp = () => {
   const deleteFileImage = () => {
     URL.revokeObjectURL(fileimage);
     setFileImage("");
+    setVisible(false);
   };
   // const submitOnclickHandler = () => {};
 
@@ -233,11 +267,15 @@ const SignUp = () => {
     imageInput.current.click();
     setFileImage();
   };
+  console.log(nickname);
 
   return (
     <StSignupContainer>
       {/* SignuptopNav */}
-      <SignupAppBar />
+      <StAppBar>
+        <SignupAppBar />
+      </StAppBar>
+
       {/* SignupImgForm */}
       <StSignupList>
         <StProfileContainer>
@@ -245,11 +283,13 @@ const SignUp = () => {
             <StImgContainer>
               <Stimage src={fileimage || Profile}></Stimage>
 
-              <StImgdelete
-                onClick={deleteFileImage}
-                src={imgdeleteButton}
-                alt=""
-              />
+              {visible === true && (
+                <StImgdelete
+                  onClick={deleteFileImage}
+                  src={imgdeleteButton}
+                  alt=""
+                />
+              )}
             </StImgContainer>
           </StBackimage>
           <StPostProfileBtn
@@ -277,14 +317,22 @@ const SignUp = () => {
                   value={nickname}
                   onChange={onNickChangeHandler}
                   placeholder="닉네임을 입력해주세요."
+                  isChecked={isnick}
                   maxLength={10}
+                  ref={inputRef}
+                  onClick={emptyvalue}
                 />
+                <StValidMsg>
+                  {/* <ValidationWrapper> */}
 
-                {!nicklValid && nickname.length > 10 && (
-                  <StFalSpan>닉네임 형식이 바르지 않습니다.</StFalSpan>
-                )}
-                {isnick !== true && <StFalSpan>{nickMessage}</StFalSpan>}
-                {isnick === true && <StTruSpan>{nickMessage}</StTruSpan>}
+                  {!nicklValid && nickname.length === 0 && (
+                    <StFalSpan>{emptynickmessage}</StFalSpan>
+                  )}
+
+                  {isnick !== true && <StFalSpan>{nickMessage}</StFalSpan>}
+                  {isnick === true && <StTruSpan>{nickMessage}</StTruSpan>}
+                  {/* </ValidationWrapper> */}
+                </StValidMsg>
               </StNickErrMsg>
               <StBtn src={duplicateIcon} onClick={onnick} />
             </StNIckName>
@@ -305,12 +353,20 @@ const SignUp = () => {
                   type="email"
                   placeholder="이메일을 입력해주세요."
                   onChange={onEmailChangeHandler}
-                  // onClick={changeinput}
+                  isChecked={isemail}
+                  ref={emailRef}
+                  onClick={emptyemailvalue}
                 />
-
-                {isemail === true && <StTruSpan>{emailMessage}</StTruSpan>}
-
-                {isemail !== true && <StFalSpan>{emailMessage}</StFalSpan>}
+                <StValidMsg>
+                  {!emailValid && email.length === 0 && (
+                    <StFalSpan>{emptyemailmessage}</StFalSpan>
+                  )}
+                  {!emailValid && email.length < 0 && (
+                    <StFalSpan>이메일 형식이 바르지 않습니다.</StFalSpan>
+                  )}
+                  {isemail !== true && <StFalSpan>{emailMessage}</StFalSpan>}
+                  {isemail === true && <StTruSpan>{emailMessage}</StTruSpan>}
+                </StValidMsg>
               </StemailErrMsg>
 
               <StBtn src={duplicateIcon} onClick={onemail} />
@@ -327,10 +383,14 @@ const SignUp = () => {
                   onChange={onChangePassword}
                   type="password"
                   placeholder="비밀번호를 입력해주세요."
+                  isChecked={isPassword}
+                  ref={pwRef}
                 />
-                {isPassword === false && (
-                  <StFalSpan>{passwordMessage}</StFalSpan>
-                )}
+                <StPwValidMsg>
+                  {isPassword === false && (
+                    <StFalSpan>{passwordMessage}</StFalSpan>
+                  )}
+                </StPwValidMsg>
               </StInputErrMsg>
               <StInputErrMsg>
                 <StPsInput
@@ -338,6 +398,8 @@ const SignUp = () => {
                   onChange={onChangePassWordCh}
                   type="password"
                   placeholder="비밀번호를 다시 한번 입력해주세요."
+                  isChecked={isPasswordConfirm}
+                  ref={pwchRef}
                 />
                 {isPasswordConfirm === false && (
                   <StFalSpan>{passwordConfirmMessage}</StFalSpan>
@@ -376,59 +438,14 @@ const StSignupContainer = styled.div`
   background: #ffffff;
 `;
 
-const StTopNav = styled.div`
-  position: absolute;
-  width: 375px;
-  height: 108px;
-`;
-
-const StNavitem = styled.div`
-  width: 370px;
-  height: 64px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  position: absolute;
-  left: 0%;
-  right: 0%;
-  top: 40.74%;
-  bottom: 0%;
-
-  /* Gray/White */
-
-  background: #ffffff;
-`;
-
-const StTextField = styled.div`
-  width: 343px;
-  height: 48px;
-  padding-top: 20px;
-  margin: 0 auto;
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  /* identical to box height */
-
-  text-align: center;
-
-  /* Gray/Black */
-
-  color: #1f1f1f;
-`;
-
 const StSignupList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  position: absolute;
+  /* position: absolute; */
   width: 375px;
   height: 755px;
-  left: 0px;
-  top: 108px;
 `;
 
 const StProfileContainer = styled.div`
@@ -458,35 +475,48 @@ const StInputWrapper = styled.div`
   width: 375px;
   height: 575px;
 
-  /* Gray/White */
-
   background: #ffffff;
 `;
 
 const StInput = styled.input`
-  width: 243px;
-  height: 48px;
-
-  /* Gray/White */
-
+  width: 237px;
+  height: 45px;
+  text-indent: 12px;
   background: #ffffff;
-  /* Gray/Gray_200 */
-
-  border: 1px solid #1a4066;
+  outline: none;
+  border: 1px solid #dfdfdf;
   border-radius: 8px;
+
+  text-indent: 12px;
+  font-family: "Pretendard";
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+
+  color: #1f1f1f;
+  ::placeholder {
+    font-family: "Pretendard";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: #c2c2c2;
+    text-indent: 12px;
+  }
+
+  :focus {
+    border: ${({ isChecked }) =>
+      !isChecked ? "2px solid #e5294a" : "2px solid#5e67de"};
+  }
 `;
 
 const StNickdiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
-  gap: 12px;
-
+  margin-bottom: 6px;
   width: 375px;
-  height: 190px;
-
-  /* Gray/White */
+  height: 165px;
 
   background: #ffffff;
 `;
@@ -494,7 +524,7 @@ const StNickdiv = styled.div`
 const StText = styled.span`
   width: 343px;
   height: 19px;
-  padding: 16px 16px 0px 16px;
+  padding: 16px 16px 10px 16px;
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 600;
@@ -506,10 +536,8 @@ const StBtn = styled.img`
   display: flex;
   flex-direction: row;
   justify-content: center;
+
   align-items: center;
-
-  gap: 10px;
-
   width: 90px;
   height: 48px;
   cursor: pointer;
@@ -522,42 +550,47 @@ const StNIckName = styled.div`
 
   margin: 0 auto;
   gap: 10px;
-
   width: 343px;
-  height: 73px;
 `;
 
 const StPsInput = styled.input`
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 5px;
+  width: 338px;
+  height: 45px;
+  outline: none;
 
-  width: 343px;
-  height: 48px;
+  text-indent: 12px;
+  font-family: "Pretendard";
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
 
-  /* Gray/White */
+  color: #1f1f1f;
+  ::placeholder {
+    font-family: "Pretendard";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: #c2c2c2;
+    text-indent: 12px;
+  }
+
+  :focus {
+    outline: none;
+    border: ${({ isChecked }) =>
+      !isChecked ? "2px solid #e5294a" : "px solid#DFDFDF"};
+  }
 
   background: #ffffff;
   /* Gray/Gray_200 */
 
-  border: 1px solid #d5dde5;
+  border: 1px solid #dfdfdf;
   border-radius: 8px;
 `;
-
-const StStatusBar = styled.div`
-  width: 375px;
-  height: 44px;
-`;
-
-const StCloseImg = styled.img`
-  position: absolute;
-  left: 0%;
-  right: 86.01%;
-  top: -31.08%;
-  bottom: -2.08%;
-  cursor: pointer;
-`;
-
 const StBackimage = styled.div`
   width: 100px;
   height: 100px;
@@ -566,30 +599,21 @@ const StBackimage = styled.div`
 `;
 
 const StInputTxt = styled.div`
-  width: 343px;
-  height: 42px;
-  padding: 0px 16px 0px 16px;
-
+  padding: 12px 25px 16px 18px;
   font-family: "Pretendard";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
   line-height: 150%;
-
-  color: #66737f;
+  color: #3f3f3f;
 `;
 
 const StEmaildiv = styled.div`
+  margin-top: 16px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
-  gap: 12px;
-
   width: 375px;
-  height: 137px;
-
-  /* Gray/White */
 
   background: #ffffff;
 `;
@@ -598,32 +622,20 @@ const StPassContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
-  gap: 12px;
-
+  margin-top: 10px;
   width: 375px;
   height: 249px;
-
-  /* Gray/White */
 
   background: #ffffff;
 `;
 
 const Signupcontain = styled.div`
   box-sizing: border-box;
-  display: flex;
+
   flex-direction: column;
   margin: 0 auto;
-  gap: 10px;
-
-  position: absolute;
   width: 375px;
-  height: 83px;
-  left: 0px;
-  top: 100%;
-
-  /* Gray/White */
-
+  height: 130px;
   background: #ffffff;
 `;
 
@@ -637,13 +649,14 @@ const SignBtn = styled.button`
   height: 48px;
   cursor: pointer;
   /* Primary/Primary */
-
+  border: none;
   background: #006981;
   border-radius: 8px;
 
   :disabled {
     background: #a6cad3;
     border-radius: 8px;
+    border: none;
   }
 `;
 
@@ -651,12 +664,8 @@ const Stpwinputcontainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 0 auto;
-  gap: 10px;
-  padding-bottom: 18px;
 
-  width: 343px;
-  height: 132px;
+  margin: 0 auto;
 `;
 
 const StSignupBtn = styled.span`
@@ -665,6 +674,9 @@ const StSignupBtn = styled.span`
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;
+
+  text-align: center;
+
   /* identical to box height, or 24px */
   padding-top: 25px;
   width: 100px;
@@ -676,73 +688,27 @@ const StSignupBtn = styled.span`
   color: #ffffff;
 `;
 
-const Stspan = styled.span`
-  padding-top: 6px;
-  position: absolute;
-  width: 250px;
-  height: 19px;
-  background-color: white;
-  /* Subtitle/Bold/16 */
-
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
-  /* identical to box height */
-
-  display: flex;
-  align-items: flex-end;
-`;
-
-const StEmailField = styled.div`
-  width: 243px;
-  height: 74px;
-`;
-
 const StNickErrMsg = styled.div`
-  gap: 20px;
-  height: 80px;
+  width: 243px;
 `;
 
 const StTruSpan = styled.span`
-  position: absolute;
-  width: 300px;
-  height: 19px;
-  padding-top: 6px;
   color: #5e67de;
-
-  /* Subtitle/Bold/16 */
-
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
-  line-height: 19px;
-  /* identical to box height */
-
-  display: flex;
-  align-items: flex-end;
 `;
 
 const StFalSpan = styled.span`
-  padding-top: 1px;
-  position: absolute;
-  width: 300px;
-  height: 19px;
-
-  color: #e5294a;
-  /* Subtitle/Bold/16 */
-
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
-  /* identical to box height */
-
   display: flex;
   align-items: flex-end;
+  color: #e5294a;
 `;
 
 const StPostProfileBtn = styled.input`
@@ -757,7 +723,7 @@ const StPostChangeBtn = styled.button`
   padding: 4px 16px;
   gap: 12px;
   margin: 0 auto;
-  width: 125px;
+  width: 108px;
   height: 32px;
 
   /* Gray/White */
@@ -781,39 +747,13 @@ Small
 `;
 
 const StInputErrMsg = styled.div`
-  height: 80px;
+  /* height: 80px; */
 `;
 
 const StClickicon = styled.img`
-  margin-left: 10px;
-  width: 10px;
+  margin-left: 6.3px;
+  width: 9px;
   height: 15px;
-`;
-
-const StTrueInput = styled.input`
-  width: 243px;
-  height: 48px;
-
-  /* Gray/White */
-
-  background: #ffffff;
-  /* Gray/Gray_200 */
-
-  border: 2px solid #5e67de;
-  border-radius: 8px;
-`;
-
-const StFalseInput = styled.input`
-  width: 243px;
-  height: 48px;
-
-  /* Gray/White */
-
-  background: #ffffff;
-  /* Gray/Gray_200 */
-
-  border: 2px solid #e5294a;
-  border-radius: 8px;
 `;
 
 const StImgContainer = styled.div`
@@ -840,24 +780,52 @@ const StImageSpan = styled.span`
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;
-  margin: 0 auto;
+
   display: flex;
   align-items: center;
-
-  padding-left: 12px;
 `;
 
 const StemailErrMsg = styled.div``;
 
 const StNickInput = styled.input`
-  width: 243px;
-  height: 48px;
+  display: flex;
+  width: 237px;
+  height: 45px;
   background: #ffffff;
-  border: 1px solid #1a4066;
+  border: 1px solid #dfdfdf;
   border-radius: 8px;
-  border: ${(props) =>
-    props.validerror ? "1px solid #1a4066" : "1px solid black"};
+  outline: none;
+
+  text-indent: 12px;
+  font-family: "Pretendard";
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+
+  color: #1f1f1f;
+  ::placeholder {
+    font-family: "Pretendard";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: #c2c2c2;
+    text-indent: 12px;
+  }
+
   :focus {
-    border: 1px solid black;
+    border: ${({ isChecked }) =>
+      !isChecked ? "2px solid #e5294a" : "2px solid#5e67de"};
   }
 `;
+
+const StValidMsg = styled.div`
+  margin-top: 6px;
+`;
+
+const StPwValidMsg = styled.div`
+  margin-top: 6px;
+  margin-bottom: 8px;
+`;
+
+const StAppBar = styled.div``;
