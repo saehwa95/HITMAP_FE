@@ -1,7 +1,7 @@
 import React from "react";
 import StatusBar from "./StatusBar";
 import styled from "styled-components";
-import closeButton from "../../../asset/button/closeButton.svg";
+
 import { useNavigate } from "react-router-dom";
 
 const LoginAppBar = () => {
@@ -13,11 +13,12 @@ const LoginAppBar = () => {
       <StSignupTitle>
         <StSignupItem>
           <StCloseIconImg
-            src={closeButton}
             onClick={() => {
               navigate("/");
             }}
-          />
+          >
+            둘러보기
+          </StCloseIconImg>
         </StSignupItem>
       </StSignupTitle>
     </StSignupContainer>
@@ -45,9 +46,14 @@ const StSignupItem = styled.div`
   background: #ffffff;
 `;
 
-const StCloseIconImg = styled.img`
-  width: 48px;
-  height: 48px;
-  float: left;
+const StCloseIconImg = styled.span`
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: #979797;
+  float: right;
   cursor: pointer;
 `;

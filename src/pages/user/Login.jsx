@@ -94,11 +94,11 @@ const Login = () => {
             <Start />
           </StKakaoContainner>
         </StSignin>
+        <StSignupcontain>
+          아직 계정이 없으신가요?
+          <StGoSignup onClick={handleClick}>회원가입</StGoSignup>
+        </StSignupcontain>
       </StSignInContainer>
-      <StSignupcontain>
-        아직 계정이 없으신가요?
-        <StGoSignup onClick={handleClick}>회원가입</StGoSignup>
-      </StSignupcontain>
     </StLoginContainer>
   );
 };
@@ -225,14 +225,12 @@ const StSigninDiv = styled.div`
   align-items: flex-start;
 
   width: 375px;
-  height: 614px;
 `;
 
 const StKakaoContainner = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 22px;
   gap: 24px;
   width: 343px;
   height: 90px;
@@ -243,34 +241,18 @@ const StSimpleLine = styled.div`
   flex-direction: column;
   width: 342px;
   height: 18px;
-
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 150%;
-  border: 1px solid black;
-  /* identical to box height, or 18px */
-
-  text-align: center;
-
-  /* Gray/Gray_400 */
-
-  color: #c2c2c2;
-  &hr {
-  }
 `;
 
 const StSignupcontain = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-
+  padding-bottom: 40px;
   gap: 10px;
   margin: 0 auto;
   width: 220px;
   height: 32px;
-  margin-top: 20px;
+
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 500;
@@ -326,20 +308,14 @@ const Stfalsetxt = styled.span`
 `;
 
 const StSimpleLogintxt = styled.span`
-  /* Caption/Medium/12 */
-
-  width: 55px;
-  height: 18px;
+  margin-left: 17px;
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 150%;
-  /* identical to box height, or 18px */
 
   text-align: center;
-
-  /* Gray/Gray_400 */
 
   color: #c2c2c2;
 `;
@@ -352,7 +328,6 @@ const StLogin = styled.div`
   gap: 16px;
   margin: 0 auto;
   width: 343px;
-  height: 203px;
 `;
 
 const Sthr = styled.hr`

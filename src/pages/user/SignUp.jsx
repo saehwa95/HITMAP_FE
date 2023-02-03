@@ -8,6 +8,7 @@ import {
   __postSignup,
 } from "../../redux/modules/userSlice";
 import SignupAppBar from "../../components/layout/appBar/SignupAppBar";
+import StatusBar from "../../components/layout/appBar/StatusBar";
 import duplicateIcon from "../../asset/icon/duplicateIcon.svg";
 import clickclickIcon from "../../asset/icon/clickclickIcon.svg";
 import imgdeleteButton from "../../asset/button/imgdeleteButton.svg";
@@ -16,58 +17,34 @@ import Profile from "../../asset/icon/Profile.svg";
 const SignUp = () => {
   const dispatch = useDispatch();
   const [nickname, setNickname] = useState("");
+  const [nicklValid, SetNickValid] = useState(false);
+  const [isnick, setIsNick] = useState(false);
+  const [nickMessage, setNickeMessage] = useState("");
+  const [emptynickmessage, SetEmptyNcimessage] = useState("");
+  const nickRef = useRef(null);
+
   const [email, setEmail] = useState("");
+  const [emailValid, SetEmailValid] = useState(false);
+  const [isemail, setIsEmail] = useState(false);
+  const [emailMessage, setEmailMessage] = useState("");
+  const [emptyemailmessage, SetEmptyemailmessage] = useState("");
+  const emailRef = useRef(null);
+
   const [password, setPassword] = useState("");
   const [passwordCh, setPasswordCh] = useState("");
-  const [fileimage, setFileImage] = useState();
-  const imgRef = useRef();
-  //프론트 유효성 검사
-  const [emailValid, SetEmailValid] = useState(false);
-  const [nicklValid, SetNickValid] = useState(false);
   const [isPassword, SetisPassword] = useState(false);
   const [isPasswordConfirm, SetisPasswordConfirm] = useState(false);
-  //서버 유효성 검사사
-  const [isnick, setIsNick] = useState(false);
-  const [isemail, setIsEmail] = useState(false);
-  //전체 유효성 통과 후 submit
-  const [notAllow, setNotAllow] = useState(true);
-
-  //오류메시지 상태저장
-  const [nickMessage, setNickeMessage] = useState("");
-  const [emailMessage, setEmailMessage] = useState("");
   const [passwordMessage, SetpasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
-
-  const [emptynickmessage, SetEmptyNcimessage] = useState("");
-  const [emptyemailmessage, SetEmptyemailmessage] = useState("");
-
-  const navigate = useNavigate();
-
-  const inputRef = useRef(null);
-  const emailRef = useRef(null);
   const pwRef = useRef(null);
   const pwchRef = useRef(null);
 
-  const { error } = useSelector((state) => state.userSlice);
-  const validerror = error;
+  const [fileimage, setFileImage] = useState();
+  const imgRef = useRef();
 
-  const [visible, setVisible] = useState(false);
+  const [notAllow, setNotAllow] = useState(true);
 
-  //이미지 formData에 넣기
-  const saveFileImage = (e) => {
-    // formData.append("image", fileimage);
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setFileImage(reader.result);
-      }
-      setVisible(true);
-      // 이후 다시 정상적으로파일을 formdata로 담습니다. -> 결론 코드 순서의 문제 였습니다.
-      // 여기로 코드 순서를 바꾸고 해결된 문제였습니다. / - 끝 시마이 - 이대로 배포 다시 하시면 끝입니다.ㅎㅎ
-    };
-    setFileImage(URL.createObjectURL(e.target.files[0]));
-    reader.readAsDataURL(e.target.files[0]);
-  };
+  const navigate = useNavigate();
 
   //formData submit
   const submitOnclickHandler = (e) => {
@@ -87,6 +64,27 @@ const SignUp = () => {
         setIsEmail(false);
       }
     });
+  };
+
+  const [visible, setVisible] = useState(false);
+  const saveFileImage = (e) => {
+    setFileImage(e.target.files[0]);
+    e.target.value = "";
+    setVisible(true);
+  };
+
+  // 프리뷰 이미지 삭제
+  const deleteFileImage = () => {
+    setFileImage("");
+    setVisible(false);
+  };
+
+  // 프리뷰 이미지
+  const imageInput = imgRef;
+
+  const onClickImageUpload = () => {
+    imageInput.current.click();
+    setFileImage();
   };
 
   //email 유효성 확인
@@ -133,6 +131,7 @@ const SignUp = () => {
       });
     } else {
       setEmailMessage("이메일 형식이 바르지 않습니다");
+      emailRef.current.focus();
       setIsEmail(false);
     }
   };
@@ -173,24 +172,25 @@ const SignUp = () => {
           SetNickValid(true);
           setNickeMessage("사용 가능한 닉네임입니다.");
           setIsNick(true);
-          inputRef.current.focus();
+          nickRef.current.focus();
         } else if (res.meta.requestStatus === "rejected") {
           SetNickValid(true);
           setNickeMessage("이미 사용중인 닉네임입니다.");
           setIsNick(false);
 
-          inputRef.current.focus();
+          nickRef.current.focus();
         } else {
           setNickeMessage("닉네임 형식이 바르지 않습니다.");
           setIsNick(false);
 
-          inputRef.current.focus();
+          nickRef.current.focus();
         }
       });
     } else {
       setNickeMessage("닉네임 형식이 바르지 않습니다.");
-      nicklValid(true);
+      SetNickValid(true);
       setIsNick(false);
+      nickRef.current.focus();
     }
   };
   const emptyvalue = (e) => {
@@ -204,6 +204,7 @@ const SignUp = () => {
       SetEmptyemailmessage("이메일이 입력되지 않았습니다.");
     }
   };
+
   //password 유효성 검사
   const onChangePassword = (e) => {
     const passwordRegex =
@@ -252,36 +253,23 @@ const SignUp = () => {
     setNotAllow(true);
   }, [isemail, isnick, emailValid, nicklValid, isPassword, isPasswordConfirm]);
 
-  // 프리뷰 이미지 삭제
-  const deleteFileImage = () => {
-    URL.revokeObjectURL(fileimage);
-    setFileImage("");
-    setVisible(false);
-  };
-  // const submitOnclickHandler = () => {};
-
-  // 프리뷰 이미지
-  const imageInput = imgRef;
-
-  const onClickImageUpload = () => {
-    imageInput.current.click();
-    setFileImage();
-  };
-  console.log(nickname);
+  // 이미지 forData
 
   return (
     <StSignupContainer>
       {/* SignuptopNav */}
-      <StAppBar>
-        <SignupAppBar />
-      </StAppBar>
+      <SignupAppBar />
 
       {/* SignupImgForm */}
       <StSignupList>
         <StProfileContainer>
           <StBackimage>
             <StImgContainer>
-              <Stimage src={fileimage || Profile}></Stimage>
+              {fileimage ? (
+                <Stimage src={URL.createObjectURL(fileimage)}></Stimage>
+              ) : (
+                <Stimage src={Profile}></Stimage>
+              )}
 
               {visible === true && (
                 <StImgdelete
@@ -306,6 +294,7 @@ const SignUp = () => {
             </StImageSpan>
           </StPostChangeBtn>
         </StProfileContainer>
+
         <StInputWrapper>
           {/* SignUpNickForm */}
           <StNickdiv>
@@ -313,13 +302,12 @@ const SignUp = () => {
             <StNIckName>
               <StNickErrMsg>
                 <StNickInput
-                  validerror={validerror}
                   value={nickname}
                   onChange={onNickChangeHandler}
                   placeholder="닉네임을 입력해주세요."
                   isChecked={isnick}
                   maxLength={10}
-                  ref={inputRef}
+                  ref={nickRef}
                   onClick={emptyvalue}
                 />
                 <StValidMsg>
@@ -411,6 +399,8 @@ const SignUp = () => {
               영문 대소문자, 숫자, 특수문자를 3가지 이상으로 조합해 8자 이상
               16자 이하로 입력해주세요
             </StInputTxt>
+
+            {/* 회원가입 버튼 */}
             <Signupcontain>
               <SignBtn
                 onClick={(e) => submitOnclickHandler(e)}
@@ -429,9 +419,13 @@ const SignUp = () => {
 export default SignUp;
 
 const StSignupContainer = styled.div`
+  height: 100vh;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   position: relative;
   width: 373px;
-  height: 812px;
 
   /* Gray/White */
 
@@ -439,10 +433,11 @@ const StSignupContainer = styled.div`
 `;
 
 const StSignupList = styled.div`
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  margin-top: 100px;
   /* position: absolute; */
   width: 375px;
   height: 755px;
@@ -599,7 +594,8 @@ const StBackimage = styled.div`
 `;
 
 const StInputTxt = styled.div`
-  padding: 12px 25px 16px 18px;
+  padding: 12px 25px 70px 18px;
+
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 500;
@@ -631,11 +627,12 @@ const StPassContainer = styled.div`
 
 const Signupcontain = styled.div`
   box-sizing: border-box;
-
+  position: fixed;
+  bottom: 0%;
   flex-direction: column;
   margin: 0 auto;
   width: 375px;
-  height: 130px;
+  height: 50px;
   background: #ffffff;
 `;
 
@@ -766,6 +763,7 @@ const StImgContainer = styled.div`
 `;
 
 const StImgdelete = styled.img`
+  z-index: 10;
   position: absolute;
   width: 28px;
   height: 28px;

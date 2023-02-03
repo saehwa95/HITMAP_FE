@@ -28,8 +28,10 @@ const SignupAppBar = () => {
 export default SignupAppBar;
 
 const StSignupContainer = styled.div`
-  position: sticky;
-  top: 0px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
   width: 375px;
   height: 108px;
 `;
@@ -37,7 +39,7 @@ const StSignupContainer = styled.div`
 const StSignupTitle = styled.div`
   height: 64px;
   display: flex;
-  padding: 8px 16px;
+  background-color: white;
   flex-direction: column;
   padding: 8px 16px;
 `;
