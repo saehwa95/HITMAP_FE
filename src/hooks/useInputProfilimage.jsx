@@ -1,26 +1,37 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
-const useInputProfilimage = () => {
+const UseInputProfilimage = () => {
   const [fileimage, setFileImage] = useState();
+  const imgRef = useRef();
 
-  //이미지 formData에 넣기
+  const [visible, setVisible] = useState(false);
   const saveFileImage = (e) => {
-    // formData.append("image", fileimage);
-    const reader = new FileReader();
-    reader.onload = () => {
-      setFileImage(e.target.files[0]);
-      if (reader.readyState === 2) {
-        setFileImage(reader.result);
-      }
-    };
-    reader.readAsDataURL(e.target.files[0]);
+    setFileImage(e.target.files[0]);
+    e.target.value = "";
+    setVisible(true);
   };
+
   // 프리뷰 이미지 삭제
   const deleteFileImage = () => {
-    URL.revokeObjectURL(fileimage);
     setFileImage("");
+    setVisible(false);
   };
-  return { fileimage, saveFileImage, deleteFileImage };
+
+  // 프리뷰 이미지
+  const imageInput = imgRef;
+
+  const onClickImageUpload = () => {
+    imageInput.current.click();
+    setFileImage();
+  };
+  return {
+    fileimage,
+    visible,
+    imageInput,
+    saveFileImage,
+    deleteFileImage,
+    onClickImageUpload,
+  };
 };
 
-export default useInputProfilimage;
+export default UseInputProfilimage;
