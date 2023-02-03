@@ -1,6 +1,6 @@
 import React from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { instance } from "../../../redux/api/instance";
 
 const CommentDeleteConfirmModal = ({
@@ -50,6 +50,15 @@ const CommentDeleteConfirmModal = ({
 
 export default CommentDeleteConfirmModal;
 
+const LoadEffect = keyframes`
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+`;
+
 const StDeleteConfirmAll = styled.div`
   position: fixed;
   top: 0;
@@ -61,6 +70,7 @@ const StDeleteConfirmAll = styled.div`
   height: 99.9vh;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 1000;
+  animation: ${LoadEffect} 0.2s ease-in-out;
 `;
 
 const StDeleteConfirmBox = styled.div`

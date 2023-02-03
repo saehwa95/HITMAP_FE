@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { instance } from "../../../redux/api/instance";
 import { getCookie } from "../../../shared/cookie";
 import SnsDetailCarousel from "./SnsDetailCarousel";
@@ -109,6 +109,15 @@ const SnsDetailCard = () => {
 
 export default SnsDetailCard;
 
+const LoadEffect = keyframes`
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+`;
+
 const StDetailCardContainer = styled.div`
   //무한스크롤처럼 보이게 땜질한 css(추후 무한스크롤 진행 예정)
   height: 79vh;
@@ -116,6 +125,7 @@ const StDetailCardContainer = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+  animation: ${LoadEffect} 0.2s ease-in-out;
 `;
 
 const StCardHeader = styled.div`
