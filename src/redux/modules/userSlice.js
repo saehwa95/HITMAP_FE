@@ -30,7 +30,7 @@ export const __postSignin = createAsyncThunk(
 export const __postSignup = createAsyncThunk(
   "userSlice/__postSignup",
   async (arg, thunkAPI) => {
-    console.log("arg", arg);
+    console.log("arg",arg)
     try {
       const signupData = await instance.post(`/user/signup`, arg);
       console.log("adwd", signupData);
