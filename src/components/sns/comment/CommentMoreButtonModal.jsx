@@ -62,7 +62,7 @@ const StModalContainer = styled.div`
   height: 112px;
   left: 160px;
   top: 0px;
-  animation: ${LoadEffect} 0.3s ease-in-out;
+  animation: ${LoadEffect} 0.2s ease-in-out;
 `;
 
 const StGoCommentUpdateButton = styled.button`

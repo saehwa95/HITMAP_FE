@@ -79,7 +79,7 @@ const StSnsCommentContainer = styled.div`
   position: relative;
   margin: 0 16px;
   padding: 16px 0 0 0;
-  animation: ${LoadEffect} 0.3s ease-in-out;
+  animation: ${LoadEffect} 0.2s ease-in-out;
 `;
 
 const StSnsCommentWriterInfo = styled.div`

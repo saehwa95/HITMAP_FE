@@ -68,7 +68,7 @@ const StDeleteConfirmAll = styled.div`
   height: 99.9vh;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 1000;
-  animation: ${LoadEffect} 0.3s ease-in-out;
+  animation: ${LoadEffect} 0.2s ease-in-out;
 `;
 
 const StDeleteConfirmBox = styled.div`

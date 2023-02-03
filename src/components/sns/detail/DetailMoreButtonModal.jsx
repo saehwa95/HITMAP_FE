@@ -61,7 +61,7 @@ const StModalContainer = styled.div`
   left: 209px;
   top: 92px;
   z-index: 1000;
-  animation: ${LoadEffect} 0.3s ease-in-out;
+  animation: ${LoadEffect} 0.2s ease-in-out;
 `;
 
 const StGoUpdatePageButton = styled.button`

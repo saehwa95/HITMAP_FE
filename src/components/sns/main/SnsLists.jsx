@@ -47,5 +47,5 @@ const StSnsList = styled.div`
     display: none;
   }
   background: #f6f6f6;
-  animation: ${LoadEffect} 0.3s ease-in-out;
+  animation: ${LoadEffect} 0.2s ease-in-out;
 `;

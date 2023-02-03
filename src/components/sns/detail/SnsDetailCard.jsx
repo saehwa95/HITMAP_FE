@@ -125,7 +125,7 @@ const StDetailCardContainer = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-  animation: ${LoadEffect} 0.3s ease-in-out;
+  animation: ${LoadEffect} 0.2s ease-in-out;
 `;
 
 const StCardHeader = styled.div`
