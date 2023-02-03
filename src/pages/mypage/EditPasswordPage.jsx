@@ -1,5 +1,5 @@
 import React from "react";
-import EditPassword from "../../components/myPage/editMyInfo/editUser/EditPassword";
+import EditPassword from "../../components/myPage/EditMyInfo/editMyInfo/EditPassword";
 
 const EditPasswordPage = () => {
   return (
