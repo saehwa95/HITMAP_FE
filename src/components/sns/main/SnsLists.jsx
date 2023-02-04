@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { instance } from "../../../redux/api/instance";
 import SnsPostCard from "./SnsPostCard";
 
@@ -31,11 +31,21 @@ const SnsLists = () => {
 
 export default SnsLists;
 
+const LoadEffect = keyframes`
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+`;
+
 const StSnsList = styled.div`
-  height: 77vh;
+  height: 79vh;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
   }
   background: #f6f6f6;
+  animation: ${LoadEffect} 0.2s ease-in-out;
 `;

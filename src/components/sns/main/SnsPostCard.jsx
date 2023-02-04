@@ -58,15 +58,11 @@ const SnsPostCard = ({ posts }) => {
       </StCardImgBox>
       <StCardContent>{posts.content}</StCardContent>
       <StCardStatus>
-        <StLikeStatusCount>
+        <StLikeStatusCount onClick={postLikeHandler}>
           {posts.like ? (
-            <img
-              alt="좋아요 아이콘"
-              src={likeActiveIcon}
-              onClick={postLikeHandler}
-            />
+            <img alt="좋아요 아이콘" src={likeActiveIcon} />
           ) : (
-            <img alt="좋아요 아이콘" src={likeIcon} onClick={postLikeHandler} />
+            <img alt="좋아요 아이콘" src={likeIcon} />
           )}
           <span>{posts.like_count}</span>
         </StLikeStatusCount>
@@ -82,7 +78,7 @@ const SnsPostCard = ({ posts }) => {
 export default SnsPostCard;
 
 const StCardContainer = styled.div`
-  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
   border-radius: 16px;
   display: flex;
   flex-direction: column;

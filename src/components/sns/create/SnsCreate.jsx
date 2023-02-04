@@ -20,7 +20,11 @@ const SnsCreate = () => {
   };
 
   const onChangeImages = (e) => {
-    setPostImages(e.target.files);
+    if (postImages.length > 5) {
+      alert("사진은 최대 5장까지 작성 가능합니다");
+    } else {
+      setPostImages(e.target.files);
+    }
   };
 
   const formData = new FormData();
@@ -76,7 +80,7 @@ const SnsCreate = () => {
             <StPreviewImgContainer>
               {Array.from(postImages).map((item, id) => {
                 return (
-                  <div key={item.lastModified}>
+                  <div key={`${item.lastModified}-${item.name}`}>
                     <StImgPreviewContainer>
                       <StImgPreview
                         alt="미리보기이미지"

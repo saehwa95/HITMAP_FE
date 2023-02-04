@@ -16,7 +16,6 @@ const Start = () => {
    * 1. 카카오 로그인 클릭시 devModeOrProductionMode 작동  *
    * ****************************************************/
   const onClickKakaoLogin = async () => {
-    console.log("kakao_login click");
     window.location.href = devModeOrProductionMode();
   };
   return (
@@ -30,7 +29,7 @@ export default Start;
 
 const StKakaoBtn = styled.img`
   cursor: pointer;
-  background-color: #fada0a;
+
   width: 343px;
   height: 48px;
 `;
