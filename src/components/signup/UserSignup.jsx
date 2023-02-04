@@ -3,12 +3,10 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { __postSignup } from "../../redux/modules/userSlice";
-
 import UseInputProfilimage from "../../hooks/signup/UseInputProfilimage";
 import UseInputNickname from "../../hooks/signup/UseInputNickname";
 import UseInputEmail from "../../hooks/signup/UseInputEmail";
 import UseInputPassword from "../../hooks/signup/UseInputPassword";
-
 import duplicateIcon from "../../asset/icon/duplicateIcon.svg";
 import clickclickIcon from "../../asset/icon/clickclickIcon.svg";
 import imgdeleteButton from "../../asset/button/imgdeleteButton.svg";
@@ -100,7 +98,6 @@ const UserSignup = () => {
     setNotAllow(true);
   }, [isemail, isnick, emailValid, nicklValid, isPassword, isPasswordConfirm]);
 
-  console.log(nickname);
   return (
     <>
       <StProfileContainer>
@@ -206,7 +203,7 @@ const UserSignup = () => {
         <StPassContainer>
           <StText>비밀번호</StText>
           <Stpwinputcontainer>
-            <StInputErrMsg>
+            <div>
               <StPsInput
                 value={password}
                 onChange={onChangePassword}
@@ -220,8 +217,8 @@ const UserSignup = () => {
                   <StFalSpan>{passwordMessage}</StFalSpan>
                 )}
               </StPwValidMsg>
-            </StInputErrMsg>
-            <StInputErrMsg>
+            </div>
+            <div>
               <StPsInput
                 value={passwordCh}
                 onChange={onChangePassWordCh}
@@ -233,7 +230,7 @@ const UserSignup = () => {
               {isPasswordConfirm === false && (
                 <StFalSpan>{passwordConfirmMessage}</StFalSpan>
               )}
-            </StInputErrMsg>
+            </div>
           </Stpwinputcontainer>
 
           <StInputTxt>
@@ -277,7 +274,6 @@ const Stimage = styled.img`
 const StInputWrapper = styled.div`
   width: 375px;
   height: 575px;
-
   background: #ffffff;
   display: flex;
   flex-direction: column;
@@ -287,18 +283,15 @@ const StInputWrapper = styled.div`
 const StInput = styled.input`
   width: 237px;
   height: 45px;
-
   background: #ffffff;
   outline: none;
   border: 1px solid #dfdfdf;
   border-radius: 8px;
-
   text-indent: 12px;
   font-family: "Pretendard";
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
-
   color: #1f1f1f;
   ::placeholder {
     font-family: "Pretendard";
@@ -331,7 +324,6 @@ const StText = styled.span`
   width: 343px;
   height: 19px;
   padding: 16px 16px 10px 16px;
-
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 600;
@@ -342,18 +334,15 @@ const StText = styled.span`
 const StBtn = styled.img`
   width: 90px;
   height: 48px;
-
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
   cursor: pointer;
 `;
 
 const StNIckName = styled.div`
   width: 343px;
-
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -369,13 +358,11 @@ const StPsInput = styled.input`
   width: 338px;
   height: 45px;
   outline: none;
-
   text-indent: 12px;
   font-family: "Pretendard";
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
-
   color: #1f1f1f;
   ::placeholder {
     font-family: "Pretendard";
@@ -386,29 +373,24 @@ const StPsInput = styled.input`
     color: #c2c2c2;
     text-indent: 12px;
   }
-
   :focus {
     outline: none;
     border: ${({ isChecked }) =>
       !isChecked ? "2px solid #e5294a" : "px solid#DFDFDF"};
   }
-
   background: #ffffff;
-  /* Gray/Gray_200 */
-
   border: 1px solid #dfdfdf;
   border-radius: 8px;
 `;
+
 const StBackimage = styled.div`
   width: 100px;
   height: 100px;
-
   border-radius: 50%;
 `;
 
 const StInputTxt = styled.div`
   padding: 12px 25px 70px 18px;
-
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 500;
@@ -423,7 +405,6 @@ const StEmaildiv = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 375px;
-
   background: #ffffff;
 `;
 
@@ -432,10 +413,8 @@ const StPassContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   margin-top: 10px;
-
   width: 375px;
   height: 249px;
-
   background: #ffffff;
 `;
 
@@ -445,10 +424,8 @@ const Signupcontain = styled.div`
   bottom: 0%;
   flex-direction: column;
   margin: 0 auto;
-
   width: 375px;
   height: 50px;
-
   background: #ffffff;
 `;
 
@@ -458,15 +435,12 @@ const SignBtn = styled.button`
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-
   width: 343px;
   height: 48px;
   cursor: pointer;
-  /* Primary/Primary */
   border: none;
   background: #006981;
   border-radius: 8px;
-
   :disabled {
     background: #a6cad3;
     border-radius: 8px;
@@ -478,7 +452,6 @@ const Stpwinputcontainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
   margin: 0 auto;
 `;
 
@@ -489,12 +462,10 @@ const StSignupBtn = styled.span`
   font-size: 16px;
   line-height: 150%;
   text-align: center;
-
   padding-top: 25px;
   width: 100px;
   height: 50px;
   text-align: center;
-
   cursor: pointer;
   color: #ffffff;
 `;
@@ -532,20 +503,15 @@ const StPostChangeBtn = styled.button`
   padding: 4px 16px;
   gap: 12px;
   margin: 0 auto;
-
   width: 108px;
   height: 32px;
-
   background: #ffffff;
   border: 1px solid #006981;
   box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.04);
   border-radius: 100px;
   cursor: pointer;
-
   color: #006981;
 `;
-
-const StInputErrMsg = styled.div``;
 
 const StClickicon = styled.img`
   margin-left: 6.3px;
@@ -556,7 +522,6 @@ const StClickicon = styled.img`
 const StImgContainer = styled.div`
   width: 100px;
   height: 100px;
-
   border-radius: 50%;
   display: flex;
   justify-content: end;
@@ -566,10 +531,8 @@ const StImgdelete = styled.img`
   z-index: 10;
   position: absolute;
   float: right;
-
   width: 28px;
   height: 28px;
-
   cursor: pointer;
 `;
 
@@ -579,7 +542,6 @@ const StImageSpan = styled.span`
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;
-
   display: flex;
   align-items: center;
 `;
@@ -590,18 +552,15 @@ const StNickInput = styled.input`
   display: flex;
   width: 237px;
   height: 45px;
-
   background: #ffffff;
   border: 1px solid #dfdfdf;
   border-radius: 8px;
   outline: none;
-
   text-indent: 12px;
   font-family: "Pretendard";
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
-
   color: #1f1f1f;
   ::placeholder {
     font-family: "Pretendard";

@@ -78,7 +78,7 @@ const SnsPostCard = ({ posts }) => {
 export default SnsPostCard;
 
 const StCardContainer = styled.div`
-  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.12);
   border-radius: 16px;
   display: flex;
   flex-direction: column;
