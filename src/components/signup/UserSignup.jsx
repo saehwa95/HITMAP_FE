@@ -4,15 +4,15 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { __postSignup } from "../../redux/modules/userSlice";
 
-import duplicateIcon from "../../asset/icon/duplicateIcon.svg";
-import clickclickIcon from "../../asset/icon/clickclickIcon.svg";
-import imgdeleteButton from "../../asset/button/imgdeleteButton.svg";
-import Profile from "../../asset/icon/Profile.svg";
-
 import UseInputProfilimage from "../../hooks/signup/UseInputProfilimage";
 import UseInputNickname from "../../hooks/signup/UseInputNickname";
 import UseInputEmail from "../../hooks/signup/UseInputEmail";
 import UseInputPassword from "../../hooks/signup/UseInputPassword";
+
+import duplicateIcon from "../../asset/icon/duplicateIcon.svg";
+import clickclickIcon from "../../asset/icon/clickclickIcon.svg";
+import imgdeleteButton from "../../asset/button/imgdeleteButton.svg";
+import Profile from "../../asset/icon/Profile.svg";
 
 const UserSignup = () => {
   const dispatch = useDispatch();
@@ -100,6 +100,7 @@ const UserSignup = () => {
     setNotAllow(true);
   }, [isemail, isnick, emailValid, nicklValid, isPassword, isPasswordConfirm]);
 
+  console.log(nickname);
   return (
     <>
       <StProfileContainer>
@@ -142,7 +143,7 @@ const UserSignup = () => {
           <StNIckName>
             <StNickErrMsg>
               <StNickInput
-                value={nickname}
+                Value={nickname}
                 onChange={onNickChangeHandler}
                 placeholder="닉네임을 입력해주세요."
                 isChecked={isnick}
@@ -274,19 +275,19 @@ const Stimage = styled.img`
 `;
 
 const StInputWrapper = styled.div`
+  width: 375px;
+  height: 575px;
+
+  background: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
-  width: 375px;
-  height: 575px;
-  background: #ffffff;
 `;
 
 const StInput = styled.input`
   width: 237px;
   height: 45px;
-  text-indent: 12px;
+
   background: #ffffff;
   outline: none;
   border: 1px solid #dfdfdf;
@@ -339,24 +340,25 @@ const StText = styled.span`
 `;
 
 const StBtn = styled.img`
+  width: 90px;
+  height: 48px;
+
   display: flex;
   flex-direction: row;
   justify-content: center;
-
   align-items: center;
-  width: 90px;
-  height: 48px;
+
   cursor: pointer;
 `;
 
 const StNIckName = styled.div`
+  width: 343px;
+
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-
   margin: 0 auto;
   gap: 10px;
-  width: 343px;
 `;
 
 const StPsInput = styled.input`

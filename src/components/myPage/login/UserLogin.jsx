@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Start from "./kakaoLogin/Start";
-import { __postSignin } from "../../redux/modules/userSlice";
-import HitmapLogo from "../../asset/icon/HitmapLogo.svg";
-import LoginAppBar from "../../components/layout/appBar/LoginAppBar";
+import { __postSignin } from "../../../redux/modules/userSlice";
+import Start from "../../../pages/user/kakaoLogin/Start";
 
 const UserLogin = () => {
   const dispatch = useDispatch();
@@ -46,86 +44,53 @@ const UserLogin = () => {
   }, [userEmail, userPw]);
 
   return (
-    <StLoginContainer>
-      <LoginAppBar />
-      <StLogoContainner>
-        <StLoginImg src={HitmapLogo} />
-      </StLogoContainner>
+    <>
+      <StSignin>
+        <StSigninDiv>
+          <StLogin>
+            <StSigninInput>
+              <StEmailInput
+                value={userEmail}
+                onChange={(e) => setUserEmail(e.target.value)}
+                type="email"
+                placeholder="이메일"
+                isChecked={notlogin}
+              />
 
-      <StSignInContainer>
-        <StSignin>
-          <StSigninDiv>
-            <StLogin>
-              <StSigninInput>
-                <StEmailInput
-                  value={userEmail}
-                  onChange={(e) => setUserEmail(e.target.value)}
-                  type="email"
-                  placeholder="이메일"
-                  isChecked={notlogin}
-                />
+              <StEmailInput
+                value={userPw}
+                onChange={(e) => setUserPw(e.target.value)}
+                type="password"
+                placeholder="비밀번호"
+                isChecked={notlogin}
+              />
 
-                <StEmailInput
-                  value={userPw}
-                  onChange={(e) => setUserPw(e.target.value)}
-                  type="password"
-                  placeholder="비밀번호"
-                  isChecked={notlogin}
-                />
+              {!notlogin && <Stfalsetxt>{notloginmessage}</Stfalsetxt>}
+            </StSigninInput>
 
-                {!notlogin && <Stfalsetxt>{notloginmessage}</Stfalsetxt>}
-              </StSigninInput>
-
-              <StLoginBtn onClick={submitHandler} disabled={notAllow}>
-                로그인
-              </StLoginBtn>
-            </StLogin>
-          </StSigninDiv>
-          <StKakaoContainner>
-            <StSimpleLine>
-              <Sthr />
-              <StSimpleLogintxt>간편 로그인</StSimpleLogintxt>
-              <Sthr2 />
-            </StSimpleLine>
-            <Start />
-          </StKakaoContainner>
-        </StSignin>
-        <StSignupcontain>
-          아직 계정이 없으신가요?
-          <StGoSignup onClick={handleClick}>회원가입</StGoSignup>
-        </StSignupcontain>
-      </StSignInContainer>
-    </StLoginContainer>
+            <StLoginBtn onClick={submitHandler} disabled={notAllow}>
+              로그인
+            </StLoginBtn>
+          </StLogin>
+        </StSigninDiv>
+        <StKakaoContainner>
+          <StSimpleLine>
+            <Sthr />
+            <StSimpleLogintxt>간편 로그인</StSimpleLogintxt>
+            <Sthr2 />
+          </StSimpleLine>
+          <Start />
+        </StKakaoContainner>
+      </StSignin>
+      <StSignupcontain>
+        아직 계정이 없으신가요?
+        <StGoSignup onClick={handleClick}>회원가입</StGoSignup>
+      </StSignupcontain>
+    </>
   );
 };
 
 export default UserLogin;
-
-const StLoginContainer = styled.div`
-  position: relative;
-  width: 373px;
-  height: 812px;
-
-  /* Gray/White */
-
-  background: #ffffff;
-`;
-
-const StLoginImg = styled.img`
-  width: 166.52px;
-  height: 121px;
-`;
-
-const StSignInContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0px;
-  gap: 40px;
-
-  width: 375px;
-  height: 421px;
-`;
 
 const StSigninInput = styled.div``;
 
@@ -186,7 +151,6 @@ const StLoginBtn = styled.button`
   font-weight: 500;
   font-size: 16px;
   line-height: 160%;
-  /* identical to box height, or 26px */
 
   text-align: center;
   cursor: pointer;
@@ -202,17 +166,6 @@ const StSignin = styled.div`
 
   width: 375px;
   height: 349px;
-`;
-
-const StLogoContainner = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 50px;
-  gap: 36px;
-  margin: 0 auto;
-  width: 124px;
-  height: 142px;
 `;
 
 const StSigninDiv = styled.div`
