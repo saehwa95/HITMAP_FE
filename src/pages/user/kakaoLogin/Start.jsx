@@ -16,7 +16,6 @@ const Start = () => {
    * 1. 카카오 로그인 클릭시 devModeOrProductionMode 작동  *
    * ****************************************************/
   const onClickKakaoLogin = async () => {
-    console.log("kakao_login click");
     window.location.href = devModeOrProductionMode();
   };
   return (

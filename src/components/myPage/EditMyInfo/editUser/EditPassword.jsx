@@ -100,7 +100,7 @@ const EditPassword = () => {
                 <PrevPasswordInput
                   type="password"
                   value={prevPassword}
-                  placeholder="현재 비밀번호를 입력해주세요."
+                  placeholder="  현재 비밀번호를 입력해주세요."
                   onChange={(e) => setPrevPassword(e.target.value)}
                 />
                 <span />
@@ -109,7 +109,7 @@ const EditPassword = () => {
             <PasswordInput
               type="password"
               value={newPassword}
-              placeholder="새 비밀번호를 입력해주세요."
+              placeholder="  새 비밀번호를 입력해주세요."
               onChange={passwordOnChangeHandler}
               ref={newPasswordRef}
               isChecked={checkPassword}
@@ -118,7 +118,7 @@ const EditPassword = () => {
             <PasswordInput
               type="password"
               value={confirmNewPassword}
-              placeholder="새 비밀번호를 다시 한 번 입력해주세요."
+              placeholder="  새 비밀번호를 다시 한 번 입력해주세요."
               onChange={ConfirmPasswordOnChangeHandler}
               ref={confirmNewPasswordRef}
               isChecked={checkConfirmPassword}
