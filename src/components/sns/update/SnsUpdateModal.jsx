@@ -144,6 +144,12 @@ const StUpdateImage = styled.img`
 `;
 
 const StUpdateContent = styled.textarea`
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: #1f1f1f;
   border: none;
   padding: 16px 0;
   width: 343px;
@@ -175,7 +181,8 @@ const StUpdateFishNameLabel = styled.label`
 `;
 
 const StUpdateFishName = styled.textarea`
-  width: 343px;
+  padding-left: 10px;
+  width: 333px;
   height: 48px;
   resize: none;
   background: #ffffff;
@@ -183,7 +190,7 @@ const StUpdateFishName = styled.textarea`
   border-radius: 8px;
   margin-bottom: 16px;
   font-weight: 500;
-  line-height: 2.5;
+  line-height: 2.8;
   font-family: "Pretendard";
   font-style: normal;
   font-size: 16px;
