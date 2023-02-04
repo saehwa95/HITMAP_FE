@@ -30,10 +30,9 @@ export const __postSignin = createAsyncThunk(
 export const __postSignup = createAsyncThunk(
   "userSlice/__postSignup",
   async (arg, thunkAPI) => {
-    console.log("arg", arg);
     try {
       const signupData = await instance.post(`/user/signup`, arg);
-      console.log("adwd", signupData);
+
       return thunkAPI.fulfillWithValue(signupData.data);
       // if (signupData.status === 201) {
       //   return thunkAPI.fulfillWithValue(signupData.data);

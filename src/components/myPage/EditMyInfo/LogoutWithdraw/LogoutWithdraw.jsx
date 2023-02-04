@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { ReactComponent as GreyClickIcon } from "../../../../asset/icon/GreyClickIcon.svg";
 import LogoutConfirmModal from "./LogoutConfirmModal";
 
-const LogoutWithdraw = () => {
+const LogoutWithdraw = ({ socialUser }) => {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
   const showModal = () => {
@@ -22,12 +22,14 @@ const LogoutWithdraw = () => {
       {logoutModalOpen && (
         <LogoutConfirmModal setLogoutModalOpen={setLogoutModalOpen} />
       )}
-      <ButtonLink to={"/withdraw"}>
-        <div>
-          <span>회원탈퇴</span>
-          <GreyClickIcon />
-        </div>
-      </ButtonLink>
+      {socialUser !== "0" ? (
+        <ButtonLink to={"/withdraw"}>
+          <div>
+            <span>회원탈퇴</span>
+            <GreyClickIcon />
+          </div>
+        </ButtonLink>
+      ) : null}
     </>
   );
 };

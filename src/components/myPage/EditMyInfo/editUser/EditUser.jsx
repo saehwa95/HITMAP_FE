@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
 import { instance } from "../../../../redux/api/instance";
-import LogoutWithdraw from "../LogoutWithdraw/LogoutWithdraw";
+import LogoutWithdraw from "../logoutWithdraw/LogoutWithdraw";
 import { ReactComponent as ClickIdIcon } from "../../../../asset/icon/ClickIdIcon.svg";
 import imgdeleteButton from "../../../../asset/button/imgdeleteButton.svg";
 
@@ -19,9 +19,10 @@ const EditUser = () => {
   };
   const { data } = useQuery(["userInfo"], userInfoAPI);
   const userInformation = data?.data;
+  const socialUser = parseInt(userInformation?.social);
 
   //닉네임 유효성 검사
-  const regNickname = /^[A-Z|a-z|가-힣|0-9]{1,9}$/;
+  const regNickname = /^[A-Z|a-z|가-힣|0-9]{2,10}$/;
 
   const [nickname, setNickname] = useState("");
   const [nicknameAlert, setNicknameAlert] = useState("");
@@ -29,8 +30,8 @@ const EditUser = () => {
 
   const onChangeNicknameHandler = (e) => {
     e.preventDefault();
-    setNickname(e.target.value);
 
+    setNickname(e.target.value);
     if (!regNickname.test(nickname)) {
       setNicknameAlert(
         "닉네임은 한글, 영문, 숫자만 가능하며 2자 이상 10자 이하로 입력해주세요."
@@ -66,6 +67,7 @@ const EditUser = () => {
 
   const saveFileImage = (e) => {
     setFileImage(e.target.files[0]);
+    e.target.value = "";
   };
 
   // 프리뷰 이미지 삭제
@@ -108,15 +110,19 @@ const EditUser = () => {
           <div>
             <StImgContainer>
               {fileImage ? (
-                <Stimage src={URL.createObjectURL(fileImage)}></Stimage>
+                <StPreviewContainer>
+                  <Stimage src={URL.createObjectURL(fileImage)}></Stimage>
+                  <StImgdelete
+                    onClick={deleteFileImage}
+                    src={imgdeleteButton}
+                    alt="미리보기 삭제 버튼"
+                  />
+                </StPreviewContainer>
               ) : (
-                <Stimage src={userInformation?.profile_image}></Stimage>
+                <div>
+                  <Stimage src={userInformation?.profile_image}></Stimage>
+                </div>
               )}
-              <StImgdelete
-                onClick={deleteFileImage}
-                src={imgdeleteButton}
-                alt="미리보기 삭제 버튼"
-              />
             </StImgContainer>
           </div>
           <StPostProfileBtn
@@ -132,7 +138,7 @@ const EditUser = () => {
         </StProfileContainer>
         <TextBox>
           <NicknameBox>
-            <StSpan>닉네임</StSpan>
+            <span>닉네임</span>
             <InputDivBox>
               <input
                 type="text"
@@ -141,25 +147,32 @@ const EditUser = () => {
               />
               <StNickValidationBtn
                 onClick={nicknameValidationHandler}
-                disabled={!isNickname || nickname.trim() === ""}
+                disabled={!isNickname && nickname.trim() === ""}
               >
                 중복확인
               </StNickValidationBtn>
             </InputDivBox>
-            <p>{nicknameAlert}</p>
+            <StNickValidAlert>{nicknameAlert}</StNickValidAlert>
           </NicknameBox>
-          <PasswordBox>
-            <StSpan>비밀번호</StSpan>
-            <PasswordLink to={"/editPassword"}>
-              <button>비밀번호 변경</button>
-            </PasswordLink>
-          </PasswordBox>
+          {socialUser !== "0" ? (
+            <PasswordBox>
+              <StSpan>비밀번호</StSpan>
+              <PasswordLink to={"/editPassword"}>
+                <button>비밀번호 변경</button>
+              </PasswordLink>
+            </PasswordBox>
+          ) : null}
         </TextBox>
       </EditMyInfo>
       <MarginBar />
-      <LogoutWithdraw />
+      <LogoutWithdraw socialUser={socialUser} />
       <EditButtonWrapper>
-        <button onClick={submitEditedUserInfoHandler}>수정 완료</button>
+        <EditButton
+          onClick={submitEditedUserInfoHandler}
+          disabled={fileImage === undefined && nickname.length < 2}
+        >
+          수정 완료
+        </EditButton>
       </EditButtonWrapper>
     </>
   );
@@ -170,24 +183,6 @@ export default EditUser;
 const EditMyInfo = styled.div`
   width: 375px;
   height: 456px;
-`;
-
-const ImageBox = styled.div`
-  box-sizing: border-box;
-  height: 180px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 0px 12px;
-  gap: 16px;
-`;
-
-const MyImage = styled.div`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: grey;
 `;
 
 const EditImageBtn = styled.button`
@@ -223,10 +218,8 @@ const StProfileContainer = styled.div`
   height: 177px;
 `;
 
-const Stimage = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+const StPreviewContainer = styled.div`
+  position: relative;
 `;
 
 const StImgContainer = styled.div`
@@ -234,12 +227,21 @@ const StImgContainer = styled.div`
   justify-content: end;
 `;
 
+const Stimage = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+`;
+
 const StImgdelete = styled.img`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   width: 28px;
   height: 28px;
-  float: right;
-  z-index: 100;
+  top: -1px;
+  right: -1px;
   cursor: pointer;
 `;
 
@@ -298,6 +300,15 @@ const StNickValidationBtn = styled.button`
   line-height: 150%;
 `;
 
+const StNickValidAlert = styled.p`
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  color: #3f3f3f;
+`;
+
 const StSpan = styled.span`
   font-family: "Pretendard";
   font-style: normal;
@@ -317,10 +328,9 @@ const NicknameBox = styled.div`
   span {
     font-family: "Pretendard";
     font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 150%;
-    color: #3f3f3f;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 21px;
   }
 `;
 
@@ -369,18 +379,19 @@ const EditButtonWrapper = styled.div`
   width: 100%;
   height: 83px;
   padding: 8px 16px 27px 16px;
-  button {
-    width: 343px;
-    height: 48px;
-    background-color: #006981;
-    border-radius: 8px;
-    font-family: "Pretendard";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 150%;
-    color: #ffffff;
-    border: none;
-    cursor: pointer;
-  }
+`;
+
+const EditButton = styled.button`
+  width: 343px;
+  height: 48px;
+  background-color: ${(props) => (props.disabled ? "#A6CAD3" : "#006981")};
+  border-radius: 8px;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
 `;
