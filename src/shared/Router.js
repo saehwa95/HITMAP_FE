@@ -14,6 +14,7 @@ import EditMyInfo from "../pages/mypage/EditMyInfo";
 import EditPasswordPage from "../pages/mypage/EditPasswordPage";
 import LogInRegister from "../pages/mypage/LogInRegister";
 import Withdraw from "../components/myPage/editMyInfo/logoutWithdraw/Withdraw";
+import PrivateRoutes from "./PrivateRoutes";
 
 const Router = () => {
   return (
@@ -26,13 +27,15 @@ const Router = () => {
         <Route path="/weather" element={<Weather />} />
         <Route path="/postlist" element={<PostList />} />
         <Route path="/detail/:postId" element={<DetailPost />} />
-        <Route path="/create" element={<CreatePost />} />
-        <Route path="/chat" element={<Chat />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/editMyInfo" element={<EditMyInfo />} />
-        <Route path="/editPassword" element={<EditPasswordPage />} />
         <Route path="/logInRegister" element={<LogInRegister />} />
-        <Route path="/withdraw" element={<Withdraw />} />
+        <Route element={<PrivateRoutes />}>
+          <Route path="/create" element={<CreatePost />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/editMyInfo" element={<EditMyInfo />} />
+          <Route path="/editPassword" element={<EditPasswordPage />} />
+          <Route path="/withdraw" element={<Withdraw />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
