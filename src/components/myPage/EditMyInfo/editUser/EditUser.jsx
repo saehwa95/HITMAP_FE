@@ -19,6 +19,7 @@ const EditUser = () => {
   };
   const { data } = useQuery(["userInfo"], userInfoAPI);
   const userInformation = data?.data;
+  const socialUser = parseInt(userInformation?.social);
 
   //닉네임 유효성 검사
   const regNickname = /^[A-Z|a-z|가-힣|0-9]{2,10}$/;
@@ -153,16 +154,18 @@ const EditUser = () => {
             </InputDivBox>
             <StNickValidAlert>{nicknameAlert}</StNickValidAlert>
           </NicknameBox>
-          <PasswordBox>
-            <StSpan>비밀번호</StSpan>
-            <PasswordLink to={"/editPassword"}>
-              <button>비밀번호 변경</button>
-            </PasswordLink>
-          </PasswordBox>
+          {socialUser !== "0" ? (
+            <PasswordBox>
+              <StSpan>비밀번호</StSpan>
+              <PasswordLink to={"/editPassword"}>
+                <button>비밀번호 변경</button>
+              </PasswordLink>
+            </PasswordBox>
+          ) : null}
         </TextBox>
       </EditMyInfo>
       <MarginBar />
-      <LogoutWithdraw />
+      <LogoutWithdraw socialUser={socialUser} />
       <EditButtonWrapper>
         <EditButton
           onClick={submitEditedUserInfoHandler}
