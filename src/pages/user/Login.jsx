@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import HitmapLogo from "../../asset/icon/HitmapLogo.svg";
 import LoginAppBar from "../../components/layout/appBar/LoginAppBar";
-import UserLogin from "../../components/myPage/login/UserLogin";
+import UserLogin from "../../components/user/login/UserLogin";
 
 const Login = () => {
   return (

@@ -41,7 +41,7 @@ const LoadEffect = keyframes`
 `;
 
 const StSnsList = styled.div`
-  height: 77vh;
+  height: 79vh;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
