@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
@@ -10,9 +10,15 @@ const EditPassword = () => {
   const [prevPassword, setPrevPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [focused, setFocused] = useState(false);
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const newPasswordRef = useRef();
+  const confirmNewPasswordRef = useRef();
+
+  const onFocus = () => setFocused(true);
+  const onBlur = () => setFocused(false);
 
   const editPasswordMutation = useMutation({
     mutationFn: async (editPassword) => {
@@ -34,6 +40,18 @@ const EditPassword = () => {
     });
   };
 
+  useEffect(() => {
+    if (focused) newPasswordRef.current.classList.add("active");
+    else newPasswordRef.current.classList.remove("active");
+    if (newPassword && passwordRegex.test(newPassword))
+      newPasswordRef.current.classList.remove("active");
+
+    if (focused) confirmNewPasswordRef.current.classList.add("active");
+    else confirmNewPasswordRef.current.classList.remove("active");
+    if (confirmNewPassword === newPassword)
+      confirmNewPasswordRef.current.classList.remove("active");
+  }, [focused, newPassword, confirmNewPassword]);
+
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
   const status = editPasswordMutation?.error?.response.status;
   const prevErrorMessage =
@@ -46,22 +64,35 @@ const EditPassword = () => {
       <PasswordFormWrapper>
         <TextBox>
           <InputBox>
-            <PasswordInput
-              type="password"
-              placeholder="현재 비밀번호를 입력해주세요."
-              onChange={(e) => setPrevPassword(e.target.value)}
-            />
-            <span>{status === 412 ? prevErrorMessage : null}</span>
+            {status === 412 ? (
+              <>
+                <ErrorInput
+                  type="password"
+                  placeholder="현재 비밀번호를 입력해주세요."
+                  onChange={(e) => setPrevPassword(e.target.value)}
+                />
+                <span>{prevErrorMessage}</span>
+              </>
+            ) : (
+              <>
+                <PasswordInput
+                  type="password"
+                  placeholder="현재 비밀번호를 입력해주세요."
+                  onChange={(e) => setPrevPassword(e.target.value)}
+                />
+                <span />
+              </>
+            )}
             <PasswordInput
               type="password"
               placeholder="새 비밀번호를 입력해주세요."
               onChange={(e) => setNewPassword(e.target.value)}
+              ref={newPasswordRef}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
-            {/* <span>
-              {newPassword === "" ? "비밀번호가 입력되지 않았습니다." : null}
-            </span> */}
             <span>
-              {!passwordRegex.test(newPassword)
+              {focused && !passwordRegex.test(newPassword)
                 ? "비밀번호 조건에 충족하지 않습니다."
                 : null}
             </span>
@@ -69,9 +100,12 @@ const EditPassword = () => {
               type="password"
               placeholder="새 비밀번호를 다시 한 번 입력해주세요."
               onChange={(e) => setConfirmNewPassword(e.target.value)}
+              ref={confirmNewPasswordRef}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
             <span>
-              {newPassword !== confirmNewPassword
+              {focused && newPassword !== confirmNewPassword
                 ? "비밀번호가 일치하지 않습니다."
                 : null}
             </span>
@@ -99,7 +133,7 @@ export default EditPassword;
 const PasswordFormWrapper = styled.div`
   width: 375px;
   height: 383px;
-  margin-bottom: 264px;
+  margin-bottom: 238px;
 `;
 
 const TextBox = styled.div`
@@ -108,8 +142,8 @@ const TextBox = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 24px 16px 16px;
-  gap: 12px;
   width: 375px;
+  height: 258px;
 `;
 
 const InputBox = styled.div`
@@ -117,7 +151,7 @@ const InputBox = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 343px;
-  height: 200px;
+  height: 284px;
   span {
     font-family: "Pretendard";
     font-style: normal;
@@ -125,7 +159,10 @@ const InputBox = styled.div`
     font-size: 16px;
     line-height: 19px;
     color: #e5294a;
-    margin: 6px 0 11px 0;
+    margin-bottom: 10px;
+  }
+  .active {
+    border: 2px solid #e5294a;
   }
 `;
 
@@ -143,9 +180,27 @@ const PasswordInput = styled.input`
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
-  &:focus {
-    outline: 2px solid #e5294a;
+  margin-bottom: 10px;
+  :focus {
+    outline: none;
   }
+`;
+
+const ErrorInput = styled.input`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 343px;
+  height: 48px;
+  border: 2px solid #e5294a;
+  border-radius: 8px;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  margin-bottom: 10px;
 `;
 
 const SpanText = styled.span`
@@ -163,7 +218,6 @@ const EditButtonWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 8px 16px 0px;
-  gap: 10px;
   width: 375px;
   height: 83px;
 `;
@@ -173,10 +227,9 @@ const EditButton = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 10px;
   width: 343px;
   height: 48px;
-  background-color: #006981;
+  background-color: ${(props) => (props.disabled ? "#a6cad3" : "#006981")};
   border-radius: 8px;
   font-family: "Pretendard";
   font-style: normal;
@@ -185,8 +238,5 @@ const EditButton = styled.button`
   line-height: 150%;
   color: #ffffff;
   border: none;
-  cursor: pointer;
-  &:disabled {
-    background-color: #a6cad3;
-  }
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")}; ;
 `;
