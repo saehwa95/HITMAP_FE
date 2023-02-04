@@ -19,7 +19,9 @@ const SnsUpdateModal = ({ setUpdateModal, setMoreButtonModal }) => {
   const detailPostAPI = async () => {
     return await instance.get(`/post/${postId}`);
   };
-  const { data } = useQuery(["detailPost"], detailPostAPI);
+  const { data } = useQuery(["detailPost"], detailPostAPI, {
+    staleTime: 5000,
+  });
   const dataForUpdate = data?.data.post;
 
   const queryClient = useQueryClient();
