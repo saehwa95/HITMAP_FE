@@ -118,7 +118,7 @@ const SnsCreate = () => {
             name="fishName"
             value={input.fishName}
             onChange={onChangeTextHandler}
-            placeholder=" 어종을 작성해주세요.(최대 20자)"
+            placeholder=" 어종을 작성해주세요.(ex. 한치)"
           />
         </StFishNameBox>
         <StButtonBox>
@@ -178,6 +178,7 @@ const StImgPreview = styled.img`
 `;
 
 const StImgPreviewDeleteButton = styled.img`
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -227,6 +228,20 @@ const StContentInput = styled.textarea`
   vertical-align: top;
   text-align: left;
   resize: none;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: #1f1f1f;
+  ::placeholder {
+    font-family: "Pretendard";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: #c2c2c2;
+  }
   &:focus {
     outline: none;
   }
@@ -253,6 +268,14 @@ const StFishNameInput = styled.input`
   height: 48px;
   border: 1px solid #dfdfdf;
   border-radius: 8px;
+  ::placeholder {
+    font-family: "Pretendard";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: #c2c2c2;
+  }
   &:focus {
     outline: 2px solid #006981;
   }
