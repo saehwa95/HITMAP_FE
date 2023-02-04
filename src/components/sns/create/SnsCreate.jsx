@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import styled from "styled-components";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import styled, { createGlobalStyle } from "styled-components";
 import { instance } from "../../../redux/api/instance";
 import SnsCreateAppBar from "../../layout/appBar/SnsCreateAppBar";
 import deletePhotoButton from "../../../asset/button/deletePhotoButton.svg";
@@ -38,7 +38,7 @@ const SnsCreate = () => {
       formData.append("image", item);
     });
   }
-
+  const queryClient = useQueryClient();
   const postMain = useMutation({
     mutationFn: async (formData) => {
       return await instance.post("/post", formData);
@@ -46,6 +46,7 @@ const SnsCreate = () => {
     onSuccess: () => {
       alert("게시글 작성 완료");
       navigate("/postlist");
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
 
