@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
@@ -11,9 +11,48 @@ const EditPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
+  /* 유효성 체크 */
+  const [checkPassword, setCheckPassword] = useState(false);
+  const [checkConfirmPassword, setCheckConfirmPassword] = useState(false);
+
+  /* 에러 문구 */
+  const [passwordMessage, setPasswordMessage] = useState("");
+  const [confirmPasswordMessage, setConfirmPasswordMessage] = useState("");
+
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const newPasswordRef = useRef();
+  const confirmNewPasswordRef = useRef();
 
+  /* 비밀번호 onChange 핸들러 */
+  const passwordOnChangeHandler = (e) => {
+    const newPasswordCurrent = e.target.value;
+    setNewPassword(newPasswordCurrent);
+    if (!passwordRegex.test(newPasswordCurrent)) {
+      setPasswordMessage("비밀번호 조건에 충족하지 않습니다.");
+      newPasswordRef.current.focus();
+      setCheckPassword(false);
+    } else {
+      setPasswordMessage("");
+      setCheckPassword(true);
+    }
+  };
+
+  /* 비밀번호 확인 onChange 핸들러 */
+  const ConfirmPasswordOnChangeHandler = (e) => {
+    const confirmPasswordCurrent = e.target.value;
+    setConfirmNewPassword(confirmPasswordCurrent);
+    if (!passwordRegex.test(confirmPasswordCurrent)) {
+      setConfirmPasswordMessage("비밀번호가 일치하지 않습니다.");
+      confirmNewPasswordRef.current.focus();
+      setCheckConfirmPassword(false);
+    } else {
+      setConfirmPasswordMessage("");
+      setCheckConfirmPassword(true);
+    }
+  };
+
+  /* 리액트 쿼리 사용 */
   const editPasswordMutation = useMutation({
     mutationFn: async (editPassword) => {
       return await instance.patch("/me/updatePassword", editPassword);
@@ -25,6 +64,7 @@ const EditPassword = () => {
     },
   });
 
+  /* 수정완료 버튼 이벤트 핸들러 */
   const EditPasswordSubmitHandler = (e) => {
     e.preventDefault();
     editPasswordMutation.mutate({
@@ -33,7 +73,6 @@ const EditPassword = () => {
       passwordConfirm: confirmNewPassword,
     });
   };
-
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
   const status = editPasswordMutation?.error?.response.status;
   const prevErrorMessage =
@@ -46,35 +85,47 @@ const EditPassword = () => {
       <PasswordFormWrapper>
         <TextBox>
           <InputBox>
+            {status === 412 ? (
+              <>
+                <ErrorInput
+                  type="password"
+                  value={prevPassword}
+                  placeholder="현재 비밀번호를 입력해주세요."
+                  onChange={(e) => setPrevPassword(e.target.value)}
+                />
+                <span>{prevErrorMessage}</span>
+              </>
+            ) : (
+              <>
+                <PrevPasswordInput
+                  type="password"
+                  value={prevPassword}
+                  placeholder="현재 비밀번호를 입력해주세요."
+                  onChange={(e) => setPrevPassword(e.target.value)}
+                />
+                <span />
+              </>
+            )}
             <PasswordInput
               type="password"
-              placeholder="현재 비밀번호를 입력해주세요."
-              onChange={(e) => setPrevPassword(e.target.value)}
-            />
-            <span>{status === 412 ? prevErrorMessage : null}</span>
-            <PasswordInput
-              type="password"
+              value={newPassword}
               placeholder="새 비밀번호를 입력해주세요."
-              onChange={(e) => setNewPassword(e.target.value)}
+              onChange={passwordOnChangeHandler}
+              ref={newPasswordRef}
+              isChecked={checkPassword}
             />
-            {/* <span>
-              {newPassword === "" ? "비밀번호가 입력되지 않았습니다." : null}
-            </span> */}
-            <span>
-              {!passwordRegex.test(newPassword)
-                ? "비밀번호 조건에 충족하지 않습니다."
-                : null}
-            </span>
+            {checkPassword === false && <span>{passwordMessage}</span>}
             <PasswordInput
               type="password"
+              value={confirmNewPassword}
               placeholder="새 비밀번호를 다시 한 번 입력해주세요."
-              onChange={(e) => setConfirmNewPassword(e.target.value)}
+              onChange={ConfirmPasswordOnChangeHandler}
+              ref={confirmNewPasswordRef}
+              isChecked={checkConfirmPassword}
             />
-            <span>
-              {newPassword !== confirmNewPassword
-                ? "비밀번호가 일치하지 않습니다."
-                : null}
-            </span>
+            {checkConfirmPassword === false && (
+              <span>{confirmPasswordMessage}</span>
+            )}
           </InputBox>
           <SpanText>
             영문 대소문자, 숫자, 특수문자를 3가지 이상으로 조합해 8자 이상
@@ -99,7 +150,7 @@ export default EditPassword;
 const PasswordFormWrapper = styled.div`
   width: 375px;
   height: 383px;
-  margin-bottom: 264px;
+  margin-bottom: 238px;
 `;
 
 const TextBox = styled.div`
@@ -108,8 +159,8 @@ const TextBox = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 24px 16px 16px;
-  gap: 12px;
   width: 375px;
+  height: 258px;
 `;
 
 const InputBox = styled.div`
@@ -117,7 +168,7 @@ const InputBox = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 343px;
-  height: 200px;
+  height: 284px;
   span {
     font-family: "Pretendard";
     font-style: normal;
@@ -125,7 +176,26 @@ const InputBox = styled.div`
     font-size: 16px;
     line-height: 19px;
     color: #e5294a;
-    margin: 6px 0 11px 0;
+    margin-bottom:5px;
+  }
+`;
+const PrevPasswordInput = styled.input`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 343px;
+  height: 48px;
+  border: 1px solid #dfdfdf;
+  border-radius: 8px;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  margin-bottom: 5px;
+  :focus {
+    outline: none;
   }
 `;
 
@@ -143,9 +213,28 @@ const PasswordInput = styled.input`
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
-  &:focus {
-    outline: 2px solid #e5294a;
+  margin-bottom: 10px;
+  :focus {
+    border: ${({ isChecked }) => !isChecked && "2px solid #e5294a"};
+    outline: none;
   }
+`;
+
+const ErrorInput = styled.input`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 343px;
+  height: 48px;
+  border: 2px solid #e5294a;
+  border-radius: 8px;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  margin-bottom: 5px;
 `;
 
 const SpanText = styled.span`
@@ -163,7 +252,6 @@ const EditButtonWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 8px 16px 0px;
-  gap: 10px;
   width: 375px;
   height: 83px;
 `;
@@ -173,10 +261,9 @@ const EditButton = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 10px;
   width: 343px;
   height: 48px;
-  background-color: #006981;
+  background-color: ${(props) => (props.disabled ? "#a6cad3" : "#006981")};
   border-radius: 8px;
   font-family: "Pretendard";
   font-style: normal;
@@ -185,8 +272,5 @@ const EditButton = styled.button`
   line-height: 150%;
   color: #ffffff;
   border: none;
-  cursor: pointer;
-  &:disabled {
-    background-color: #a6cad3;
-  }
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")}; ;
 `;
