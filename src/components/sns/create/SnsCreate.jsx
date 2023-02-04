@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 import { instance } from "../../../redux/api/instance";
 import SnsCreateAppBar from "../../layout/appBar/SnsCreateAppBar";
 import deletePhotoButton from "../../../asset/button/deletePhotoButton.svg";
@@ -269,6 +269,12 @@ const StFishNameInput = styled.input`
   height: 48px;
   border: 1px solid #dfdfdf;
   border-radius: 8px;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  padding-left: 10px;
   ::placeholder {
     font-family: "Pretendard";
     font-style: normal;
