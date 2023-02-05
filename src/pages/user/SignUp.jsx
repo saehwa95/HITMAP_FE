@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import SignupAppBar from "../../components/layout/appBar/SignupAppBar";
-import UserSignup from "../../components/signup/UserSignup";
+import UserSignup from "../../components/user/signup/UserSignup";
 
 const SignUp = () => {
   return (

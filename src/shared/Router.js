@@ -13,7 +13,7 @@ import MyPage from "../pages/mypage/MyPage";
 import EditMyInfo from "../pages/mypage/EditMyInfo";
 import EditPasswordPage from "../pages/mypage/EditPasswordPage";
 import LogInRegister from "../pages/mypage/LogInRegister";
-import Withdraw from "../components/myPage/editMyInfo/logoutWithdraw/Withdraw";
+import Withdraw from "../components/myPage/EditMyInfo/LogoutWithdraw/Withdraw";
 import PrivateRoutes from "./PrivateRoutes";
 
 const Router = () => {

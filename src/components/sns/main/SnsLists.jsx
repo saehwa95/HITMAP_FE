@@ -10,7 +10,9 @@ const SnsLists = () => {
     return instance.get("/post");
   };
 
-  const { data, isLoading, error } = useQuery(["posts"], postsAPI);
+  const { data, isLoading, error } = useQuery(["posts"], postsAPI, {
+    staleTime: 15000,
+  });
   if (isLoading) {
     return <h2>Loading....</h2>;
   }

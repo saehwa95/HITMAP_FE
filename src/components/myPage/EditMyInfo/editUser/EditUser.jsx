@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
 import { instance } from "../../../../redux/api/instance";
-import LogoutWithdraw from "../logoutWithdraw/LogoutWithdraw";
+import LogoutWithdraw from "../LogoutWithdraw/LogoutWithdraw";
 import { ReactComponent as ClickIdIcon } from "../../../../asset/icon/ClickIdIcon.svg";
 import imgdeleteButton from "../../../../asset/button/imgdeleteButton.svg";
 
@@ -25,20 +25,20 @@ const EditUser = () => {
   const regNickname = /^[A-Z|a-z|가-힣|0-9]{2,10}$/;
 
   const [nickname, setNickname] = useState("");
-  const [nicknameAlert, setNicknameAlert] = useState("");
+  const [nicknameValid, setNicknameValid] = useState(false);
   const [isNickname, setIsNickname] = useState(false);
+  const [nicknameAlert, setNicknameAlert] = useState("");
+  const [nickValidForCss, setNickValidForCss] = useState(false);
 
   const onChangeNicknameHandler = (e) => {
     e.preventDefault();
 
     setNickname(e.target.value);
     if (!regNickname.test(nickname)) {
-      setNicknameAlert(
-        "닉네임은 한글, 영문, 숫자만 가능하며 2자 이상 10자 이하로 입력해주세요."
-      );
+      setNicknameValid(nicknameValid);
       setIsNickname(false);
     } else {
-      setNicknameAlert("");
+      setNicknameValid(!nicknameValid);
       setIsNickname(true);
     }
   };
@@ -49,10 +49,12 @@ const EditUser = () => {
       return await instance.post("/me/myNickname", nickname);
     },
     onSuccess: () => {
-      alert("사용 가능한 닉네임입니다.");
+      setNicknameAlert(nicknameValidation.data?.data?.message);
+      setNickValidForCss(true);
     },
     onError: (error) => {
-      alert(error.response.data.errorMessage);
+      setNicknameAlert(error.response.data.errorMessage);
+      setNickValidForCss(false);
     },
   });
   //댓글 input창에 내용 없으면 등록 안되게 if문 처리
@@ -140,10 +142,13 @@ const EditUser = () => {
           <NicknameBox>
             <span>닉네임</span>
             <InputDivBox>
-              <input
+              <StInput
                 type="text"
                 defaultValue={userInformation?.nickname}
                 onChange={onChangeNicknameHandler}
+                minLength="2"
+                maxLength="10"
+                nickValidForCss={nickValidForCss}
               />
               <StNickValidationBtn
                 onClick={nicknameValidationHandler}
@@ -152,7 +157,13 @@ const EditUser = () => {
                 중복확인
               </StNickValidationBtn>
             </InputDivBox>
-            <StNickValidAlert>{nicknameAlert}</StNickValidAlert>
+            <StNickValidAlert nickValidForCss={nickValidForCss}>
+              {nicknameAlert}
+            </StNickValidAlert>
+            <StNickValidDesc>
+              닉네임은 한글, 영문, 숫자만 가능하며 2자 이상 10자 이하로
+              입력해주세요.
+            </StNickValidDesc>
           </NicknameBox>
           {socialUser !== "0" ? (
             <PasswordBox>
@@ -265,20 +276,27 @@ const InputDivBox = styled.div`
   width: 343px;
   height: 48px;
   margin: 12px 0;
-  input {
-    box-sizing: border-box;
-    padding: 4px 16px;
-    width: 243px;
-    height: 48px;
-    border: 1px solid #dfdfdf;
-    border-radius: 8px;
-    font-family: "Pretendard";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 150%;
-    color: #1f1f1f;
+`;
+
+const StInput = styled.input`
+  box-sizing: border-box;
+  padding: 4px 16px;
+  width: 243px;
+  height: 48px;
+  border-radius: 8px;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: #1f1f1f;
+  :focus {
+    outline: none;
+    border: 2px solid
+      ${({ nickValidForCss }) =>
+        nickValidForCss === false ? "#e5294a" : "#5E67DE"};
   }
+  border: 1px solid #dfdfdf;
 `;
 
 const StNickValidationBtn = styled.button`
@@ -298,9 +316,24 @@ const StNickValidationBtn = styled.button`
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;
+  cursor: pointer;
 `;
 
-const StNickValidAlert = styled.p`
+const StNickValidAlert = styled.div`
+  padding: 0 8px;
+  margin-bottom: 4px;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  /* color: #e5294a; */
+  color: ${({ nickValidForCss }) =>
+    nickValidForCss === false ? "#e5294a" : "#5E67DE"};
+`;
+
+const StNickValidDesc = styled.div`
+  padding: 0 8px;
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 500;
