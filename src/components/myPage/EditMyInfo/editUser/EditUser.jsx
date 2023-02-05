@@ -154,7 +154,7 @@ const EditUser = () => {
             </InputDivBox>
             <StNickValidAlert>{nicknameAlert}</StNickValidAlert>
           </NicknameBox>
-          {socialUser !== "0" ? (
+          {socialUser === 0 ? (
             <PasswordBox>
               <StSpan>비밀번호</StSpan>
               <PasswordLink to={"/editPassword"}>

@@ -100,7 +100,7 @@ const EditPassword = () => {
                 <PrevPasswordInput
                   type="password"
                   value={prevPassword}
-                  placeholder="  현재 비밀번호를 입력해주세요."
+                  placeholder="현재 비밀번호를 입력해주세요."
                   onChange={(e) => setPrevPassword(e.target.value)}
                 />
                 <span />
@@ -109,7 +109,7 @@ const EditPassword = () => {
             <PasswordInput
               type="password"
               value={newPassword}
-              placeholder="  새 비밀번호를 입력해주세요."
+              placeholder="새 비밀번호를 입력해주세요."
               onChange={passwordOnChangeHandler}
               ref={newPasswordRef}
               isChecked={checkPassword}
@@ -118,7 +118,7 @@ const EditPassword = () => {
             <PasswordInput
               type="password"
               value={confirmNewPassword}
-              placeholder="  새 비밀번호를 다시 한 번 입력해주세요."
+              placeholder="새 비밀번호를 다시 한 번 입력해주세요."
               onChange={ConfirmPasswordOnChangeHandler}
               ref={confirmNewPasswordRef}
               isChecked={checkConfirmPassword}
@@ -138,7 +138,7 @@ const EditPassword = () => {
           onClick={EditPasswordSubmitHandler}
           disabled={!prevPassword || !newPassword || !confirmNewPassword}
         >
-          수정완료
+          수정 완료
         </EditButton>
       </EditButtonWrapper>
     </div>
@@ -176,7 +176,7 @@ const InputBox = styled.div`
     font-size: 16px;
     line-height: 19px;
     color: #e5294a;
-    margin-bottom:5px;
+    margin-bottom: 5px;
   }
 `;
 const PrevPasswordInput = styled.input`
@@ -186,6 +186,7 @@ const PrevPasswordInput = styled.input`
   align-items: center;
   width: 343px;
   height: 48px;
+  padding-left: 16px;
   border: 1px solid #dfdfdf;
   border-radius: 8px;
   font-family: "Pretendard";
@@ -206,6 +207,7 @@ const PasswordInput = styled.input`
   align-items: center;
   width: 343px;
   height: 48px;
+  padding-left: 16px;
   border: 1px solid #dfdfdf;
   border-radius: 8px;
   font-family: "Pretendard";
