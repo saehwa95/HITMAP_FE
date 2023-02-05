@@ -84,6 +84,7 @@ const WriteCommentBar = () => {
 export default WriteCommentBar;
 
 const StWriteCommentBarContainer = styled.div`
+  background-color: white;
   box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
   bottom: 0px;
   width: 375px;
