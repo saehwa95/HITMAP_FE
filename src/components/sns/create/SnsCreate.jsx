@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
 import { instance } from "../../../redux/api/instance";
 import SnsCreateAppBar from "../../layout/appBar/SnsCreateAppBar";
@@ -38,7 +38,7 @@ const SnsCreate = () => {
       formData.append("image", item);
     });
   }
-
+  const queryClient = useQueryClient();
   const postMain = useMutation({
     mutationFn: async (formData) => {
       return await instance.post("/post", formData);
@@ -46,6 +46,7 @@ const SnsCreate = () => {
     onSuccess: () => {
       alert("게시글 작성 완료");
       navigate("/postlist");
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
 
@@ -118,7 +119,7 @@ const SnsCreate = () => {
             name="fishName"
             value={input.fishName}
             onChange={onChangeTextHandler}
-            placeholder=" 어종을 작성해주세요.(최대 20자)"
+            placeholder=" 어종을 작성해주세요.(ex. 한치)"
           />
         </StFishNameBox>
         <StButtonBox>
@@ -178,6 +179,7 @@ const StImgPreview = styled.img`
 `;
 
 const StImgPreviewDeleteButton = styled.img`
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -227,6 +229,20 @@ const StContentInput = styled.textarea`
   vertical-align: top;
   text-align: left;
   resize: none;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: #1f1f1f;
+  ::placeholder {
+    font-family: "Pretendard";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: #c2c2c2;
+  }
   &:focus {
     outline: none;
   }
@@ -253,6 +269,20 @@ const StFishNameInput = styled.input`
   height: 48px;
   border: 1px solid #dfdfdf;
   border-radius: 8px;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  padding-left: 10px;
+  ::placeholder {
+    font-family: "Pretendard";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: #c2c2c2;
+  }
   &:focus {
     outline: 2px solid #006981;
   }

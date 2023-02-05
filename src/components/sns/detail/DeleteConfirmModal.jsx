@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import styled, { keyframes } from "styled-components";
 import { instance } from "../../../redux/api/instance";
 
@@ -13,6 +13,7 @@ const DeleteConfirmModal = ({ setMoreButtonModal, setDeleteConfirmModal }) => {
     setMoreButtonModal(false);
   };
 
+  const queryClient = useQueryClient();
   const deleteMain = useMutation({
     mutationFn: async (postId) => {
       return await instance.delete(`/post/${postId}`);
@@ -20,6 +21,7 @@ const DeleteConfirmModal = ({ setMoreButtonModal, setDeleteConfirmModal }) => {
     onSuccess: () => {
       alert("게시글 삭제 완료");
       navigate("/postlist");
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
 
@@ -111,6 +113,7 @@ const StDeleteConfirmCancelButton = styled.button`
   font-weight: 700;
   font-size: 16px;
   color: #006981;
+  cursor: pointer;
 `;
 
 const StDeleteConfirmDeleteButton = styled.button`
@@ -125,4 +128,5 @@ const StDeleteConfirmDeleteButton = styled.button`
   background: #006981;
   border-radius: 8px;
   border: none;
+  cursor: pointer;
 `;

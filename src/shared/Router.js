@@ -21,9 +21,9 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/socialauth" element={<SocialAuth />} />
-        <Route path="/" element={<Main />} />
+        <Route path="/main" element={<Main />} />
         <Route path="/weather" element={<Weather />} />
         <Route path="/postlist" element={<PostList />} />
         <Route path="/detail/:postId" element={<DetailPost />} />

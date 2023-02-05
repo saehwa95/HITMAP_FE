@@ -28,11 +28,10 @@ const StSignupContainer = styled.div`
 `;
 
 const StSignupList = styled.div`
-  margin-top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 100px;
+
   width: 375px;
   height: 755px;
 `;

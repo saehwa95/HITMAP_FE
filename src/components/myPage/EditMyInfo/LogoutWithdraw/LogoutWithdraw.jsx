@@ -22,7 +22,7 @@ const LogoutWithdraw = ({ socialUser }) => {
       {logoutModalOpen && (
         <LogoutConfirmModal setLogoutModalOpen={setLogoutModalOpen} />
       )}
-      {socialUser !== "0" ? (
+      {socialUser === 0 ? (
         <ButtonLink to={"/withdraw"}>
           <div>
             <span>회원탈퇴</span>
