@@ -29,7 +29,7 @@ const Socialauth = () => {
         )
         .then((res) => {
           setCookie("auth", res.data.access_token);
-          window.location.href = "/";
+          window.location.href = "/main";
         })
         .catch((err) => {
           const errorMessage = err.response.data.errorMessage;
