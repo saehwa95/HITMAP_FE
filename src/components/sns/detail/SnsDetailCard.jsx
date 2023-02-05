@@ -33,7 +33,9 @@ const SnsDetailCard = () => {
     return await instance.get(`/post/${postId}`);
   };
 
-  const { data, isLoading } = useQuery(["detailPost"], detailPostAPI);
+  const { data, isLoading } = useQuery(["detailPost"], detailPostAPI, {
+    staleTime: 15000,
+  });
   const detailData = data?.data.post;
   const imageSrc = detailData?.PostImage;
   if (isLoading) {

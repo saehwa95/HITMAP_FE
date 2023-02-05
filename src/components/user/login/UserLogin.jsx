@@ -20,7 +20,7 @@ const UserLogin = () => {
     dispatch(__postSignin({ email: userEmail, password: userPw })).then(
       (res) => {
         if (res.meta.requestStatus === "fulfilled") {
-          navigate("/");
+          navigate("/main");
           alert("로그인 완료");
         } else {
           setNotLoginMessage("이메일 또는 비밀번호를 확인해주세요.");
@@ -48,7 +48,7 @@ const UserLogin = () => {
       <StSignin>
         <StSigninDiv>
           <StLogin>
-            <StSigninInput>
+            <div>
               <StEmailInput
                 value={userEmail}
                 onChange={(e) => setUserEmail(e.target.value)}
@@ -66,7 +66,7 @@ const UserLogin = () => {
               />
 
               {!notlogin && <Stfalsetxt>{notloginmessage}</Stfalsetxt>}
-            </StSigninInput>
+            </div>
 
             <StLoginBtn onClick={submitHandler} disabled={notAllow}>
               로그인
@@ -92,22 +92,15 @@ const UserLogin = () => {
 
 export default UserLogin;
 
-const StSigninInput = styled.div``;
-
 const StEmailInput = styled.input`
   box-sizing: border-box;
   margin-top: 10px;
   flex-direction: row;
   align-items: center;
   padding: 4px 16px;
-
   width: 343px;
   height: 48px;
-
-  /* Gray/White */
-
   background: #ffffff;
-  /* Gray/Gray_300 */
   outline: none;
   border: 1px solid #dfdfdf;
   border-radius: 8px;
@@ -118,7 +111,6 @@ const StEmailInput = styled.input`
     font-weight: 500;
     font-size: 16px;
     line-height: 150%;
-
     color: #c2c2c2;
   }
   &:focus {
@@ -134,27 +126,23 @@ const StLoginBtn = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
+  border: none;
   width: 343px;
   height: 48px;
   background: #006981;
   border-radius: 8px;
-
   :disabled {
     background: #a6cad3;
     border-radius: 8px;
     border: none;
   }
-
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 160%;
-
   text-align: center;
   cursor: pointer;
-
   color: #ffffff;
 `;
 
@@ -163,7 +151,6 @@ const StSignin = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 24px;
-
   width: 375px;
   height: 349px;
 `;
@@ -172,7 +159,6 @@ const StSigninDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
   width: 375px;
 `;
 
@@ -201,48 +187,31 @@ const StSignupcontain = styled.div`
   margin: 0 auto;
   width: 220px;
   height: 32px;
-
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 500;
   font-size: 15px;
   line-height: 150%;
-  /* identical to box height, or 24px */
-
   text-align: center;
-
-  /* Gray/Gray_500 */
-
   color: #979797;
-  /* Gray/White */
-
   background: #ffffff;
 `;
 
 const StGoSignup = styled.span`
   width: 56px;
   height: 24px;
-
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;
-  /* identical to box height, or 24px */
-
   text-align: center;
   text-decoration-line: underline;
-
-  /* Primary/Primary */
-
   color: #006981;
-
   cursor: pointer;
 `;
 
 const Stfalsetxt = styled.span`
-  /* Subtitle/Bold/16 */
-
   font-family: "Pretendard";
   margin-top: 5px;
   font-weight: 700;
@@ -250,22 +219,18 @@ const Stfalsetxt = styled.span`
   line-height: 19px;
   display: flex;
   align-items: flex-end;
-
-  /* Alert/Negative */
-
   color: #e5294a;
 `;
 
 const StSimpleLogintxt = styled.span`
+  position: absolute;
   margin-left: 17px;
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 150%;
-
   text-align: center;
-
   color: #c2c2c2;
 `;
 
@@ -273,7 +238,6 @@ const StLogin = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 8px;
-
   gap: 16px;
   margin: 0 auto;
   width: 343px;

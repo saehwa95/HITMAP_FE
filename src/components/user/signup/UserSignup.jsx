@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { __postSignup } from "../../redux/modules/userSlice";
-import UseInputProfilimage from "../../hooks/signup/UseInputProfilimage";
-import UseInputNickname from "../../hooks/signup/UseInputNickname";
-import UseInputEmail from "../../hooks/signup/UseInputEmail";
-import UseInputPassword from "../../hooks/signup/UseInputPassword";
-import duplicateIcon from "../../asset/icon/duplicateIcon.svg";
-import clickclickIcon from "../../asset/icon/clickclickIcon.svg";
-import imgdeleteButton from "../../asset/button/imgdeleteButton.svg";
-import Profile from "../../asset/icon/Profile.svg";
+import { __postSignup } from "../../../redux/modules/userSlice";
+import UseInputProfilimage from "../../../hooks/signup/UseInputProfilimage";
+import UseInputNickname from "../../../hooks/signup/UseInputNickname";
+import UseInputEmail from "../../../hooks/signup/UseInputEmail";
+import UseInputPassword from "../../../hooks/signup/UseInputPassword";
+
+import clickclickIcon from "../../../asset/icon/clickclickIcon.svg";
+import imgdeleteButton from "../../../asset/button/imgdeleteButton.svg";
+import Profile from "../../../asset/icon/Profile.svg";
 
 const UserSignup = () => {
   const dispatch = useDispatch();
@@ -160,7 +160,7 @@ const UserSignup = () => {
                 {/* </ValidationWrapper> */}
               </StValidMsg>
             </StNickErrMsg>
-            <StBtn src={duplicateIcon} onClick={onnick} />
+            <StBtn onClick={onnick}>중복확인</StBtn>
           </StNIckName>
 
           <StInputTxt>
@@ -195,7 +195,7 @@ const UserSignup = () => {
               </StValidMsg>
             </StemailErrMsg>
 
-            <StBtn src={duplicateIcon} onClick={onemail} />
+            <StBtn onClick={onemail}>중복확인</StBtn>
           </StNIckName>
         </StEmaildiv>
 
@@ -237,8 +237,6 @@ const UserSignup = () => {
             영문 대소문자, 숫자, 특수문자를 3가지 이상으로 조합해 8자 이상 16자
             이하로 입력해주세요
           </StInputTxt>
-
-          {/* 회원가입 버튼 */}
           <Signupcontain>
             <SignBtn
               onClick={(e) => submitOnclickHandler(e)}
@@ -331,13 +329,23 @@ const StText = styled.span`
   line-height: 19px;
 `;
 
-const StBtn = styled.img`
-  width: 90px;
-  height: 48px;
+const StBtn = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: #ffffff;
+  gap: 10px;
+  width: 90px;
+  height: 48px;
+  background: #006981;
+  border-radius: 8px;
   cursor: pointer;
 `;
 
@@ -354,6 +362,7 @@ const StPsInput = styled.input`
   display: flex;
   flex-direction: row;
   align-items: center;
+
   margin-bottom: 5px;
   width: 338px;
   height: 45px;
@@ -412,7 +421,7 @@ const StPassContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-top: 10px;
+  margin-top: 20px;
   width: 375px;
   height: 249px;
   background: #ffffff;
@@ -500,8 +509,6 @@ const StPostProfileBtn = styled.input`
 const StPostChangeBtn = styled.button`
   box-sizing: border-box;
   grid-auto-flow: column;
-  padding: 4px 16px;
-  gap: 12px;
   margin: 0 auto;
   width: 108px;
   height: 32px;
@@ -514,9 +521,9 @@ const StPostChangeBtn = styled.button`
 `;
 
 const StClickicon = styled.img`
-  margin-left: 6.3px;
-  width: 9px;
-  height: 15px;
+  margin-left: 9px;
+  width: 8px;
+  height: 13px;
 `;
 
 const StImgContainer = styled.div`
@@ -537,6 +544,7 @@ const StImgdelete = styled.img`
 `;
 
 const StImageSpan = styled.span`
+  margin-left: 14px;
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
@@ -551,7 +559,7 @@ const StemailErrMsg = styled.div``;
 const StNickInput = styled.input`
   display: flex;
   width: 237px;
-  height: 45px;
+  height: 48px;
   background: #ffffff;
   border: 1px solid #dfdfdf;
   border-radius: 8px;

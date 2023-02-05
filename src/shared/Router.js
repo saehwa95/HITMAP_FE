@@ -13,7 +13,7 @@ import MyPage from "../pages/mypage/MyPage";
 import EditMyInfo from "../pages/mypage/EditMyInfo";
 import EditPasswordPage from "../pages/mypage/EditPasswordPage";
 import LogInRegister from "../pages/mypage/LogInRegister";
-import Withdraw from "../components/myPage/editMyInfo/logoutWithdraw/Withdraw";
+import Withdraw from "../components/myPage/EditMyInfo/LogoutWithdraw/Withdraw";
 import PrivateRoutes from "./PrivateRoutes";
 
 const Router = () => {
@@ -21,9 +21,9 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/socialauth" element={<SocialAuth />} />
-        <Route path="/" element={<Main />} />
+        <Route path="/main" element={<Main />} />
         <Route path="/weather" element={<Weather />} />
         <Route path="/postlist" element={<PostList />} />
         <Route path="/detail/:postId" element={<DetailPost />} />

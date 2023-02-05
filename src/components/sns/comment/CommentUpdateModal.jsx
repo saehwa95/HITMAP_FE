@@ -80,7 +80,6 @@ const StDeleteConfirmAll = styled.div`
   flex-direction: column;
   width: 100%;
   height: 99.8vh;
-  background-color: rgba(0, 0, 0, 0.4);
   z-index: 1000;
 `;
 
@@ -94,10 +93,15 @@ const StInputContainer = styled.div`
 `;
 
 const StUpdateCommentInput = styled.textarea`
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  color: #1f1f1f;
   text-align: top;
   border: none;
   width: 343px;
-  height: 79vh;
+  height: 77vh;
   background-color: #ffffff;
   resize: none;
   &:focus {
@@ -106,6 +110,7 @@ const StUpdateCommentInput = styled.textarea`
 `;
 
 const StButtonBox = styled.div`
+  border: none;
   box-sizing: border-box;
   padding: 8px 16px 27px 16px;
   width: 375px;

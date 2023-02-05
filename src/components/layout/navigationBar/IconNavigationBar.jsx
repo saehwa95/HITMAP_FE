@@ -8,7 +8,7 @@ import chatIcon from "../../../asset/icon/chatIcon.svg";
 import myPageIcon from "../../../asset/icon/myPageIcon.svg";
 import clickHomeIcon from "../../../asset/icon/clickHomeIcon.svg";
 import clickSnsIcon from "../../../asset/icon/clickSnsIcon.svg";
-import clickChatIcon from "../../../asset/icon/clickChatIcon.svg";
+// import clickChatIcon from "../../../asset/icon/clickChatIcon.svg";
 import clickMyPageIcon from "../../../asset/icon/clickMyPageIcon.svg";
 
 const IconNavigationBar = () => {
@@ -22,12 +22,12 @@ const IconNavigationBar = () => {
   return (
     <BottomNavigationBar>
       <div className="icon-wrapper">
-        {pathName === "/" ? (
+        {pathName === "/main" ? (
           <img
             src={clickHomeIcon}
             alt=""
             onClick={() => {
-              navigate("/");
+              navigate("/main");
             }}
           />
         ) : (
@@ -35,7 +35,7 @@ const IconNavigationBar = () => {
             src={homeIcon}
             alt=""
             onClick={() => {
-              navigate("/");
+              navigate("/main");
             }}
           />
         )}

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import SignupAppBar from "../../components/layout/appBar/SignupAppBar";
-import UserSignup from "../../components/signup/UserSignup";
+import UserSignup from "../../components/user/signup/UserSignup";
 
 const SignUp = () => {
   return (
@@ -28,11 +28,10 @@ const StSignupContainer = styled.div`
 `;
 
 const StSignupList = styled.div`
-  margin-top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 100px;
+
   width: 375px;
   height: 755px;
 `;
