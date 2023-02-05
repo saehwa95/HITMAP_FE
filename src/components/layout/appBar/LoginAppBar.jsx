@@ -14,7 +14,7 @@ const LoginAppBar = () => {
         <StSignupItem>
           <StCloseIconImg
             onClick={() => {
-              navigate("/");
+              navigate("/main");
             }}
           >
             둘러보기

@@ -10,7 +10,7 @@ const PlaceName = ({ placeName }) => {
       <StatusBar />
       <Name>
         <div>
-          <Link to={"/"}>
+          <Link to={"/main"}>
             <button>
               <img src={closeIcon} alt="" />
             </button>
