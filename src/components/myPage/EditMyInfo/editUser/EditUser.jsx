@@ -165,7 +165,7 @@ const EditUser = () => {
               입력해주세요.
             </StNickValidDesc>
           </NicknameBox>
-          {socialUser !== "0" ? (
+          {socialUser === 0 ? (
             <PasswordBox>
               <StSpan>비밀번호</StSpan>
               <PasswordLink to={"/editPassword"}>
