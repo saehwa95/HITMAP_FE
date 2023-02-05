@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const LoginRegisterButton = () => {
   return (
     <ButtonWrapper>
-      <LoginLink to={"/login"} className="button">
+      <LoginLink to={"/"} className="button">
         <span>로그인</span>
       </LoginLink>
       <RegisterLink to={"/signup"} className="button">
