@@ -51,7 +51,7 @@ const SnsPostCard = ({ posts }) => {
         <StCardImgBackground>
           <StCardImg
             alt="작성사진"
-            src={posts.PostImage[0].src}
+            src={posts.original_post_image[0].src}
             onClick={goDetailPage}
           />
         </StCardImgBackground>
