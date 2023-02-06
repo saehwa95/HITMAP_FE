@@ -23,6 +23,19 @@ const SnsCreate = () => {
     if (postImages.length > 5) {
       alert("사진은 최대 5장까지 작성 가능합니다");
     } else {
+      /* 
+      Array.from(postImages).forEach((item) => {
+        formData.append("image", e.target.files);
+        axios.post('/save_image', {
+          src: formData
+        }, {
+          withCredentials: true
+        }).then((res) => {
+          console.log(res)
+          setPostImages(res) 
+        })
+      });
+      */
       setPostImages(e.target.files);
     }
   };
@@ -44,8 +57,13 @@ const SnsCreate = () => {
       return await instance.post("/post", formData);
     },
     onSuccess: () => {
+      // 이미지가 리사이징 하는 동안 시간을 벌어주기 위함
       alert("게시글 작성 완료");
       navigate("/postlist");
+      // setTimeout(() => {
+      //   alert("게시글 작성 완료");
+      //   navigate("/postlist");
+      // }, 1500);
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
