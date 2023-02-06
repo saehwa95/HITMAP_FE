@@ -56,16 +56,6 @@ const WriteCommentBar = () => {
           alt="유저 프로필이미지"
           src={data?.data.profile_image}
         />
-        {/* <StTextBar>
-          <StTextInput
-            maxLength="50"
-            onChange={onChangeCommentHandler}
-            placeholder="댓글 남기기(최대 50자)"
-            value={comment}
-            onKeyPress={onKeyPress}
-          />
-          <StSendButton onClick={postCommentHandler}>등록</StSendButton>
-        </StTextBar> */}
         <StTextBar>
           <input
             maxLength="50"
@@ -105,47 +95,7 @@ const StUserProfileImg = styled.img`
   border-radius: 50px;
 `;
 
-// const StTextBar = styled.div`
-//   width: 300px;
-//   height: 36px;
-//   background: #ffffff;
-//   border: 1px solid #dfdfdf;
-//   border-radius: 16px;
-//   display: flex;
-//   justify-content: space-between;
-// `;
-
-// const StTextInput = styled.input`
-//   width: 240px;
-//   border: none;
-//   border-radius: 16px;
-//   ::placeholder {
-//     font-family: "Pretendard";
-//     font-style: normal;
-//     font-weight: 500;
-//     font-size: 16px;
-//     color: #c2c2c2;
-//     text-indent: 16px;
-//   }
-//   &:focus {
-//     outline: none;
-//   }
-// `;
-
-// const StSendButton = styled.button`
-//   width: 50px;
-//   font-family: "Pretendard";
-//   font-style: normal;
-//   font-weight: 700;
-//   font-size: 16px;
-//   color: #979797;
-//   border: none;
-//   background-color: transparent;
-//   cursor: pointer;
-// `;
-
 const StTextBar = styled.label`
-  /* border: 1px solid red; */
   position: relative;
   display: flex;
 
@@ -170,7 +120,6 @@ const StTextBar = styled.label`
       font-weight: 500;
       font-size: 16px;
       color: #c2c2c2;
-      /* text-indent: 16px; */
     }
     &:focus {
       outline: none;

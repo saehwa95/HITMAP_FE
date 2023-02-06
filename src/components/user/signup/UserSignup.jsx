@@ -7,7 +7,6 @@ import UseInputProfilimage from "../../../hooks/signup/UseInputProfilimage";
 import UseInputNickname from "../../../hooks/signup/UseInputNickname";
 import UseInputEmail from "../../../hooks/signup/UseInputEmail";
 import UseInputPassword from "../../../hooks/signup/UseInputPassword";
-
 import clickclickIcon from "../../../asset/icon/clickclickIcon.svg";
 import imgdeleteButton from "../../../asset/button/imgdeleteButton.svg";
 import Profile from "../../../asset/icon/Profile.svg";
@@ -108,7 +107,6 @@ const UserSignup = () => {
             ) : (
               <Stimage src={Profile}></Stimage>
             )}
-
             {visible === true && (
               <StImgdelete
                 onClick={deleteFileImage}
@@ -132,9 +130,7 @@ const UserSignup = () => {
           </StImageSpan>
         </StPostChangeBtn>
       </StProfileContainer>
-
       <StInputWrapper>
-        {/* SignUpNickForm */}
         <StNickdiv>
           <StText>닉네임</StText>
           <StNIckName>
@@ -149,15 +145,11 @@ const UserSignup = () => {
                 onClick={emptyvalue}
               />
               <StValidMsg>
-                {/* <ValidationWrapper> */}
-
                 {!nicklValid && nickname.length === 0 && (
                   <StFalSpan>{emptynickmessage}</StFalSpan>
                 )}
-
                 {isnick !== true && <StFalSpan>{nickMessage}</StFalSpan>}
                 {isnick === true && <StTruSpan>{nickMessage}</StTruSpan>}
-                {/* </ValidationWrapper> */}
               </StValidMsg>
             </StNickErrMsg>
             <StBtn onClick={onnick}>중복확인</StBtn>
@@ -168,8 +160,6 @@ const UserSignup = () => {
             입력해주세요
           </StInputTxt>
         </StNickdiv>
-
-        {/* SignupEmailForm */}
         <StEmaildiv>
           <StText>이메일</StText>
           <StNIckName>
@@ -194,12 +184,9 @@ const UserSignup = () => {
                 {isemail === true && <StTruSpan>{emailMessage}</StTruSpan>}
               </StValidMsg>
             </StemailErrMsg>
-
             <StBtn onClick={onemail}>중복확인</StBtn>
           </StNIckName>
         </StEmaildiv>
-
-        {/* SignupPwForm */}
         <StPassContainer>
           <StText>비밀번호</StText>
           <Stpwinputcontainer>
@@ -232,7 +219,6 @@ const UserSignup = () => {
               )}
             </div>
           </Stpwinputcontainer>
-
           <StInputTxt>
             영문 대소문자, 숫자, 특수문자를 3가지 이상으로 조합해 8자 이상 16자
             이하로 입력해주세요

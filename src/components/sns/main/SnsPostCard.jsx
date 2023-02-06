@@ -48,13 +48,13 @@ const SnsPostCard = ({ posts }) => {
         </div>
       </StCardHeader>
       <StCardImgBox>
-        <StCardImgBackground>
+        <div>
           <StCardImg
             alt="작성사진"
             src={posts.original_post_image[0].src}
             onClick={goDetailPage}
           />
-        </StCardImgBackground>
+        </div>
       </StCardImgBox>
       <StCardContent>{posts.content}</StCardContent>
       <StCardStatus>
@@ -132,20 +132,9 @@ const StCardImgBox = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const StCardImgBackground = styled.div`
-  /* display: flex; */
-  /* align-items: center; */
-  /* width: 343px; */
-  /* height: 343px; */
-  /* padding: 10px 0; */
-  /* background-color: #f6f6f6; */
-  /* background-color: #c2c2c2; */
-  /* background-color: #3f3f3f; */
-`;
 
 const StCardImg = styled.img`
   width: 343px;
-  /* height: 343px; */
   cursor: pointer;
 `;
 

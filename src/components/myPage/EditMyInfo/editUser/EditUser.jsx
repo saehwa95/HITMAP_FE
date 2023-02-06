@@ -50,7 +50,6 @@ const EditUser = () => {
       return await instance.post("/me/myNickname", nickname);
     },
     onSuccess: () => {
-      console.log(nicknameValidation.data);
       setNickValidTrueForCss(true);
       setNicknameAlert(nicknameValidation.data?.data?.message);
     },
@@ -339,7 +338,6 @@ const StNickValidAlert = styled.div`
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
-  /* color: #e5294a; */
   color: ${(props) => {
     if (props.nickValidTrueForCss === true) {
       return "#5E67DE";

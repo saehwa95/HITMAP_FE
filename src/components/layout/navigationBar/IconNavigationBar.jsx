@@ -8,7 +8,6 @@ import chatIcon from "../../../asset/icon/chatIcon.svg";
 import myPageIcon from "../../../asset/icon/myPageIcon.svg";
 import clickHomeIcon from "../../../asset/icon/clickHomeIcon.svg";
 import clickSnsIcon from "../../../asset/icon/clickSnsIcon.svg";
-// import clickChatIcon from "../../../asset/icon/clickChatIcon.svg";
 import clickMyPageIcon from "../../../asset/icon/clickMyPageIcon.svg";
 
 const IconNavigationBar = () => {
@@ -63,29 +62,6 @@ const IconNavigationBar = () => {
             alert("준비중인 기능입니다.");
           }}
         />
-        {/* {pathName === "/chat" ? (
-          <img
-            src={clickChatIcon}
-            alt=""
-            onClick={() => {
-              authJudge
-                ? navigate("/chat")
-                : alert("로그인이 필요한 기능이므로 로그인페이지로 이동합니다");
-              authJudge ? navigate("/chat") : navigate("/login");
-            }}
-          />
-        ) : (
-          <img
-            src={chatIcon}
-            alt=""
-            onClick={() => {
-              authJudge
-                ? navigate("/chat")
-                : alert("로그인이 필요한 기능이므로 로그인페이지로 이동합니다");
-              authJudge ? navigate("/chat") : navigate("/login");
-            }}
-          />
-        )} */}
         {pathName === "/mypage" || pathName === "/logInRegister" ? (
           <img
             src={clickMyPageIcon}
@@ -118,7 +94,7 @@ const BottomNavigationBar = styled.div`
   width: 375px;
   height: 83px;
   background-color: #ffffff;
-  border-top: 1px solid #ECECEC;
+  border-top: 1px solid #ececec;
   box-shadow: 0px -4px 24px rgba(0, 0, 0, 0.08);
   border-radius: 24px 24px 0px 0px;
   bottom: 0px;

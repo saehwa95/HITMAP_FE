@@ -27,7 +27,6 @@ const StSignupList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   width: 375px;
   height: 755px;
 `;

@@ -31,7 +31,7 @@ const CommentDeleteConfirmModal = ({
         <StDeleteConfirmMessage>
           댓글을 삭제하시겠습니까?
         </StDeleteConfirmMessage>
-        <StDeleteConfirmButtonBox>
+        <div>
           <StDeleteConfirmCancelButton onClick={closeCommentDeleteConfirmModal}>
             취소
           </StDeleteConfirmCancelButton>
@@ -42,7 +42,7 @@ const CommentDeleteConfirmModal = ({
           >
             삭제
           </StDeleteConfirmDeleteButton>
-        </StDeleteConfirmButtonBox>
+        </div>
       </StDeleteConfirmBox>
     </StDeleteConfirmAll>
   );
@@ -98,8 +98,6 @@ const StDeleteConfirmMessage = styled.div`
   height: 72px;
   color: #1f1f1f;
 `;
-
-const StDeleteConfirmButtonBox = styled.div``;
 
 const StDeleteConfirmCancelButton = styled.button`
   width: 136px;
