@@ -74,7 +74,7 @@ const UserSignup = () => {
     dispatch(__postSignup(formData)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         alert("회원가입이 완료되었습니다.");
-        navigate("/login");
+        navigate("/");
       } else {
         alert("회원가입에 실패하셨습니다.");
       }
@@ -443,7 +443,7 @@ const SignBtn = styled.button`
   align-items: center;
   margin: 0 auto;
   width: 343px;
-  height: 48px;
+  height: 50px;
   cursor: pointer;
   border: none;
   background: #006981;
@@ -469,9 +469,7 @@ const StSignupBtn = styled.span`
   font-size: 16px;
   line-height: 150%;
   text-align: center;
-  padding-top: 25px;
   width: 100px;
-  height: 50px;
   text-align: center;
   cursor: pointer;
   color: #ffffff;
