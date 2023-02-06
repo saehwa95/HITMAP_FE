@@ -399,7 +399,7 @@ const StBackimage = styled.div`
 `;
 
 const StInputTxt = styled.div`
-  padding: 12px 25px 70px 18px;
+  padding: 12px 25px 20px 18px;
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 500;
@@ -429,8 +429,6 @@ const StPassContainer = styled.div`
 
 const Signupcontain = styled.div`
   box-sizing: border-box;
-  position: fixed;
-  bottom: 0%;
   flex-direction: column;
   margin: 0 auto;
   width: 375px;
