@@ -56,7 +56,6 @@ const UserLogin = () => {
                 placeholder="이메일"
                 isChecked={notlogin}
               />
-
               <StEmailInput
                 value={userPw}
                 onChange={(e) => setUserPw(e.target.value)}
@@ -64,10 +63,8 @@ const UserLogin = () => {
                 placeholder="비밀번호"
                 isChecked={notlogin}
               />
-
               {!notlogin && <Stfalsetxt>{notloginmessage}</Stfalsetxt>}
             </div>
-
             <StLoginBtn onClick={submitHandler} disabled={notAllow}>
               로그인
             </StLoginBtn>

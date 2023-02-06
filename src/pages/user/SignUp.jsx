@@ -18,10 +18,6 @@ export default SignUp;
 
 const StSignupContainer = styled.div`
   height: 100vh;
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    display: none;
-  }
   position: relative;
   width: 373px;
   background: #ffffff;
@@ -31,7 +27,6 @@ const StSignupList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   width: 375px;
   height: 755px;
 `;

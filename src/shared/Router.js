@@ -8,7 +8,6 @@ import Weather from "../pages/main/Weather";
 import PostList from "../pages/sns/PostList";
 import DetailPost from "../pages/sns/DetailPost";
 import CreatePost from "../pages/sns/CreatePost";
-import Chat from "../pages/socket/Chat";
 import MyPage from "../pages/mypage/MyPage";
 import EditMyInfo from "../pages/mypage/EditMyInfo";
 import EditPasswordPage from "../pages/mypage/EditPasswordPage";
@@ -30,7 +29,6 @@ const Router = () => {
         <Route path="/logInRegister" element={<LogInRegister />} />
         <Route element={<PrivateRoutes />}>
           <Route path="/create" element={<CreatePost />} />
-          <Route path="/chat" element={<Chat />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/editMyInfo" element={<EditMyInfo />} />
           <Route path="/editPassword" element={<EditPasswordPage />} />
