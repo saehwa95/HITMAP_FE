@@ -18,10 +18,6 @@ export default SignUp;
 
 const StSignupContainer = styled.div`
   height: 100vh;
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    display: none;
-  }
   position: relative;
   width: 373px;
   background: #ffffff;
