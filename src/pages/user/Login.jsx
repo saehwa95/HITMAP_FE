@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import HitmapLogo from "../../asset/icon/HitmapLogo.svg";
 import LoginAppBar from "../../components/layout/appBar/LoginAppBar";
 import UserLogin from "../../components/user/login/UserLogin";
+import HitmapLogo from "../../asset/icon/HitmapLogo.svg";
 
 const Login = () => {
   return (
@@ -24,9 +24,6 @@ const StLoginContainer = styled.div`
   position: relative;
   width: 373px;
   height: 812px;
-
-  /* Gray/White */
-
   background: #ffffff;
 `;
 
@@ -41,7 +38,6 @@ const StSignInContainer = styled.div`
   align-items: center;
   padding: 0px;
   gap: 40px;
-
   width: 375px;
   height: 421px;
 `;

@@ -28,7 +28,8 @@ const EditUser = () => {
   const [nicknameValid, setNicknameValid] = useState(false);
   const [isNickname, setIsNickname] = useState(false);
   const [nicknameAlert, setNicknameAlert] = useState("");
-  const [nickValidForCss, setNickValidForCss] = useState(false);
+  const [nickValidTrueForCss, setNickValidTrueForCss] = useState(false);
+  const [nickValidFalseForCss, setNickValidFalseForCss] = useState(false);
 
   const onChangeNicknameHandler = (e) => {
     e.preventDefault();
@@ -49,12 +50,12 @@ const EditUser = () => {
       return await instance.post("/me/myNickname", nickname);
     },
     onSuccess: () => {
+      setNickValidTrueForCss(true);
       setNicknameAlert(nicknameValidation.data?.data?.message);
-      setNickValidForCss(true);
     },
     onError: (error) => {
       setNicknameAlert(error.response.data.errorMessage);
-      setNickValidForCss(false);
+      setNickValidFalseForCss(true);
     },
   });
   //댓글 input창에 내용 없으면 등록 안되게 if문 처리
@@ -148,7 +149,8 @@ const EditUser = () => {
                 onChange={onChangeNicknameHandler}
                 minLength="2"
                 maxLength="10"
-                nickValidForCss={nickValidForCss}
+                nickValidTrueForCss={nickValidTrueForCss}
+                nickValidFalseForCss={nickValidFalseForCss}
               />
               <StNickValidationBtn
                 onClick={nicknameValidationHandler}
@@ -157,7 +159,10 @@ const EditUser = () => {
                 중복확인
               </StNickValidationBtn>
             </InputDivBox>
-            <StNickValidAlert nickValidForCss={nickValidForCss}>
+            <StNickValidAlert
+              nickValidTrueForCss={nickValidTrueForCss}
+              nickValidFalseForCss={nickValidFalseForCss}
+            >
               {nicknameAlert}
             </StNickValidAlert>
             <StNickValidDesc>
@@ -292,11 +297,17 @@ const StInput = styled.input`
   color: #1f1f1f;
   :focus {
     outline: none;
-    border: 2px solid
-      ${({ nickValidForCss }) =>
-        nickValidForCss === false ? "#e5294a" : "#5E67DE"};
   }
-  border: 1px solid #dfdfdf;
+  border: 2px solid
+    ${(props) => {
+      if (props.nickValidTrueForCss === true) {
+        return "#5E67DE";
+      } else if (props.nickValidFalseForCss === true) {
+        return "#e5294a";
+      } else {
+        return "#dfdfdf";
+      }
+    }};
 `;
 
 const StNickValidationBtn = styled.button`
@@ -327,9 +338,18 @@ const StNickValidAlert = styled.div`
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
-  /* color: #e5294a; */
-  color: ${({ nickValidForCss }) =>
-    nickValidForCss === false ? "#e5294a" : "#5E67DE"};
+  color: ${(props) => {
+    if (props.nickValidTrueForCss === true) {
+      return "#5E67DE";
+    } else if (
+      props.nickValidTrueForCss === false &&
+      props.nickValidFalseForCss === true
+    ) {
+      return "#e5294a";
+    } else {
+      return null;
+    }
+  }};
 `;
 
 const StNickValidDesc = styled.div`

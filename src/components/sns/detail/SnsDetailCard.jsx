@@ -10,11 +10,9 @@ import SnsCommentList from "../comment/SnsCommentList";
 import likeIcon from "../../../asset/icon/likeIcon.svg";
 import likeActiveIcon from "../../../asset/icon/likeActiveIcon.svg";
 import commentIcon from "../../../asset/icon/commentIcon.svg";
-// import chattingIcon from "../../../asset/icon/chattingIcon.svg";
 
 //sns 상세카드 한 장 컴포넌트
 const SnsDetailCard = () => {
-  // const navigate = useNavigate();
   const { postId } = useParams();
 
   const authJudge = getCookie("auth");
@@ -49,11 +47,6 @@ const SnsDetailCard = () => {
     authJudge ? submitLike.mutate() : alert("로그인이 필요한 기능입니다");
   };
 
-  //채팅아이콘 누르면 채팅페이지로 이동하는 함수
-  // const onClickChattingHandler = () => {
-  //   navigate("/chat");
-  // };
-
   return (
     <StDetailCardContainer>
       <StCardHeader>
@@ -67,14 +60,6 @@ const SnsDetailCard = () => {
           <StCardHeaderNickName>{detailData.nickname}</StCardHeaderNickName>
           <StCardHeaderCreateTime>{timeForCard}</StCardHeaderCreateTime>
         </div>
-        {/* 채팅기능 활성화되면 보여줄 아이콘
-        {authJudge ? (
-          <StChatIcon
-            alt="채팅아이콘"
-            src={chattingIcon}
-            onClick={onClickChattingHandler}
-          />
-        ) : null} */}
       </StCardHeader>
       <div>
         <StCardImgBox>
@@ -121,7 +106,6 @@ const LoadEffect = keyframes`
 `;
 
 const StDetailCardContainer = styled.div`
-  //무한스크롤처럼 보이게 땜질한 css(추후 무한스크롤 진행 예정)
   height: 79vh;
   overflow-y: scroll;
   ::-webkit-scrollbar {
@@ -159,11 +143,6 @@ const StCardHeaderCreateTime = styled.div`
   color: #c2c2c2;
 `;
 
-// const StChatIcon = styled.img`
-//   transform: translateX(90px);
-//   cursor: pointer;
-// `;
-
 const StCardImgBox = styled.div`
   padding-bottom: 36px;
   display: flex;
@@ -173,13 +152,7 @@ const StCardImgBox = styled.div`
 
 const StCarouselBox = styled.div`
   width: 342px;
-  /* height: 342px; */
 `;
-
-// const StCardImg = styled.img`
-//   width: 342px;
-//   height: 342px;
-// `;
 
 const StCardContent = styled.div`
   margin: 16px;

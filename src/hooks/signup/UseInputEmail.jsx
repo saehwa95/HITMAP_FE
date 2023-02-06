@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
-import { __emailItem } from "../../redux/modules/userSlice";
 import { useDispatch } from "react-redux";
+import { __emailItem } from "../../redux/modules/userSlice";
 
 const UseInputEmail = () => {
   const [email, setEmail] = useState("");
@@ -60,7 +60,6 @@ const UseInputEmail = () => {
   };
 
   //nickname 유효성 검사
-
   const emptyemailvalue = (e) => {
     if (email.length === 0) {
       SetEmptyemailmessage("이메일이 입력되지 않았습니다.");

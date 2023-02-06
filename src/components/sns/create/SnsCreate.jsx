@@ -149,7 +149,6 @@ const StCreateContainer = styled.form`
 
 const StPreviewImgContainer = styled.div`
   width: 250px;
-  /* min-width: 1%; */
   padding-top: 10px;
   display: flex;
   align-items: flex-start;
