@@ -206,6 +206,7 @@ const StGoSignup = styled.span`
   text-align: center;
   text-decoration-line: underline;
   color: #006981;
+  cursor: pointer;
 `;
 
 const Stfalsetxt = styled.span`
