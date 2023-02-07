@@ -328,6 +328,9 @@ const StNickValidationBtn = styled.button`
   font-size: 16px;
   line-height: 150%;
   cursor: pointer;
+  :disabled {
+    cursor: default;
+  }
 `;
 
 const StNickValidAlert = styled.div`
@@ -447,4 +450,7 @@ const EditButton = styled.button`
   color: #ffffff;
   border: none;
   cursor: pointer;
+  :disabled {
+    cursor: default;
+  }
 `;

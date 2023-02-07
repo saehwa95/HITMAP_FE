@@ -58,6 +58,16 @@ const SnsCreate = () => {
     setPostImages(newPreviewList);
   };
 
+  //중복등록 방지를 위한 state
+  const [preventSubmitDuplication, setPreventSubmitDuplication] =
+    useState(false);
+
+  const postHandler = (e) => {
+    e.preventDefault();
+    postMain.mutate(formData);
+    setPreventSubmitDuplication(!preventSubmitDuplication);
+  };
+
   return (
     <div>
       <SnsCreateAppBar />
@@ -125,12 +135,14 @@ const SnsCreate = () => {
         <StButtonBox>
           <StButton
             type="submit"
-            onClick={(e) => {
-              e.preventDefault();
-              postMain.mutate(formData);
-            }}
+            onClick={postHandler}
             disabled={
-              !(input.fishName && input.content && !(postImages.length === 0))
+              !(
+                preventSubmitDuplication === false &&
+                input.fishName &&
+                input.content &&
+                !(postImages.length === 0)
+              )
             }
           >
             작성하기
@@ -308,4 +320,7 @@ const StButton = styled.button`
   line-height: 150%;
   border-radius: 8px;
   cursor: pointer;
+  :disabled {
+    cursor: default;
+  }
 `;
