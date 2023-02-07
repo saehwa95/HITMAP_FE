@@ -129,6 +129,7 @@ const StLoginBtn = styled.button`
   background: #006981;
   border-radius: 8px;
   :disabled {
+    cursor: default;
     background: #a6cad3;
     border-radius: 8px;
     border: none;
@@ -205,7 +206,6 @@ const StGoSignup = styled.span`
   text-align: center;
   text-decoration-line: underline;
   color: #006981;
-  cursor: pointer;
 `;
 
 const Stfalsetxt = styled.span`
