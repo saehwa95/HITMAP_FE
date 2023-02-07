@@ -131,4 +131,7 @@ const StButton = styled.button`
   line-height: 150%;
   border-radius: 8px;
   cursor: pointer;
+  :disabled {
+    cursor: default;
+  }
 `;
