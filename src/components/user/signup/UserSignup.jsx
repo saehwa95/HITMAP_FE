@@ -418,7 +418,7 @@ const Signupcontain = styled.div`
   flex-direction: column;
   margin: 0 auto;
   width: 375px;
-  height: 50px;
+  height: 83px;
   background: #ffffff;
 `;
 
@@ -435,6 +435,7 @@ const SignBtn = styled.button`
   background: #006981;
   border-radius: 8px;
   :disabled {
+    cursor: default;
     background: #a6cad3;
     border-radius: 8px;
     border: none;
@@ -457,7 +458,6 @@ const StSignupBtn = styled.span`
   text-align: center;
   width: 100px;
   text-align: center;
-  cursor: pointer;
   color: #ffffff;
 `;
 
