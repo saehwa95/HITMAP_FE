@@ -60,6 +60,7 @@ const UseInputEmail = () => {
   };
 
   //nickname 유효성 검사
+
   const emptyemailvalue = (e) => {
     if (email.length === 0) {
       SetEmptyemailmessage("이메일이 입력되지 않았습니다.");
@@ -67,14 +68,13 @@ const UseInputEmail = () => {
   };
   return {
     email,
-    emailValid,
     isemail,
+    emailValid,
     emailMessage,
     emptyemailmessage,
     onemail,
-    emptyemailvalue,
     onEmailChangeHandler,
-    emailRef,
+    emptyemailvalue,
   };
 };
 
