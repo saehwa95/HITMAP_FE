@@ -46,36 +46,35 @@ const UserLogin = () => {
   return (
     <>
       <StSignin>
-        <StSigninDiv>
-          <StLogin>
-            <div>
-              <StEmailInput
-                value={userEmail}
-                onChange={(e) => setUserEmail(e.target.value)}
-                type="email"
-                placeholder="이메일"
-                isChecked={notlogin}
-              />
-              <StEmailInput
-                value={userPw}
-                onChange={(e) => setUserPw(e.target.value)}
-                type="password"
-                placeholder="비밀번호"
-                isChecked={notlogin}
-              />
-              {!notlogin && <Stfalsetxt>{notloginmessage}</Stfalsetxt>}
-            </div>
-            <StLoginBtn onClick={submitHandler} disabled={notAllow}>
-              로그인
-            </StLoginBtn>
-          </StLogin>
-        </StSigninDiv>
+        <StLogin>
+          <div>
+            <StLoginInput
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
+              type="email"
+              placeholder="이메일"
+              isChecked={notlogin}
+            />
+            <StLoginInput
+              value={userPw}
+              onChange={(e) => setUserPw(e.target.value)}
+              type="password"
+              placeholder="비밀번호"
+              isChecked={notlogin}
+            />
+            {!notlogin && <Stfalsetxt>{notloginmessage}</Stfalsetxt>}
+          </div>
+          <StLoginBtn onClick={submitHandler} disabled={notAllow}>
+            로그인
+          </StLoginBtn>
+        </StLogin>
+
         <StKakaoContainner>
-          <StSimpleLine>
+          <div>
             <Sthr />
             <StSimpleLogintxt>간편 로그인</StSimpleLogintxt>
             <Sthr2 />
-          </StSimpleLine>
+          </div>
           <Start />
         </StKakaoContainner>
       </StSignin>
@@ -89,11 +88,9 @@ const UserLogin = () => {
 
 export default UserLogin;
 
-const StEmailInput = styled.input`
+const StLoginInput = styled.input`
   box-sizing: border-box;
   margin-top: 10px;
-  flex-direction: row;
-  align-items: center;
   padding: 4px 16px;
   width: 343px;
   height: 48px;
@@ -104,10 +101,8 @@ const StEmailInput = styled.input`
   outline: none;
   ::placeholder {
     font-family: "Pretendard";
-    font-style: normal;
     font-weight: 500;
     font-size: 16px;
-    line-height: 150%;
     color: #c2c2c2;
   }
   &:focus {
@@ -134,12 +129,9 @@ const StLoginBtn = styled.button`
     border-radius: 8px;
     border: none;
   }
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 500;
+  font-family: "Pretendard";
+  font-weight: 700;
   font-size: 16px;
-  line-height: 160%;
-  text-align: center;
   cursor: pointer;
   color: #ffffff;
 `;
@@ -153,57 +145,30 @@ const StSignin = styled.div`
   height: 349px;
 `;
 
-const StSigninDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 375px;
-`;
-
 const StKakaoContainner = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 24px;
-  width: 343px;
-  height: 90px;
-`;
-
-const StSimpleLine = styled.div`
-  display: inline-block;
-  flex-direction: column;
-  width: 342px;
-  height: 18px;
 `;
 
 const StSignupcontain = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
   padding-bottom: 40px;
   gap: 10px;
   margin: 0 auto;
-  width: 220px;
-  height: 32px;
   font-family: "Pretendard";
-  font-style: normal;
   font-weight: 500;
   font-size: 15px;
   line-height: 150%;
-  text-align: center;
   color: #979797;
   background: #ffffff;
 `;
 
 const StGoSignup = styled.span`
-  width: 56px;
-  height: 24px;
   font-family: "Pretendard";
-  font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;
-  text-align: center;
   text-decoration-line: underline;
   color: #006981;
   cursor: pointer;
@@ -214,9 +179,7 @@ const Stfalsetxt = styled.span`
   margin-top: 5px;
   font-weight: 700;
   font-size: 16px;
-  line-height: 19px;
   display: flex;
-  align-items: flex-end;
   color: #e5294a;
 `;
 
@@ -224,11 +187,9 @@ const StSimpleLogintxt = styled.span`
   position: absolute;
   margin-left: 17px;
   font-family: "Pretendard";
-  font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 150%;
-  text-align: center;
   color: #c2c2c2;
 `;
 
