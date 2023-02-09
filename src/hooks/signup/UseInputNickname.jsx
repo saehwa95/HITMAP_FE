@@ -30,13 +30,11 @@ const UseInputNickname = () => {
   //nickname 유효성 서버
   const onnick = (e) => {
     e.preventDefault();
-
     const regex =
       // eslint-disable-next-line
       /^(?=.*[A-Za-z0-9가-힣])[A-Za-z0-9가-힣]{2,10}$/;
     if (regex.test(nickname)) {
       setIsNick(true);
-
       const payload = {
         nickname: nickname,
       };
@@ -51,12 +49,10 @@ const UseInputNickname = () => {
           SetNickValid(true);
           setNickeMessage("이미 사용중인 닉네임입니다.");
           setIsNick(false);
-
           nickRef.current.focus();
         } else {
           setNickeMessage("닉네임 형식이 바르지 않습니다.");
           setIsNick(false);
-
           nickRef.current.focus();
         }
       });
