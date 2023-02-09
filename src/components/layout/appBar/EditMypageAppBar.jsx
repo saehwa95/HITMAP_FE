@@ -13,6 +13,7 @@ const EditMypageAppBar = () => {
       <StEditMypageTitle>
         <StEditMypageItem>
           <StBackIconImg
+            alt="뒤로가기 아이콘"
             src={backButton}
             onClick={() => {
               navigate("/mypage");

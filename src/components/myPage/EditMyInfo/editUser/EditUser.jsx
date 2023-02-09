@@ -114,7 +114,10 @@ const EditUser = () => {
             <StImgContainer>
               {fileImage ? (
                 <StPreviewContainer>
-                  <Stimage src={URL.createObjectURL(fileImage)}></Stimage>
+                  <Stimage
+                    alt="유저 프로필 이미지"
+                    src={URL.createObjectURL(fileImage)}
+                  ></Stimage>
                   <StImgdelete
                     onClick={deleteFileImage}
                     src={imgdeleteButton}
@@ -123,7 +126,10 @@ const EditUser = () => {
                 </StPreviewContainer>
               ) : (
                 <div>
-                  <Stimage src={userInformation?.profile_image}></Stimage>
+                  <Stimage
+                    alt="업로드 할 프로필 이미지"
+                    src={userInformation?.profile_image}
+                  ></Stimage>
                 </div>
               )}
             </StImgContainer>
