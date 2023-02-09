@@ -67,11 +67,11 @@
 </details>
 
 ### 💗 히트맵 멤버
-|Name|Github|Position|Role|
-|:---:|:---|:---|:---|
-|장세화|https://github.com/saehwa95|FE🔰| 지도 페이지, 날씨 페이지, 마이페이지, 내 정보 수정 페이지|
-|정창원|https://github.com/jungjang|FE| SNS 페이지, 내 정보 수정 페이지, 소셜로그인|
-|조형준|https://github.com/cho98|FE|로그인 페이지, 회원가입 페이지|
-|고윤혁|https://github.com/KYH9800|BE🔰|-|
-|이규형|https://github.com/kyuhyunglee8|BE|-|
-|이연정|https://i0y0j057.myportfolio.com/|DE|-|
+|Name|Github|Role|
+|:---:|:---|:---|
+|장세화[FE🔰]|https://github.com/saehwa95|지도 페이지, 날씨 페이지, 마이페이지, 내 정보 수정 페이지|
+|정창원[FE]|https://github.com/jungjang|SNS 페이지, 내 정보 수정 페이지, 소셜로그인|
+|조형준[FE]|https://github.com/cho98|로그인 페이지, 회원가입 페이지|
+|고윤혁[BE🔰]|https://github.com/KYH9800|-|
+|이규형[BE]|https://github.com/kyuhyunglee8|-|
+|이연정[DE]|https://i0y0j057.myportfolio.com/|-|
