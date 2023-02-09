@@ -13,7 +13,6 @@ const MyPostList = () => {
   };
 
   const { data } = useQuery(["myPostList"], myPostListAPI);
-
   const myPostLists = data?.data.Posts;
 
   return (

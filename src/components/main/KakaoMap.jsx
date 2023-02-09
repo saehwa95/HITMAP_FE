@@ -84,7 +84,6 @@ const KakaoMap = ({ searchPlace }) => {
       const imageSrc = pinMarker;
       const imageSize = new kakao.maps.Size(40, 54);
       const imageOption = { offset: new kakao.maps.Point(17, 36) };
-
       const markerImage = new kakao.maps.MarkerImage(
         imageSrc,
         imageSize,
@@ -115,6 +114,7 @@ const KakaoMap = ({ searchPlace }) => {
 
       // 마커 클릭 시 위도 경도에 맞는 상세 페이지 이동
       kakao.maps.event.addListener(marker, "click", function () {
+
         navigate(
           `/weather?lat=${place.y}&lon=${place.x}&place_name=${place.place_name}`
         );
