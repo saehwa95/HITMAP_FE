@@ -103,9 +103,12 @@ const UserSignup = () => {
         <StBackimage>
           <StImgContainer>
             {fileimage ? (
-              <Stimage src={URL.createObjectURL(fileimage)}></Stimage>
+              <Stimage
+                src={URL.createObjectURL(fileimage)}
+                alt="fileimage"
+              ></Stimage>
             ) : (
-              <Stimage src={Profile}></Stimage>
+              <Stimage src={Profile} alt="basicimage"></Stimage>
             )}
             {visible === true && (
               <StImgdelete
@@ -134,8 +137,8 @@ const UserSignup = () => {
         <StNickdiv>
           <StText>닉네임</StText>
           <StNIckName>
-            <StNickErrMsg>
-              <StNickInput
+            <div>
+              <StInput
                 Value={nickname}
                 onChange={onNickChangeHandler}
                 placeholder="닉네임을 입력해주세요."
@@ -151,10 +154,9 @@ const UserSignup = () => {
                 {isnick !== true && <StFalSpan>{nickMessage}</StFalSpan>}
                 {isnick === true && <StTruSpan>{nickMessage}</StTruSpan>}
               </StValidMsg>
-            </StNickErrMsg>
+            </div>
             <StBtn onClick={onnick}>중복확인</StBtn>
           </StNIckName>
-
           <StInputTxt>
             닉네임은 한글, 영문, 숫자만 가능하며 2자 이상 10자 이하로
             입력해주세요
@@ -163,10 +165,9 @@ const UserSignup = () => {
         <StEmaildiv>
           <StText>이메일</StText>
           <StNIckName>
-            <StemailErrMsg>
+            <div>
               <StInput
                 value={email || ""}
-                type="email"
                 placeholder="이메일을 입력해주세요."
                 onChange={onEmailChangeHandler}
                 isChecked={isemail}
@@ -183,7 +184,7 @@ const UserSignup = () => {
                 {isemail !== true && <StFalSpan>{emailMessage}</StFalSpan>}
                 {isemail === true && <StTruSpan>{emailMessage}</StTruSpan>}
               </StValidMsg>
-            </StemailErrMsg>
+            </div>
             <StBtn onClick={onemail}>중복확인</StBtn>
           </StNIckName>
         </StEmaildiv>
@@ -261,32 +262,28 @@ const StInputWrapper = styled.div`
   background: #ffffff;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 `;
 
 const StInput = styled.input`
+  display: flex;
   width: 237px;
-  height: 45px;
+  height: 48px;
   background: #ffffff;
-  outline: none;
   border: 1px solid #dfdfdf;
   border-radius: 8px;
+  outline: none;
   text-indent: 12px;
   font-family: "Pretendard";
   font-weight: 500;
   font-size: 16px;
-  line-height: 150%;
   color: #1f1f1f;
   ::placeholder {
     font-family: "Pretendard";
-    font-style: normal;
     font-weight: 500;
     font-size: 16px;
-    line-height: 150%;
     color: #c2c2c2;
     text-indent: 12px;
   }
-
   :focus {
     border: ${({ isChecked }) =>
       !isChecked ? "2px solid #e5294a" : "2px solid#5e67de"};
@@ -296,60 +293,42 @@ const StInput = styled.input`
 const StNickdiv = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   margin-bottom: 6px;
   width: 375px;
   height: 165px;
-
   background: #ffffff;
 `;
 
 const StText = styled.span`
-  width: 343px;
-  height: 19px;
   padding: 16px 16px 10px 16px;
   font-family: "Pretendard";
-  font-style: normal;
   font-weight: 600;
   font-size: 16px;
-  line-height: 19px;
 `;
 
 const StBtn = styled.div`
+  width: 90px;
+  height: 48px;
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
   font-family: "Pretendard";
-  font-style: normal;
   font-weight: 700;
-  font-size: 16px;
-  line-height: 150%;
-  text-align: center;
   color: #ffffff;
-  gap: 10px;
-  width: 90px;
-  height: 48px;
   background: #006981;
   border-radius: 8px;
   cursor: pointer;
 `;
 
 const StNIckName = styled.div`
-  width: 343px;
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
   margin: 0 auto;
   gap: 10px;
 `;
 
 const StPsInput = styled.input`
   display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   width: 338px;
   height: 45px;
   outline: none;
@@ -361,10 +340,8 @@ const StPsInput = styled.input`
   color: #1f1f1f;
   ::placeholder {
     font-family: "Pretendard";
-    font-style: normal;
     font-weight: 500;
     font-size: 16px;
-    line-height: 150%;
     color: #c2c2c2;
     text-indent: 12px;
   }
@@ -387,7 +364,6 @@ const StBackimage = styled.div`
 const StInputTxt = styled.div`
   padding: 12px 25px 20px 18px;
   font-family: "Pretendard";
-  font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 150%;
@@ -398,8 +374,6 @@ const StEmaildiv = styled.div`
   margin-top: 16px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  width: 375px;
   background: #ffffff;
 `;
 
@@ -408,23 +382,18 @@ const StPassContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   margin-top: 20px;
-  width: 375px;
-  height: 249px;
   background: #ffffff;
 `;
 
 const Signupcontain = styled.div`
-  box-sizing: border-box;
-  flex-direction: column;
   margin: 0 auto;
   width: 375px;
-  height: 83px;
+  height: 50px;
   background: #ffffff;
 `;
 
 const SignBtn = styled.button`
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
@@ -435,7 +404,6 @@ const SignBtn = styled.button`
   background: #006981;
   border-radius: 8px;
   :disabled {
-    cursor: default;
     background: #a6cad3;
     border-radius: 8px;
     border: none;
@@ -445,42 +413,30 @@ const SignBtn = styled.button`
 const Stpwinputcontainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   margin: 0 auto;
 `;
 
 const StSignupBtn = styled.span`
   font-family: "Pretendard";
-  font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;
-  text-align: center;
-  width: 100px;
-  text-align: center;
+  cursor: pointer;
   color: #ffffff;
-`;
-
-const StNickErrMsg = styled.div`
-  width: 243px;
 `;
 
 const StTruSpan = styled.span`
   color: #5e67de;
   font-family: "Pretendard";
-  font-style: normal;
   font-weight: 700;
   font-size: 16px;
 `;
 
 const StFalSpan = styled.span`
   font-family: "Pretendard";
-  font-style: normal;
   font-weight: 700;
   font-size: 16px;
-  line-height: 19px;
   display: flex;
-  align-items: flex-end;
   color: #e5294a;
 `;
 
@@ -489,9 +445,6 @@ const StPostProfileBtn = styled.input`
 `;
 
 const StPostChangeBtn = styled.button`
-  box-sizing: border-box;
-  grid-auto-flow: column;
-  margin: 0 auto;
   width: 108px;
   height: 32px;
   background: #ffffff;
@@ -499,7 +452,6 @@ const StPostChangeBtn = styled.button`
   box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.04);
   border-radius: 100px;
   cursor: pointer;
-  color: #006981;
 `;
 
 const StClickicon = styled.img`
@@ -528,44 +480,11 @@ const StImgdelete = styled.img`
 const StImageSpan = styled.span`
   margin-left: 14px;
   font-family: "Pretendard";
-  font-style: normal;
   font-weight: 700;
   font-size: 16px;
-  line-height: 150%;
   display: flex;
   align-items: center;
-`;
-
-const StemailErrMsg = styled.div``;
-
-const StNickInput = styled.input`
-  display: flex;
-  width: 237px;
-  height: 48px;
-  background: #ffffff;
-  border: 1px solid #dfdfdf;
-  border-radius: 8px;
-  outline: none;
-  text-indent: 12px;
-  font-family: "Pretendard";
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 150%;
-  color: #1f1f1f;
-  ::placeholder {
-    font-family: "Pretendard";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 150%;
-    color: #c2c2c2;
-    text-indent: 12px;
-  }
-
-  :focus {
-    border: ${({ isChecked }) =>
-      !isChecked ? "2px solid #e5294a" : "2px solid#5e67de"};
-  }
+  color: #006981;
 `;
 
 const StValidMsg = styled.div`
@@ -573,6 +492,5 @@ const StValidMsg = styled.div`
 `;
 
 const StPwValidMsg = styled.div`
-  margin-top: 6px;
-  margin-bottom: 8px;
+  margin-bottom: 11px;
 `;
