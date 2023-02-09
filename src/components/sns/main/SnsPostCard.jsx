@@ -36,6 +36,11 @@ const SnsPostCard = ({ posts }) => {
     authJudge ? submitLike.mutate() : alert("로그인이 필요한 기능입니다");
   };
 
+  //리사이징 작업 간 잠시 보여줄 오리지널 이미지 보여주는 함수
+  const altOriginImg = (e) => {
+    e.target.src = posts.original_post_image;
+  };
+
   return (
     <StCardContainer>
       <StCardHeader>
@@ -51,7 +56,8 @@ const SnsPostCard = ({ posts }) => {
         <div>
           <StCardImg
             alt="작성사진"
-            src={posts.original_post_image[0].src}
+            src={posts.resizing_post_image[0].src}
+            onError={altOriginImg}
             onClick={goDetailPage}
           />
         </div>

@@ -15,11 +15,19 @@ const MyInfoBox = () => {
 
   const myData = data?.data;
 
+  const altOriginImg = (e) => {
+    e.target.src = myData.original_user_profile_image;
+  };
+
   return (
     <InfoBoxWrapper>
       <div className="top">
         <div className="profileImg">
-          <img alt="" src={myData?.profile_image} />
+          <img
+            alt=""
+            src={myData?.resizing_user_profile_image}
+            onError={altOriginImg}
+          />
         </div>
         <div className="nickname">
           <span>{myData?.nickname}</span>
