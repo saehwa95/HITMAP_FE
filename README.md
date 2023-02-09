@@ -1,6 +1,11 @@
 # 🎣히트맵🎣
 <img src="https://user-images.githubusercontent.com/100126319/217750977-35c3f015-7bc4-4d53-a604-6d67101d7758.png" width="800" height="500"/>
 
+### [👉 히트맵 바로가기](https://hitmap-fe.vercel.app)
+### [👉 히트맵 백엔드 깃헙 보러가기](https://github.com/KYH9800/hitmap_api_v1)
+
+<hr>
+
 ### 🐟 프로젝트 소개
 #### 낚시에 필요한 날씨 정보 제공과 낚시인들을 위한 SNS 커뮤니티 서비스
 
