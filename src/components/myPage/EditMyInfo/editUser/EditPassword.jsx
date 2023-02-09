@@ -11,11 +11,9 @@ const EditPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
-  /* 유효성 체크 */
   const [checkPassword, setCheckPassword] = useState(false);
   const [checkConfirmPassword, setCheckConfirmPassword] = useState(false);
 
-  /* 에러 문구 */
   const [passwordMessage, setPasswordMessage] = useState("");
   const [confirmPasswordMessage, setConfirmPasswordMessage] = useState("");
 
@@ -24,7 +22,6 @@ const EditPassword = () => {
   const newPasswordRef = useRef();
   const confirmNewPasswordRef = useRef();
 
-  /* 비밀번호 onChange 핸들러 */
   const passwordOnChangeHandler = (e) => {
     const newPasswordCurrent = e.target.value;
     setNewPassword(newPasswordCurrent);
@@ -38,7 +35,6 @@ const EditPassword = () => {
     }
   };
 
-  /* 비밀번호 확인 onChange 핸들러 */
   const ConfirmPasswordOnChangeHandler = (e) => {
     const confirmPasswordCurrent = e.target.value;
     setConfirmNewPassword(confirmPasswordCurrent);
@@ -52,7 +48,6 @@ const EditPassword = () => {
     }
   };
 
-  /* 리액트 쿼리 사용 */
   const editPasswordMutation = useMutation({
     mutationFn: async (editPassword) => {
       return await instance.patch("/me/updatePassword", editPassword);
@@ -64,7 +59,6 @@ const EditPassword = () => {
     },
   });
 
-  /* 수정완료 버튼 이벤트 핸들러 */
   const EditPasswordSubmitHandler = (e) => {
     e.preventDefault();
     editPasswordMutation.mutate({
@@ -73,13 +67,14 @@ const EditPassword = () => {
       passwordConfirm: confirmNewPassword,
     });
   };
+
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
   const status = editPasswordMutation?.error?.response.status;
   const prevErrorMessage =
     editPasswordMutation?.error?.response.data.errorMessage;
 
   return (
-    <div>
+    <>
       <StatusBar />
       <PasswordEditAppBar />
       <PasswordFormWrapper>
@@ -141,7 +136,7 @@ const EditPassword = () => {
           수정 완료
         </EditButton>
       </EditButtonWrapper>
-    </div>
+    </>
   );
 };
 
