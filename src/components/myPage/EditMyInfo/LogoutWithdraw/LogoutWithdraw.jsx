@@ -35,6 +35,7 @@ const LogoutWithdraw = ({ socialUser }) => {
 };
 
 export default LogoutWithdraw;
+
 const ButtonLink = styled(Link)`
   display: flex;
   align-items: center;

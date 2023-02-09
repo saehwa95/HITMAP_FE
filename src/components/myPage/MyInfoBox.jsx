@@ -12,7 +12,6 @@ const MyInfoBox = () => {
   };
 
   const { data } = useQuery(["myInfo"], myInfoAPI);
-
   const myData = data?.data;
 
   return (
