@@ -9,12 +9,6 @@ import SnsUpdateAppBar from "../../layout/appBar/SnsUpdateAppBar";
 const SnsUpdateModal = ({ setUpdateModal, setMoreButtonModal }) => {
   const { postId } = useParams();
 
-  const [input, setInput] = useState({ content: "", fishName: "" });
-  const onChangeTextHandler = (e) => {
-    const { value, name } = e.target;
-    setInput({ ...input, [name]: value });
-  };
-
   //해당 게시글 정보 가져오는 useQuery
   const detailPostAPI = async () => {
     return await instance.get(`/post/${postId}`);
@@ -23,6 +17,16 @@ const SnsUpdateModal = ({ setUpdateModal, setMoreButtonModal }) => {
     staleTime: 5000,
   });
   const dataForUpdate = data?.data.post;
+
+  const [input, setInput] = useState({
+    content: dataForUpdate.content,
+    fishName: dataForUpdate.fishName,
+  });
+
+  const onChangeTextHandler = (e) => {
+    const { value, name } = e.target;
+    setInput({ ...input, [name]: value });
+  };
 
   const queryClient = useQueryClient();
   const updateMain = useMutation({
