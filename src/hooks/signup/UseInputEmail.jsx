@@ -3,13 +3,13 @@ import { useDispatch } from "react-redux";
 import { __emailItem } from "../../redux/modules/userSlice";
 
 const UseInputEmail = () => {
-  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [emailValid, SetEmailValid] = useState(false);
   const [isemail, setIsEmail] = useState(false);
   const [emailMessage, setEmailMessage] = useState("");
   const [emptyemailmessage, SetEmptyemailmessage] = useState("");
   const emailRef = useRef(null);
+  const dispatch = useDispatch();
   //email 유효성 확인
   const onEmailChangeHandler = (e) => {
     e.preventDefault();
@@ -17,11 +17,9 @@ const UseInputEmail = () => {
     setEmailMessage("");
     setIsEmail(false);
 
-    const regexcom =
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.com/;
-    const regexnet =
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.net/;
-    if (regexcom.test(email) || regexnet.test(email)) {
+    const regex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (regex.test(email)) {
       SetEmailValid(true);
     } else {
       SetEmailValid(false);
@@ -29,7 +27,6 @@ const UseInputEmail = () => {
   };
   //email 유효성 서버
   const onemail = (e) => {
-    e.preventDefault();
     const regexcom =
       /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.com/;
     const regexnet =
@@ -42,12 +39,10 @@ const UseInputEmail = () => {
 
       dispatch(__emailItem(payload)).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
-          SetEmailValid(true);
           setEmailMessage("사용 가능한 이메일 입니다.");
           setIsEmail(true);
           emailRef.current.focus();
-        } else if (res.meta.requestStatus === "rejected") {
-          SetEmailValid(true);
+        } else if (res.error.message === "Rejected") {
           setEmailMessage("이미 사용중인 이메일입니다.");
           setIsEmail(false);
           emailRef.current.focus();
@@ -58,12 +53,14 @@ const UseInputEmail = () => {
         }
       });
     } else {
-      setEmailMessage("이메일 형식이 바르지 않습니다.");
-      SetEmailValid(true);
-      setIsEmail(false);
+      setEmailMessage("이메일 형식이 바르지 않습니다");
       emailRef.current.focus();
+      setIsEmail(false);
     }
   };
+
+  //nickname 유효성 검사
+
   const emptyemailvalue = (e) => {
     if (email.length === 0) {
       SetEmptyemailmessage("이메일이 입력되지 않았습니다.");
@@ -78,7 +75,6 @@ const UseInputEmail = () => {
     onemail,
     onEmailChangeHandler,
     emptyemailvalue,
-    emailRef,
   };
 };
 

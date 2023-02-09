@@ -2,8 +2,9 @@ import { useState, useRef } from "react";
 
 const UseInputProfilimage = () => {
   const [fileimage, setFileImage] = useState();
-  const [visible, setVisible] = useState(false);
   const imgRef = useRef();
+
+  const [visible, setVisible] = useState(false);
   const saveFileImage = (e) => {
     setFileImage(e.target.files[0]);
     e.target.value = "";

@@ -9,7 +9,7 @@ const Login = () => {
     <StLoginContainer>
       <LoginAppBar />
       <StLogoContainner>
-        <StLoginImg src={HitmapLogo} alt="hitmap로고" />
+        <StLoginImg src={HitmapLogo} />
       </StLogoContainner>
       <StSignInContainer>
         <UserLogin />

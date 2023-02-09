@@ -15,7 +15,7 @@ const SignupAppBar = () => {
           <StCloseIconImg
             src={closeButton}
             onClick={() => {
-              navigate("/");
+              navigate("/main");
             }}
           />
           <TitleSpan>회원가입</TitleSpan>
