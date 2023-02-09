@@ -10,6 +10,7 @@ const WeatherSkeleton = () => {
 };
 
 export default WeatherSkeleton;
+
 const SkeletonWrapper = styled.div`
   width: 311px;
   @keyframes loading {

@@ -108,5 +108,7 @@ const BottomNavigationBar = styled.div`
   }
   img {
     cursor: pointer;
+    width: 54px;
+    height: 54px;
   }
 `;

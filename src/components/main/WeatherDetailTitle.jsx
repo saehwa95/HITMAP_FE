@@ -28,7 +28,7 @@ const WeatherDetailInfo = () => {
   );
 };
 
-export default React.memo(WeatherDetailInfo);
+export default WeatherDetailInfo;
 
 const WeatherDetailTitleWrapper = styled.div`
   width: 64px;
