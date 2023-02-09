@@ -68,7 +68,7 @@
 
 ### 💗 히트맵 멤버
 |Name|Github|Role|
-|:---:|:---|:---|
+|:---|:---|:---|
 |장세화[FE🔰]|https://github.com/saehwa95|지도 페이지, 날씨 페이지, 마이페이지, 내 정보 수정 페이지|
 |정창원[FE]|https://github.com/jungjang|SNS 페이지, 내 정보 수정 페이지, 소셜로그인|
 |조형준[FE]|https://github.com/cho98|로그인 페이지, 회원가입 페이지|
