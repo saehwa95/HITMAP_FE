@@ -51,7 +51,6 @@ const Router = () => {
           <Route path="/postlist" element={<PostList />} />
           <Route path="/detail/:postId" element={<DetailPost />} />
           <Route path="/logInRegister" element={<LogInRegister />} />
-          <Route path="/loading" element={<LoadingPage />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/create" element={<CreatePost />} />
             <Route path="/mypage" element={<MyPage />} />
