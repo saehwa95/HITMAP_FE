@@ -9,7 +9,7 @@ import likeActiveIcon from "../../../asset/icon/likeActiveIcon.svg";
 import { getCookie } from "../../../shared/cookie.js";
 
 //sns 포스트카드 한 장 컴포넌트
-const SnsPostCard = ({ posts }) => {
+const SnsPostCard = React.memo(({ posts }) => {
   const navigate = useNavigate();
   const authJudge = getCookie("auth");
 
@@ -79,7 +79,7 @@ const SnsPostCard = ({ posts }) => {
       </StCardStatus>
     </StCardContainer>
   );
-};
+});
 
 export default SnsPostCard;
 
