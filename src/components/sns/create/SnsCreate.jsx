@@ -7,7 +7,7 @@ import SnsCreateAppBar from "../../layout/appBar/SnsCreateAppBar";
 import deletePhotoButton from "../../../asset/button/deletePhotoButton.svg";
 import photoAddIcon from "../../../asset/icon/photoAddIcon.svg";
 
-const SnsCreate = () => {
+const SnsCreate = React.memo(() => {
   const navigate = useNavigate();
   const [input, setInput] = useState({ content: "", fishName: "" });
 
@@ -151,7 +151,7 @@ const SnsCreate = () => {
       </StCreateContainer>
     </div>
   );
-};
+});
 
 export default SnsCreate;
 
