@@ -5,7 +5,7 @@ import loadingPageImg from "../../asset/image/loadingPageImg.svg";
 const LoadingPage = () => {
   return (
     <StLoadingImgContainer>
-      <StLoadingImg alt="로딩 페이지" src={loadingPageImg} />
+      <img alt="로딩 페이지" src={loadingPageImg} />
       <span>로딩중...</span>
     </StLoadingImgContainer>
   );
@@ -29,6 +29,7 @@ const StLoadingImgContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  animation: ${LoadEffect} 0.15s ease-in-out;
   span {
     font-size: 36px;
     font-weight: 700;
@@ -36,9 +37,7 @@ const StLoadingImgContainer = styled.div`
     font-style: normal;
     color: #003b49;
   }
-`;
-
-const StLoadingImg = styled.img`
-  width: 375px;
-  animation: ${LoadEffect} 0.1s ease-in-out;
+  img {
+    width: 375px;
+  }
 `;
