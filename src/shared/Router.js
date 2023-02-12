@@ -1,6 +1,7 @@
 import React from "react";
 import { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LoadingPage from "../pages/common/LoadingPage";
 // import SignUp from "../pages/user/SignUp";
 // import Login from "../pages/user/Login";
 // import SocialAuth from "../pages/user/kakaoLogin/SocialAuth";
@@ -40,7 +41,7 @@ const PrivateRoutes = React.lazy(() => import("./PrivateRoutes"));
 const Router = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingPage />}>
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/" element={<Login />} />
@@ -50,6 +51,7 @@ const Router = () => {
           <Route path="/postlist" element={<PostList />} />
           <Route path="/detail/:postId" element={<DetailPost />} />
           <Route path="/logInRegister" element={<LogInRegister />} />
+          <Route path="/loading" element={<LoadingPage />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/create" element={<CreatePost />} />
             <Route path="/mypage" element={<MyPage />} />
